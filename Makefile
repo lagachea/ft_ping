@@ -37,6 +37,9 @@ out/%.o: srcs/%.c
 	printf "$(LNECLR)$(NAME): $<"
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o $@ -c $<
 
+json:
+	bear -- make re
+
 clean:
 	$(RM) -rf out
 	make -s -C $(LIBDIR) clean
