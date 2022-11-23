@@ -30,9 +30,9 @@ all: $(NAME)
 $(NAME): $(OBJECT)
 	make -s -C $(LIBDIR)
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o $(NAME) $(OBJECT) $(LIBA)
-	printf "$(LNECLR)$(GREEN)make lem-in done$(WHITE)\n"
+	printf "$(LNECLR)$(GREEN)make done$(WHITE)\n"
 
-out/%.o: srcs/%.c includes/ft_ping.h 
+out/%.o: srcs/%.c
 	mkdir -p out
 	printf "$(LNECLR)$(NAME): $<"
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o $@ -c $<
@@ -40,12 +40,12 @@ out/%.o: srcs/%.c includes/ft_ping.h
 clean:
 	$(RM) -rf out
 	make -s -C $(LIBDIR) clean
-	printf "$(PURPLE)clean lem-in done$(WHITE)\n"
+	printf "$(PURPLE)clean done$(WHITE)\n"
 
 fclean:
 	$(RM) -rf out $(NAME)
 	make -s -C $(LIBDIR) fclean
-	printf "$(PURPLE)fclean lem-in done$(WHITE)\n"
+	printf "$(PURPLE)fclean done$(WHITE)\n"
 
 re: fclean all
 
