@@ -11,44 +11,41 @@ Partie obligatoire
 L’option -v ici va aussi nous permettre de voir le résultat dans le cas d’un problème ou d’une erreur liée aux packets, ce qui
 logiquement ne va pas forcer l’arrêt du programme (La modification de la valeur TTL peut aider à forcer une erreur).
 
-• Vous devez gérer une IPv4 simple (adresse/hostname) comme paramètre du pro- gramme.
+• Vous devez gérer une IPv4 simple (adresse/hostname) comme paramètre du programme.
 • Vous devez gérer le FQDN sans pour autant effectuer la résolution DNS dans le retour du paquet.
 
-Vous avez le droit d’utiliser les fonctions de la famille printf
-ainsi qu’une globale.
-getpid
-getuid
-getaddrinfo
-gettimeofday
-inet_ntop
-inet_pton
-exit
-signal
-alarm
-setsockopt
-recvmsg
-sendto
-socket
+Vous avez le droit d’utiliser les fonctions de la famille printf ainsi qu’une globale.
 xprintf
+gettimeofday
+exit
+inet_ntop inet_pton
+signal alarm
+socket setsockopt
+sendto recvmsg
+getpid getuid
+getaddrinfo freeaddrinfo
+strerror / gai_strerror
 ATTENTION: l’utilisation des fonctions fcntl, poll et ppoll est interdite et injustifiable.
+
+
 
 Ce projet ne sera corrigé que par des humains. Vous êtes donc libres d’organi-
 ser et nommer vos fichiers comme vous le désirez, en respectant néanmoins les
 contraintes listées ici.
 
 • Vous devez coder en C et rendre un Makefile (respectant les règles habituelles).
+
 • Vous devez gérer les erreurs de façon raisonnée. En aucun cas votre programme
 ne doit quitter de façon inattendue (Segmentation fault, etc).
+
 • Rendez-votre travail sur votre dépot GiT comme d’habitude. Seul le travail présent
 sur votre dépot sera évalué en soutenance.
-• Vous devez être sous une VM avec un noyau Linux > 3.14. Pour info le barême a
-été fait avec une Debian 7.0 stable.
-• Exception faite de la ligne RTT, le résultat devra avoir une indentation identique
-au ping réel.
 
-Une différence de +/- 30ms est acceptable sur un paquet.
 
 Des idées de bonus :
 • ajout de flag -f -m -l -I -m -M -n -w -W -p -Q -S -t -T ...
-
 Le flag -V n’est pas un bonus.
+
+• Vous devez être sous une VM avec un noyau Linux > 3.14. Pour info le barême a
+été fait avec une Debian 7.0 stable.
+
