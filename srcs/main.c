@@ -1,7 +1,5 @@
 #include "ft_ping.h"
 #include "libft.h"
-       #include <sys/socket.h>
-       #include <netdb.h>
 
 uid_t getuid(void);
 pid_t getpid(void);
@@ -29,7 +27,6 @@ ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
 ssize_t recvmsg(int sockfd, struct msghdr *msg, int flags);
 int printf(const char *format, ...);
 
-// /etc/protocols
 int sockets[24] = {
 SOCK_CLOEXEC    ,
 SOCK_DGRAM      ,
@@ -67,6 +64,7 @@ AF_X25       ,
 AF_XDP       
 };
 
+// /etc/protocols
 
 int printSocket(struct addrinfo *rsltptr, int sockfd){
 	for (size_t iter = 0; iter < 24; iter++)
@@ -90,8 +88,8 @@ printf("IN\n");
 	uid_t uid;
 	pid_t pid;
 	int res;
-	char address[40] = "192.168.1.1";
-	// "8.8.8.8";
+	char address[40] = "9.9.9.9";
+	// "192.168.1.1";
 	// "google.com";
 	unsigned int in_addr = 0;
 	char socktype[] = "";
@@ -100,17 +98,19 @@ printf("IN\n");
 	struct addrinfo *rsltptr;
 
 	int sockfd = 0;
-	void *buf = NULL;
-	size_t buflen = 0;
+	// void *buf = NULL;
+	t_icmp packet;
+	size_t packetlen = 0;
 	int send_flags = 0;
 
-	const struct sockaddr dest_addr;
+	// const struct sockaddr dest_addr;
 	struct msghdr msg;
 	int rec_flags = 0;
 
+	packetlen = sizeof(packet);
 	ft_memset(&hints, 0, sizeof(hints));
 	ft_memset(&result, 0, sizeof(&result));
-	hints.ai_flags = AI_PASSIVE;
+	hints.ai_flags = AI_PASSIVE ^ AI_CANONNAME;
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = 0;
 	hints.ai_protocol = 0;
@@ -150,14 +150,31 @@ printf("IN\n");
 		if (sockfd != -1) {
 			printf("===socket\n");
 			printSocket(rsltptr, sockfd);
-			// int setsockopt(int sockfd, int level, int optname, const void *optval, socklen_t optlen);
-			res = sendto(sockfd, buf, buflen, send_flags, &dest_addr, rsltptr->ai_addrlen);
-			if (res != -1) {
-				printf("BB\n");
-				res = recvmsg(sockfd, &msg, rec_flags);
-				if (res != -1) {
-					printf("AA\n");
-				}
+
+			ft_memset(&packet, 0, sizeof(packet));
+			if (res < 0) {
+				printf("FAIL set sock option |%d|%d|\n", res, errno);
+				exit(1);
+			}
+			
+			// fills packet
+			packet.type = 8;
+			packet.code = 0;
+			packet.checksum = 0;
+			packet.identifier = 0;
+			packet.sequence_number = 0;
+			packet.playload = 0;
+
+			res = sendto(sockfd, &packet, packetlen, send_flags, NULL, 0);
+			if (res < 0) {
+				printf("FAIL send to |%d|%d|\n", res, errno);
+				exit(1);
+			}
+
+			res = recvmsg(sockfd, &msg, rec_flags);
+			if (res < 0) {
+				printf("FAIL RECV |%d|%d|\n", res, errno);
+				exit(1);
 			}
 		}
 
@@ -175,4 +192,3 @@ printf("IN\n");
 printf("OUT\n");
 	return 0;
 }
-

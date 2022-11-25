@@ -1,6 +1,7 @@
 #include <arpa/inet.h>
 #include <bits/types/struct_timeval.h>
 #include <netdb.h>
+#include <netinet/in.h>
 #include <signal.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -9,6 +10,17 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <errno.h>
+
+struct s_icmp {
+	unsigned int type: 8;
+	unsigned int code: 8;
+	unsigned int checksum: 16;
+	unsigned int identifier: 16;
+	unsigned int sequence_number: 16;
+	unsigned int playload: 32;
+};
+typedef struct s_icmp t_icmp;
 
 
 //getpid getuid;
