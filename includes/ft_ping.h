@@ -1,5 +1,6 @@
 #include <arpa/inet.h>
 #include <bits/types/struct_timeval.h>
+#include <errno.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <signal.h>
@@ -10,32 +11,53 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <errno.h>
 
 struct s_icmp {
-	unsigned int type: 8;
-	unsigned int code: 8;
-	unsigned int checksum: 16;
-	unsigned int identifier: 16;
-	unsigned int sequence_number: 16;
-	unsigned int playload: 32;
+  unsigned int type : 8;
+  unsigned int code : 8;
+  unsigned int checksum : 16;
+  unsigned int identifier : 16;
+  unsigned int sequence_number : 16;
+  unsigned int playload : 32;
 };
 typedef struct s_icmp t_icmp;
 
+typedef struct s_socket t_socket;
+struct s_socket {
+	int family;
+	int socktype;
+	int protocol;
+	int sockfd;
+	t_socket *next;
+};
 
-//getpid getuid;
-
+typedef struct s_ftping {
+	uid_t uid;
+	pid_t pid;
+	int address;
+	char *node;
+	char *service;
+	struct addrinfo hints;
+	struct addrinfo *results;
+	t_socket socket;
+	t_socket *sockets;
+	//Packet buf ? + len
+	void *buf;
+	const struct sockaddr dest_addr;
+	socklen_t addrlen;
+	int send_flags;
+	int rec_flags;
+	struct msghdr msg;
+} t_ftping;
+// getpid getuid;
 
 uid_t getuid(void);
 pid_t getpid(void);
 
-
-//getaddrinfo freeaddrinfo gai_strerror;
-
+// getaddrinfo freeaddrinfo gai_strerror;
 
 int getaddrinfo(const char *node, const char *service,
-		const struct addrinfo *hints,
-		struct addrinfo **res);
+                const struct addrinfo *hints, struct addrinfo **res);
 void freeaddrinfo(struct addrinfo *res);
 const char *gai_strerror(int errcode);
 
@@ -50,54 +72,38 @@ const char *gai_strerror(int errcode);
 // 	struct addrinfo *ai_next;
 // };
 
-
-
-//gettimeofday;
-
+// gettimeofday;
 
 // int gettimeofday(struct timeval *tv, struct timezone *tz);
 
+// inet_ntop inet_pton;
 
-//inet_ntop inet_pton;
-
-
-const char *inet_ntop(int af, const void *src,
-		char *dst, socklen_t size);
+const char *inet_ntop(int af, const void *src, char *dst, socklen_t size);
 
 int inet_pton(int af, const char *src, void *dst);
 
-
-//exit;
-
+// exit;
 
 void exit(int status);
 
-
-//alarm signal;
-
+// alarm signal;
 
 typedef void (*sighandler_t)(int);
 sighandler_t signal(int signum, sighandler_t handler);
 unsigned int alarm(unsigned int seconds);
 
-
-//socket setsockopt;
-
+// socket setsockopt;
 
 int socket(int domain, int type, int protocol);
-int setsockopt(int sockfd, int level, int optname,
-		const void *optval, socklen_t optlen);
+int setsockopt(int sockfd, int level, int optname, const void *optval,
+               socklen_t optlen);
 // int getsockopt(int sockfd, int level, int optname,
 // 		void *optval, socklen_t *optlen);
 
-
-
-
-//sendto recvmsg;
-
+// sendto recvmsg;
 
 ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
-		const struct sockaddr *dest_addr, socklen_t addrlen);
+               const struct sockaddr *dest_addr, socklen_t addrlen);
 
 // ssize_t send(int sockfd, const void *buf, size_t len, int flags);
 // ssize_t sendmsg(int sockfd, const struct msghdr *msg, int flags);
@@ -108,11 +114,7 @@ ssize_t recvmsg(int sockfd, struct msghdr *msg, int flags);
 // ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
 // 		struct sockaddr *src_addr, socklen_t *addrlen);
 
-
-
-
-//xprintf;
-
+// xprintf;
 
 int printf(const char *format, ...);
 int fprintf(FILE *stream, const char *format, ...);

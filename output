@@ -1,0 +1,51 @@
+pattern output:
+[2Kft_ping: srcs/main.c
+[2K[32mmake done[0m
+
+IN
+PID=     11390 | UID=      1000
+in_addr => 151587081
+address => 9.9.9.9
+socktype => 
+=====
+===
+list==
+===AI
+flags = 3
+family = 2
+socktype = 1
+protocol = 6
+addlen = 16
+canon name = 9.9.9.9
+next = 0x606000000080
+
+
+===AI
+flags = 3
+family = 2
+socktype = 2
+protocol = 17
+addlen = 16
+canon name = (null)
+next = 0x6060000000e0
+
+
+===AI
+flags = 3
+family = 2
+socktype = 3
+protocol = 0
+addlen = 16
+canon name = (null)
+next = (nil)
+
+
+=====
+asked for socket with IPV4 = 2
+SOCK_STREAM=1
+protocole=0
+got sockfd 3 
+===socket
+
+
+
