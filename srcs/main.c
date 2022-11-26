@@ -129,12 +129,6 @@ int getSimpleSocket(t_ftping *data)
 	return res;
 }
 
-int getAddrinfo(t_ftping *data) {
-	int res;
-	res = getaddrinfo(data->node, data->service, &(data->hints), &(data->results));
-	return res;
-}
-
 int	main(void)
 {
 printf("IN\n");
@@ -174,7 +168,7 @@ printf("IN\n");
 	pingdata.hints.ai_next = NULL;
 
 
-	res = getAddrinfo(&pingdata);
+	res = getaddrinfo(pingdata.node, pingdata.service, &(pingdata.hints), &(pingdata.results));
 	if (res < 0) {
 		printf("%s\n", gai_strerror(res));
 		return res;
