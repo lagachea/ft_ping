@@ -34,16 +34,16 @@ struct s_socket {
 typedef struct s_ftping {
 	uid_t uid;
 	pid_t pid;
-	int address;
 	char *node;
 	char *service;
 	struct addrinfo hints;
 	struct addrinfo *results;
+	int address;
 	t_socket socket;
 	t_socket *sockets;
 	//Packet buf ? + len
 	void *buf;
-	const struct sockaddr dest_addr;
+	struct sockaddr dest_addr;
 	socklen_t addrlen;
 	int send_flags;
 	int rec_flags;

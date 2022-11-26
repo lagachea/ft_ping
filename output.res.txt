@@ -1,0 +1,26 @@
+
+flags = 3
+family = 2
+IPV4
+
+
+socktype = 1
+protocol = 6
+addlen = 16
+canon name = 9.9.9.9
+
+socktype = 2
+protocol = 17
+addlen = 16
+canon name = (null)
+
+socktype = 3
+protocol = 0
+addlen = 16
+canon name = (null)
+
+
+asked for socket with IPV4 = 2
+SOCK_STREAM=1
+protocole=0
+got sockfd 3 
