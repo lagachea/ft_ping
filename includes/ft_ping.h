@@ -12,6 +12,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#define FAILURE -1
+#define SUCCESS 0
+
 struct s_icmp {
   unsigned int type : 8;
   unsigned int code : 8;

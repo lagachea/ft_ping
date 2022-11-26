@@ -1,6 +1,9 @@
 #include "ft_ping.h"
 #include "libft.h"
+#include <errno.h>
 #include <netdb.h>
+#include <netinet/in.h>
+#include <string.h>
 
 uid_t getuid(void);
 pid_t getpid(void);
@@ -88,31 +91,47 @@ const char* getSocketName(int value) {
 
 // /etc/protocols
 //
-void printSocketInfo(t_socket *sckt) {
-	printf("got sockfd %d \n", sckt->sockfd);
-	printf("got family |%s| %d \n", getFamilyName(sckt->family), sckt->family);
-	printf("got socket type |%s| %d \n", getSocketName(sckt->socktype), sckt->socktype);
-	printf("got protocol |%s| %d \n", getprotobynumber(sckt->protocol)->p_name, sckt->protocol);
-	printf("+++socket\n");
+void printSocket(int family, int socktype, int protocol) {
+	const char *fname;
+	const char *sname;
+	struct protoent *ptcl;
+	char *pname = NULL;
+
+	fname = getFamilyName(family);
+	sname = getSocketName(socktype);
+	ptcl = getprotobynumber(protocol);
+	if (ptcl != NULL) {
+		pname = ptcl->p_name;
+	}
+	printf("socket with:\n");
+	printf("family |%s| %d \n", fname, family);
+	printf("socket type |%s| %d \n", sname, socktype);
+	printf("protocol |%s| %d \n", pname, protocol);
+}
+void printTSocket(t_socket *sckt) {
+	printSocket(sckt->family, sckt->socktype, sckt->protocol);
+	printf("sockfd |%d|\n", sckt->sockfd);
 }
 
 int getSocketFrom(t_socket *sckt, t_socket data)
 {
+	int family = data.family;
+	int socktype = data.socktype;
+	int protocol = data.protocol;
 	printf("+++socket\n");
-	sckt->protocol = data.protocol;
-	sckt->socktype = data.socktype;
-	sckt->family = data.family;
+	sckt->family = family;
+	sckt->socktype = socktype;
+	sckt->protocol = protocol;
 
-	printf("asked for socket with:\n");
-	printf("family |%s| %d \n", getFamilyName(sckt->family), sckt->family);
-	printf("socket type |%s| %d \n", getSocketName(sckt->socktype), sckt->socktype);
-	printf("protocol |%s| %d \n", getprotobynumber(sckt->protocol)->p_name, sckt->protocol);
-	sckt->sockfd = socket(sckt->family, sckt->socktype, sckt->protocol);
-	printSocketInfo(sckt);
+	printSocket(family, socktype, protocol);
+	sckt->sockfd = socket(family, socktype, protocol);
 	if (sckt->sockfd == -1) {
+		printf("\n====\nERROR:%s\n====\n", strerror(errno));
 		printf("Failed getting a socket\n");
+		return FAILURE;
 	}
-	return sckt->sockfd;
+	printTSocket(sckt);
+	return SUCCESS;
 }
 
 int getSimpleSocket(t_ftping *data)
@@ -124,7 +143,7 @@ int getSimpleSocket(t_ftping *data)
 
 	res = getSocketFrom(&(data->socket), data->socket);
 	if (res == -1) {
-		printf("ERROR IN GETSOCKET\n");
+		printf("GETSIMPLESOCKET\n");
 	}
 	return res;
 }
@@ -186,6 +205,10 @@ printf("IN\n");
 			.socktype = rsltptr->ai_socktype,
 			.protocol = rsltptr->ai_protocol
 		};
+		if (sckt.socktype == SOCK_RAW)
+		{
+			sckt.protocol = IPPROTO_RAW;
+		}
 
 		res = getSocketFrom(&(pingdata.socket), sckt);
 		if (res == -1) {
