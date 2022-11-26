@@ -90,9 +90,9 @@ const char* getSocketName(int value) {
 //
 void printSocketInfo(t_socket *sckt) {
 	printf("got sockfd %d \n", sckt->sockfd);
-	printf("got family %s %d \n", getFamilyName(sckt->family), sckt->family);
-	printf("got socket type %s %d \n", getSocketName(sckt->socktype), sckt->sockfd);
-	printf("got protocol %s %d \n", getprotobynumber(sckt->protocol)->p_name, sckt->protocol);
+	printf("got family |%s| %d \n", getFamilyName(sckt->family), sckt->family);
+	printf("got socket type |%s| %d \n", getSocketName(sckt->socktype), sckt->sockfd);
+	printf("got protocol |%s| %d \n", getprotobynumber(sckt->protocol)->p_name, sckt->protocol);
 	printf("+++socket\n");
 }
 
@@ -104,9 +104,9 @@ int getSocketFrom(t_socket *sckt, t_socket data)
 	sckt->family = data.family;
 
 	printf("asked for socket with:\n");
-	printf("family %s %d \n", getFamilyName(sckt->family), sckt->family);
-	printf("socket type %s %d \n", getSocketName(sckt->socktype), sckt->sockfd);
-	printf("protocol %s %d \n", getprotobynumber(sckt->protocol)->p_name, sckt->protocol);
+	printf("family |%s| %d \n", getFamilyName(sckt->family), sckt->family);
+	printf("socket type |%s| %d \n", getSocketName(sckt->socktype), sckt->sockfd);
+	printf("protocol |%s| %d \n", getprotobynumber(sckt->protocol)->p_name, sckt->protocol);
 	sckt->sockfd = socket(sckt->family, sckt->socktype, sckt->protocol);
 	printSocketInfo(sckt);
 	if (sckt->sockfd == -1) {
@@ -192,9 +192,11 @@ printf("IN\n");
 			freeaddrinfo(pingdata.results);
 			exit(1);
 		}
+		// Do something with socket
 		rsltptr = rsltptr->ai_next;
 		printf("===AI END\n\n");
 	}
+	printf("list end===\n");
 	freeaddrinfo(pingdata.results);
 	pingdata.results = NULL;
 
