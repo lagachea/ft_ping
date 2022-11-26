@@ -40,6 +40,9 @@ out/%.o: srcs/%.c
 json:
 	bear -- make re
 
+test: all
+	./ft_ping
+
 clean:
 	$(RM) -rf out
 	make -s -C $(LIBDIR) clean
