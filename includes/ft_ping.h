@@ -53,6 +53,7 @@ typedef struct s_ftping {
 	struct msghdr msg;
 } t_ftping;
 // getpid getuid;
+t_ftping *g_pingdata;
 
 uid_t getuid(void);
 pid_t getpid(void);
