@@ -41,7 +41,12 @@ json:
 	bear -- make re
 
 test: all
+	python3 test.py
 	./ft_ping
+
+sudotest: all
+	sudo python3 test.py
+	sudo ./ft_ping
 
 clean:
 	$(RM) -rf out
