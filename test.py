@@ -2,9 +2,13 @@ import socket
 import os
 
 pid = os.getpid()
-addrs = ["9.9.9.9","www.42.fr","google.com"]
-addr_infos = [socket.getaddrinfo(addr, "") for addr in addrs]
-print(addr_infos)
+uid = os.getuid()
+if uid != 0:
+    print('Cannot use raw socket when not root')
+    exit(1);
+# addrs = ["9.9.9.9","www.42.fr","google.com"]
+# addr_infos = [socket.getaddrinfo(addr, "") for addr in addrs]
+# print(addr_infos)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
 s.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
@@ -19,4 +23,4 @@ icmp_header = b'\x08\x00\xe5\xca' # Type of message, Code | Checksum
 icmp_header += b'\x12\x34\x00\x01' # Identifier | Sequence Number
 
 packet = ip_header + icmp_header
-# s.sendto(packet, ())
+s.sendto(packet, ('8.8.8.8', 0))
