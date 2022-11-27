@@ -16,12 +16,12 @@
 #define SUCCESS 0
 
 struct s_icmp {
-  unsigned int type : 8;
-  unsigned int code : 8;
-  unsigned int checksum : 16;
-  unsigned int identifier : 16;
-  unsigned int sequence_number : 16;
-  unsigned int playload : 32;
+  u_char Type;
+  u_char Code;
+  u_short Checksum;
+  u_short Identifier;
+  u_short Sequence_number;
+  // u_short Playload;
 };
 typedef struct s_icmp t_icmp;
 
