@@ -13,10 +13,11 @@ if uid != 0:
 s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
 s.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
 
+src_addr = socket.inet_pton(socket.AF_INET, "172.20.76.6")
 ip_header = b'\x45\x00\x00\x1c' # Version, IHL, Type of Service | Total Length
 ip_header += b'\xab\xcd\x00\x00' # Identification | Flags, Fragment Offset
 ip_header += b'\x40\x01\x6b\xd8' # TTL, Protocol | Header Checksum
-ip_header += b'\xc0\xa8\x92\x83' # Source Address
+ip_header += src_addr # Source Address
 ip_header += b'\x08\x08\x08\x08' # Destination Address
 
 icmp_header = b'\x08\x00\xe5\xca' # Type of message, Code | Checksum

@@ -4,6 +4,7 @@
 #include <netdb.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 uid_t getuid(void);
@@ -128,16 +129,23 @@ int getSocketFrom(t_socket *sckt, t_socket data)
 	sckt->protocol = protocol;
 	if (sckt->socktype == SOCK_RAW)
 	{
+		if (sckt->protocol == IPPROTO_IP) {
+			printf("switch from IP TO ICMP for %s\n", getSocketName(SOCK_RAW));
+			sckt->protocol = IPPROTO_ICMP;
+		}
 		if (g_pingdata->uid != 0) {
-			printf("no raw without sudo switching to DGRAM\n");
+			printf("no raw socket without sudo switching to DGRAM\n");
 			sckt->socktype = SOCK_DGRAM;
 		}
-		printf("shall we try as root to get a %s\n", getSocketName(SOCK_RAW));
+		else
+		{
+			printf("shall we try as root to get a %s\n", getSocketName(SOCK_RAW));
+		}
 	}
 
 	printf("ask for ");
-	printSocket(family, socktype, protocol);
-	sckt->sockfd = socket(family, socktype, protocol);
+	printSocket(sckt->family, sckt->socktype, sckt->protocol);
+	sckt->sockfd = socket(sckt->family, sckt->socktype, sckt->protocol);
 	if (sckt->sockfd == -1) {
 		printf("\n====\nERROR:%s\n====\n", strerror(errno));
 		printf("Failed getting a socket\n");
@@ -190,8 +198,8 @@ printf("IN\n");
 	t_ftping pingdata;
 	g_pingdata = &pingdata;
 	int res;
-	char node[40] = "ms-17";
-	// "9.9.9.9;www.42.fr;google.com";
+	char node[40] = "192.168.1.1";
+	// "9.9.9.9;www.42.fr;ms-17;google.com";
 	char service[] = "";
 	struct addrinfo *rsltptr;
 	t_socket sckt;
