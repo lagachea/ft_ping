@@ -111,6 +111,17 @@ void printSocket(int family, int socktype, int protocol) {
 	printf("protocol |%s| %d \n", pname, protocol);
 }
 void printTSocket(t_socket *sckt) {
+	struct sockaddr addr;
+	socklen_t len;
+	int res;
+
+	len = sizeof(addr);
+	res = getsockname(sckt->sockfd, &addr, &len);
+	if (res == -1)
+	{
+		printf("\n====\nERROR:%s\n====\n", strerror(errno));
+	}
+	printf("GOT SOCK %s |%s|\n",getFamilyName(addr.sa_family), addr.sa_data);
 	printSocket(sckt->family, sckt->socktype, sckt->protocol);
 	printf("sockfd |%d|\n", sckt->sockfd);
 }

@@ -24,4 +24,6 @@ icmp_header = b'\x08\x00\xe5\xca' # Type of message, Code | Checksum
 icmp_header += b'\x12\x34\x00\x01' # Identifier | Sequence Number
 
 packet = ip_header + icmp_header
-s.sendto(packet, ('8.8.8.8', 0))
+# s.sendto(packet, ('8.8.8.8', 0))
+s.connect(('8.8.8.8',0))
+print(s.getsockname())
