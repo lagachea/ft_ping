@@ -47,29 +47,28 @@ SOCK_STREAM
 const char* getFamilyName(int value) {
 #define NAME(ERR) case ERR: return #ERR;
     switch (value) {
-		NAME(AF_ALG       )
-		NAME(AF_APPLETALK )
-		NAME(AF_AX25      )
-		NAME(AF_BLUETOOTH )
-		NAME(AF_CAN       )
-		NAME(AF_IB        )
-		NAME(AF_INET      )
-		NAME(AF_INET6     )
-		NAME(AF_IPX       )
-		NAME(AF_KCM       )
-		NAME(AF_KEY       )
-		NAME(AF_LLC       )
-		// NAME(AF_LOCAL     ) local is 1 same as unix here
-		NAME(AF_UNIX      )
-		NAME(AF_MPLS      )
-		NAME(AF_NETLINK   )
-		NAME(AF_PACKET    )
-		NAME(AF_PPPOX     )
-		NAME(AF_RDS       )
-		NAME(AF_TIPC      )
-		NAME(AF_VSOCK     )
-		NAME(AF_X25       )
-		NAME(AF_XDP       )
+		NAME(AF_ALG       );
+		NAME(AF_APPLETALK );
+		NAME(AF_AX25      );
+		NAME(AF_BLUETOOTH );
+		NAME(AF_CAN       );
+		NAME(AF_IB        );
+		NAME(AF_INET      );
+		NAME(AF_INET6     );
+		NAME(AF_IPX       );
+		NAME(AF_KCM       );
+		NAME(AF_KEY       );
+		NAME(AF_LLC       );
+		NAME(AF_UNIX      );
+		NAME(AF_MPLS      );
+		NAME(AF_NETLINK   );
+		NAME(AF_PACKET    );
+		NAME(AF_PPPOX     );
+		NAME(AF_RDS       );
+		NAME(AF_TIPC      );
+		NAME(AF_VSOCK     );
+		NAME(AF_X25       );
+		NAME(AF_XDP       );
 	}
     return "unknown";
 #undef NAME
@@ -78,14 +77,14 @@ const char* getFamilyName(int value) {
 const char* getSocketName(int value) {
 #define NAME(ERR) case ERR: return #ERR;
     switch (value) {
-		NAME(SOCK_CLOEXEC    )
-		NAME(SOCK_DGRAM      )
-		NAME(SOCK_NONBLOCK   )
-		NAME(SOCK_PACKET     )
-		NAME(SOCK_RAW        )
-		NAME(SOCK_RDM        )
-		NAME(SOCK_SEQPACKET  )
-		NAME(SOCK_STREAM     )
+		NAME(SOCK_CLOEXEC    );
+		NAME(SOCK_DGRAM      );
+		NAME(SOCK_NONBLOCK   );
+		NAME(SOCK_PACKET     );
+		NAME(SOCK_RAW        );
+		NAME(SOCK_RDM        );
+		NAME(SOCK_SEQPACKET  );
+		NAME(SOCK_STREAM     );
     }
     return "unknown";
 #undef NAME
