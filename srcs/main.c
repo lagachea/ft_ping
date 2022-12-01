@@ -1,5 +1,6 @@
 #include "ft_ping.h"
 #include "libft.h"
+#include <asm-generic/socket.h>
 #include <errno.h>
 #include <netdb.h>
 #include <netinet/in.h>
@@ -176,6 +177,7 @@ int getSimpleSocket()
 
 	printSocket(g_pingdata->socket.family, g_pingdata->socket.socktype, g_pingdata->socket.protocol);
 	res = getSocketFrom(&(g_pingdata->socket), g_pingdata->socket);
+	setsockopt(g_pingdata->socket.sockfd, SOL_SOCKET, IP_HDRINCL);
 	if (res == -1) {
 		printf("Failed getting a socket\n");
 		exit(1);

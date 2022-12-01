@@ -15,8 +15,9 @@ if uid != 0:
 # print(addr_infos)
 
 sock = sckt.socket(family, socktype, protocol)
-print(sock)
-sock.setsockopt(sckt.IPPROTO_IP, sckt.IP_HDRINCL, 1)
+# print(sock)
+sock.setsockopt(sckt.IPPROTO_IP, sckt.IP_HDRINCL, 0)
+# print(sock)
 
 src_addr = sckt.inet_pton(sckt.AF_INET, "172.20.76.6")
 ip_header = b'\x45\x00\x00\x1c' # Version, IHL, Type of Service | Total Length
@@ -25,10 +26,13 @@ ip_header += b'\x40\x01\x6b\xd8' # TTL, Protocol | Header Checksum
 ip_header += src_addr # Source Address
 ip_header += b'\x08\x08\x08\x08' # Destination Address
 
+# No need for source address if we set IP_HDRINCL to ...
+
 icmp_header = b'\x08\x00\xe5\xca' # Type of message, Code | Checksum
 icmp_header += b'\x12\x34\x00\x01' # Identifier | Sequence Number
 
 packet = ip_header + icmp_header
+packet = icmp_header
 
 # This sends our packet to google '8.8.8.8'
 sock.sendto(packet, ('8.8.8.8', 0))
