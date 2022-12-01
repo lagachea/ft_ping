@@ -1,1 +1,1758 @@
-[]
+[
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-I",
+      "includes",
+      "-I",
+      "libft/includes",
+      "-o",
+      "out/main.o",
+      "-c",
+      "srcs/main.c"
+    ],
+    "directory": "/home/resu/ping",
+    "file": "/home/resu/ping/srcs/main.c",
+    "output": "/home/resu/ping/out/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_memset.o",
+      "-c",
+      "srcs/lib/ft_memset.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_memset.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_memset.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_memcpy.o",
+      "-c",
+      "srcs/lib/ft_memcpy.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_memcpy.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_memcpy.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_memccpy.o",
+      "-c",
+      "srcs/lib/ft_memccpy.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_memccpy.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_memccpy.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_memmove.o",
+      "-c",
+      "srcs/lib/ft_memmove.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_memmove.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_memmove.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_memchr.o",
+      "-c",
+      "srcs/lib/ft_memchr.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_memchr.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_memchr.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_memcmp.o",
+      "-c",
+      "srcs/lib/ft_memcmp.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_memcmp.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_memcmp.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_memalloc.o",
+      "-c",
+      "srcs/lib/ft_memalloc.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_memalloc.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_memalloc.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_memjoin.o",
+      "-c",
+      "srcs/lib/ft_memjoin.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_memjoin.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_memjoin.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_memdel.o",
+      "-c",
+      "srcs/lib/ft_memdel.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_memdel.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_memdel.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_bzero.o",
+      "-c",
+      "srcs/lib/ft_bzero.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_bzero.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_bzero.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_free_arr.o",
+      "-c",
+      "srcs/lib/ft_free_arr.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_free_arr.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_free_arr.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strlen.o",
+      "-c",
+      "srcs/lib/ft_strlen.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strlen.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strlen.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strdup.o",
+      "-c",
+      "srcs/lib/ft_strdup.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strdup.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strdup.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strcpy.o",
+      "-c",
+      "srcs/lib/ft_strcpy.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strcpy.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strcpy.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strncpy.o",
+      "-c",
+      "srcs/lib/ft_strncpy.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strncpy.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strncpy.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strcat.o",
+      "-c",
+      "srcs/lib/ft_strcat.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strcat.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strcat.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strncat.o",
+      "-c",
+      "srcs/lib/ft_strncat.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strncat.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strncat.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strlcat.o",
+      "-c",
+      "srcs/lib/ft_strlcat.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strlcat.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strlcat.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strchr.o",
+      "-c",
+      "srcs/lib/ft_strchr.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strchr.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strchr.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strrchr.o",
+      "-c",
+      "srcs/lib/ft_strrchr.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strrchr.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strrchr.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strstr.o",
+      "-c",
+      "srcs/lib/ft_strstr.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strstr.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strstr.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strnstr.o",
+      "-c",
+      "srcs/lib/ft_strnstr.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strnstr.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strnstr.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strcmp.o",
+      "-c",
+      "srcs/lib/ft_strcmp.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strcmp.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strcmp.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strncmp.o",
+      "-c",
+      "srcs/lib/ft_strncmp.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strncmp.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strncmp.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strnew.o",
+      "-c",
+      "srcs/lib/ft_strnew.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strnew.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strnew.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strdel.o",
+      "-c",
+      "srcs/lib/ft_strdel.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strdel.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strdel.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strclr.o",
+      "-c",
+      "srcs/lib/ft_strclr.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strclr.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strclr.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_striter.o",
+      "-c",
+      "srcs/lib/ft_striter.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_striter.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_striter.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_striteri.o",
+      "-c",
+      "srcs/lib/ft_striteri.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_striteri.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_striteri.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strmap.o",
+      "-c",
+      "srcs/lib/ft_strmap.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strmap.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strmap.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strmapi.o",
+      "-c",
+      "srcs/lib/ft_strmapi.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strmapi.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strmapi.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strequ.o",
+      "-c",
+      "srcs/lib/ft_strequ.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strequ.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strequ.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strnequ.o",
+      "-c",
+      "srcs/lib/ft_strnequ.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strnequ.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strnequ.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strsub.o",
+      "-c",
+      "srcs/lib/ft_strsub.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strsub.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strsub.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strjoin.o",
+      "-c",
+      "srcs/lib/ft_strjoin.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strjoin.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strjoin.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strjoinfree.o",
+      "-c",
+      "srcs/lib/ft_strjoinfree.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strjoinfree.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strjoinfree.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strtrim.o",
+      "-c",
+      "srcs/lib/ft_strtrim.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strtrim.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strtrim.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_strsplit.o",
+      "-c",
+      "srcs/lib/ft_strsplit.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_strsplit.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_strsplit.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_ischarset.o",
+      "-c",
+      "srcs/lib/ft_ischarset.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_ischarset.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_ischarset.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_occurence_of.o",
+      "-c",
+      "srcs/lib/ft_occurence_of.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_occurence_of.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_occurence_of.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_isprint.o",
+      "-c",
+      "srcs/lib/ft_isprint.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_isprint.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_isprint.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_isascii.o",
+      "-c",
+      "srcs/lib/ft_isascii.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_isascii.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_isascii.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_isdigit.o",
+      "-c",
+      "srcs/lib/ft_isdigit.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_isdigit.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_isdigit.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_isalpha.o",
+      "-c",
+      "srcs/lib/ft_isalpha.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_isalpha.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_isalpha.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_isalnum.o",
+      "-c",
+      "srcs/lib/ft_isalnum.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_isalnum.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_isalnum.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_atoi.o",
+      "-c",
+      "srcs/lib/ft_atoi.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_atoi.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_atoi.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_itoa.o",
+      "-c",
+      "srcs/lib/ft_itoa.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_itoa.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_itoa.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_itoa_base.o",
+      "-c",
+      "srcs/lib/ft_itoa_base.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_itoa_base.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_itoa_base.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_tolower.o",
+      "-c",
+      "srcs/lib/ft_tolower.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_tolower.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_tolower.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_toupper.o",
+      "-c",
+      "srcs/lib/ft_toupper.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_toupper.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_toupper.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_atol.o",
+      "-c",
+      "srcs/lib/ft_atol.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_atol.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_atol.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_putchar.o",
+      "-c",
+      "srcs/lib/ft_putchar.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_putchar.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_putchar.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_putstr.o",
+      "-c",
+      "srcs/lib/ft_putstr.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_putstr.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_putstr.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_putendl.o",
+      "-c",
+      "srcs/lib/ft_putendl.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_putendl.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_putendl.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_putnbr.o",
+      "-c",
+      "srcs/lib/ft_putnbr.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_putnbr.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_putnbr.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_putchar_fd.o",
+      "-c",
+      "srcs/lib/ft_putchar_fd.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_putchar_fd.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_putchar_fd.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_putstr_fd.o",
+      "-c",
+      "srcs/lib/ft_putstr_fd.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_putstr_fd.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_putstr_fd.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_putendl_fd.o",
+      "-c",
+      "srcs/lib/ft_putendl_fd.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_putendl_fd.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_putendl_fd.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_putnbr_fd.o",
+      "-c",
+      "srcs/lib/ft_putnbr_fd.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_putnbr_fd.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_putnbr_fd.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_lstnew.o",
+      "-c",
+      "srcs/lib/ft_lstnew.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_lstnew.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_lstnew.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_lstdelone.o",
+      "-c",
+      "srcs/lib/ft_lstdelone.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_lstdelone.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_lstdelone.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_lstdel.o",
+      "-c",
+      "srcs/lib/ft_lstdel.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_lstdel.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_lstdel.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_lstadd.o",
+      "-c",
+      "srcs/lib/ft_lstadd.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_lstadd.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_lstadd.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_lstiter.o",
+      "-c",
+      "srcs/lib/ft_lstiter.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_lstiter.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_lstiter.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_lstmap.o",
+      "-c",
+      "srcs/lib/ft_lstmap.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_lstmap.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_lstmap.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_2lstadd_first.o",
+      "-c",
+      "srcs/lib/ft_2lstadd_first.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_2lstadd_first.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_2lstadd_first.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_2lstadd_last.o",
+      "-c",
+      "srcs/lib/ft_2lstadd_last.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_2lstadd_last.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_2lstadd_last.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_2lstdel.o",
+      "-c",
+      "srcs/lib/ft_2lstdel.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_2lstdel.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_2lstdel.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_2lstdelone.o",
+      "-c",
+      "srcs/lib/ft_2lstdelone.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_2lstdelone.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_2lstdelone.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_2lstdelnext.o",
+      "-c",
+      "srcs/lib/ft_2lstdelnext.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_2lstdelnext.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_2lstdelnext.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/lib/ft_2lstnew.o",
+      "-c",
+      "srcs/lib/ft_2lstnew.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/lib/ft_2lstnew.c",
+    "output": "/home/resu/ping/libft/obj/lib/ft_2lstnew.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/gnl/get_next_line.o",
+      "-c",
+      "srcs/gnl/get_next_line.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/gnl/get_next_line.c",
+    "output": "/home/resu/ping/libft/obj/gnl/get_next_line.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/ft_printf.o",
+      "-c",
+      "srcs/printf/ft_printf.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/ft_printf.c",
+    "output": "/home/resu/ping/libft/obj/printf/ft_printf.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/ft_dprintf.o",
+      "-c",
+      "srcs/printf/ft_dprintf.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/ft_dprintf.c",
+    "output": "/home/resu/ping/libft/obj/printf/ft_dprintf.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/pwidth.o",
+      "-c",
+      "srcs/printf/pwidth.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/pwidth.c",
+    "output": "/home/resu/ping/libft/obj/printf/pwidth.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/pflags.o",
+      "-c",
+      "srcs/printf/pflags.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/pflags.c",
+    "output": "/home/resu/ping/libft/obj/printf/pflags.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/plenmodifier.o",
+      "-c",
+      "srcs/printf/plenmodifier.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/plenmodifier.c",
+    "output": "/home/resu/ping/libft/obj/printf/plenmodifier.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/pprecision.o",
+      "-c",
+      "srcs/printf/pprecision.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/pprecision.c",
+    "output": "/home/resu/ping/libft/obj/printf/pprecision.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/func_selector.o",
+      "-c",
+      "srcs/printf/func_selector.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/func_selector.c",
+    "output": "/home/resu/ping/libft/obj/printf/func_selector.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/global_tools.o",
+      "-c",
+      "srcs/printf/global_tools.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/global_tools.c",
+    "output": "/home/resu/ping/libft/obj/printf/global_tools.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/int.o",
+      "-c",
+      "srcs/printf/int.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/int.c",
+    "output": "/home/resu/ping/libft/obj/printf/int.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/int_tools.o",
+      "-c",
+      "srcs/printf/int_tools.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/int_tools.c",
+    "output": "/home/resu/ping/libft/obj/printf/int_tools.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/unsigned.o",
+      "-c",
+      "srcs/printf/unsigned.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/unsigned.c",
+    "output": "/home/resu/ping/libft/obj/printf/unsigned.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/unsigned_tools.o",
+      "-c",
+      "srcs/printf/unsigned_tools.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/unsigned_tools.c",
+    "output": "/home/resu/ping/libft/obj/printf/unsigned_tools.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/octal.o",
+      "-c",
+      "srcs/printf/octal.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/octal.c",
+    "output": "/home/resu/ping/libft/obj/printf/octal.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/octal_tools.o",
+      "-c",
+      "srcs/printf/octal_tools.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/octal_tools.c",
+    "output": "/home/resu/ping/libft/obj/printf/octal_tools.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/percent.o",
+      "-c",
+      "srcs/printf/percent.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/percent.c",
+    "output": "/home/resu/ping/libft/obj/printf/percent.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/char.o",
+      "-c",
+      "srcs/printf/char.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/char.c",
+    "output": "/home/resu/ping/libft/obj/printf/char.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/hexa.o",
+      "-c",
+      "srcs/printf/hexa.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/hexa.c",
+    "output": "/home/resu/ping/libft/obj/printf/hexa.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/hexa_tools.o",
+      "-c",
+      "srcs/printf/hexa_tools.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/hexa_tools.c",
+    "output": "/home/resu/ping/libft/obj/printf/hexa_tools.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/hexa_upper.o",
+      "-c",
+      "srcs/printf/hexa_upper.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/hexa_upper.c",
+    "output": "/home/resu/ping/libft/obj/printf/hexa_upper.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/string.o",
+      "-c",
+      "srcs/printf/string.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/string.c",
+    "output": "/home/resu/ping/libft/obj/printf/string.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/float.o",
+      "-c",
+      "srcs/printf/float.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/float.c",
+    "output": "/home/resu/ping/libft/obj/printf/float.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/float_tools.o",
+      "-c",
+      "srcs/printf/float_tools.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/float_tools.c",
+    "output": "/home/resu/ping/libft/obj/printf/float_tools.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/double.o",
+      "-c",
+      "srcs/printf/double.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/double.c",
+    "output": "/home/resu/ping/libft/obj/printf/double.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/double_tools.o",
+      "-c",
+      "srcs/printf/double_tools.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/double_tools.c",
+    "output": "/home/resu/ping/libft/obj/printf/double_tools.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/ldouble.o",
+      "-c",
+      "srcs/printf/ldouble.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/ldouble.c",
+    "output": "/home/resu/ping/libft/obj/printf/ldouble.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/ldouble_tools.o",
+      "-c",
+      "srcs/printf/ldouble_tools.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/ldouble_tools.c",
+    "output": "/home/resu/ping/libft/obj/printf/ldouble_tools.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/address_tools.o",
+      "-c",
+      "srcs/printf/address_tools.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/address_tools.c",
+    "output": "/home/resu/ping/libft/obj/printf/address_tools.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/address.o",
+      "-c",
+      "srcs/printf/address.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/address.c",
+    "output": "/home/resu/ping/libft/obj/printf/address.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/special.o",
+      "-c",
+      "srcs/printf/special.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/special.c",
+    "output": "/home/resu/ping/libft/obj/printf/special.o"
+  },
+  {
+    "arguments": [
+      "/usr/lib/llvm-11/bin/clang",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-I",
+      "includes",
+      "-o",
+      "obj/printf/special_tools.o",
+      "-c",
+      "srcs/printf/special_tools.c"
+    ],
+    "directory": "/home/resu/ping/libft",
+    "file": "/home/resu/ping/libft/srcs/printf/special_tools.c",
+    "output": "/home/resu/ping/libft/obj/printf/special_tools.o"
+  }
+]
