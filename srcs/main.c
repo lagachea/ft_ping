@@ -75,6 +75,10 @@ const char* getFamilyName(int value) {
 #undef NAME
 }
 
+void getPacket() {
+	// Fill g_pingdata->icmp_header
+}
+
 const char* getSocketName(int value) {
 #define NAME(ERR) case ERR: return #ERR;
     switch (value) {
@@ -171,13 +175,16 @@ int getSocketFrom(t_socket *sckt, t_socket data)
 int getSimpleSocket()
 {
 	int res;
+	int hdrincl;
+
+	hdrincl = 0;
 	g_pingdata->socket.family = AF_INET;
 	g_pingdata->socket.socktype = SOCK_RAW;
 	g_pingdata->socket.protocol = IPPROTO_ICMP;
 
 	printSocket(g_pingdata->socket.family, g_pingdata->socket.socktype, g_pingdata->socket.protocol);
 	res = getSocketFrom(&(g_pingdata->socket), g_pingdata->socket);
-	setsockopt(g_pingdata->socket.sockfd, SOL_SOCKET, IP_HDRINCL);
+	setsockopt(g_pingdata->socket.sockfd, SOL_SOCKET, IP_HDRINCL, &hdrincl, sizeof(hdrincl));
 	if (res == -1) {
 		printf("Failed getting a socket\n");
 		exit(1);
@@ -210,11 +217,12 @@ printf("IN\n");
 	t_ftping pingdata;
 	g_pingdata = &pingdata;
 	int res;
-	char node[40] = "192.168.1.1";
-	// "9.9.9.9;www.42.fr;ms-17;google.com";
+	char node[40] = "google.com";
+	// "9.9.9.9;www.42.fr;192.168.1.1;ms-17;google.com";
 	char service[] = "";
-	struct addrinfo *rsltptr;
-	t_socket sckt;
+	// struct addrinfo *rsltptr;
+	// t_socket sckt;
+	struct icmp *packet;
 
 	ft_memset(&pingdata, 0, sizeof(pingdata));
 	g_pingdata->node = &(node[0]);
@@ -238,74 +246,23 @@ printf("IN\n");
 	g_pingdata->hints.ai_addr = NULL;
 	g_pingdata->hints.ai_next = NULL;
 
-	getSimpleSocket();
-	close(g_pingdata->socket.sockfd);
-	printf("closed sockfd %d\n",g_pingdata->socket.sockfd);
+	packet = NULL;
 
 	res = getaddrinfo(g_pingdata->node, g_pingdata->service, &(g_pingdata->hints), &(g_pingdata->results));
+	// set dest addr and addrlen
 	if (res < 0) {
 		printf("%s\n", gai_strerror(res));
 		return res;
 	}
-	rsltptr = g_pingdata->results;
-	printf("list==\n");
-	while (rsltptr != NULL)
-	{
-		printf("===AI BEGIN\n");
-		getSockAddr(rsltptr, g_pingdata);
-
-		sckt = (t_socket){
-			.family = rsltptr->ai_family,
-			.socktype = rsltptr->ai_socktype,
-			.protocol = rsltptr->ai_protocol
-		};
-		// else {
-			res = getSocketFrom(&(g_pingdata->socket), sckt);
-			if (res == -1) {
-				freeaddrinfo(g_pingdata->results);
-				exit(1);
-			}
-			// Do something with socket
-			close(sckt.sockfd);
-			printf("close sockfd %d\n", sckt.sockfd);
-		// }
-		rsltptr = rsltptr->ai_next;
-		printf("===AI END\n\n");
-	}
-	printf("list end===\n");
 	freeaddrinfo(g_pingdata->results);
 	g_pingdata->results = NULL;
+
+	getSimpleSocket();
+	getPacket();
+	sendto(g_pingdata->socket.sockfd, packet, 8, 0, &g_pingdata->dest_addr, sizeof(g_pingdata->addrlen));
+	close(g_pingdata->socket.sockfd);
+	printf("closed sockfd %d\n",g_pingdata->socket.sockfd);
 
 printf("OUT\n");
 	return 0;
 }
-		// typedef void (*sighandler_t)(int);
-		// sighandler_t signal(int signum, sighandler_t handler);
-		// unsigned int alarm(unsigned int seconds);
-		//
-
-		// ft_memset(&packet, 0, sizeof(packet));
-		// // fills packet
-		// packet.type = 8;
-		// packet.code = 0;
-		// packet.checksum = 0;
-		// packet.identifier = 0;
-		// packet.sequence_number = 0;
-		// packet.playload = 0;
-		// if (res < 0) {
-		// 	printf("FAIL set sock option |%d|%d|\n", res, errno);
-		// 	exit(1);
-		// }
-		
-		// res = sendto(pingdata.socket.sockfd, pingdata.buf, 0, pingdata.send_flags, &(pingdata.dest_addr), pingdata.addrlen);
-		// if (res < 0) {
-		// 	printf("FAIL send to |%d|%d|\n", res, errno);
-		// 	exit(1);
-		// }
-		//
-		// res = recvmsg(pingdata.socket.sockfd, &(pingdata.msg), pingdata.rec_flags);
-		// if (res < 0) {
-		// 	printf("FAIL RECV |%d|%d|\n", res, errno);
-		// 	exit(1);
-		// }
-
