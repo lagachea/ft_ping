@@ -1,59 +1,57 @@
-#include <arpa/inet.h>
-#include <bits/types/struct_timeval.h>
-#include <errno.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <signal.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/socket.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <unistd.h>
+#ifndef FT_PING_H
+# define FT_PING_H
 
-#define FAILURE -1
-#define SUCCESS 0
+# include <arpa/inet.h>
+# include <asm-generic/socket.h>
+# include <bits/types/struct_timeval.h>
+# include <errno.h>
+# include <netdb.h>
+# include <netinet/in.h>
+# include <netinet/ip_icmp.h>
+# include <signal.h>
+# include <stdarg.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/socket.h>
+# include <sys/time.h>
+# include <sys/types.h>
+# include <unistd.h>
 
-struct s_icmp {
-  u_char Type;
-  u_char Code;
-  u_short Checksum;
-  u_short Identifier;
-  u_short Sequence_number;
-  // u_short Playload;
-};
-typedef struct s_icmp t_icmp;
+# define FAILURE -1
+# define SUCCESS 0
+# define ICMP_ADDR_LEN 8
 
 typedef struct s_socket t_socket;
 struct s_socket {
-	int family;
-	int socktype;
-	int protocol;
-	int sockfd;
-	t_socket *next;
+  int family;
+  int socktype;
+  int protocol;
+  int sockfd;
+  t_socket *next;
 };
 
 typedef struct s_ftping {
-	uid_t uid;
-	pid_t pid;
-	char *node;
-	char *service;
-	struct addrinfo hints;
-	struct addrinfo *results;
-	int address;
-	t_socket socket;
-	t_socket *sockets;
-	//Packet buf ? + len
-	void *buf;
-	struct sockaddr dest_addr;
-	socklen_t addrlen;
-	int send_flags;
-	int rec_flags;
-	struct msghdr msg;
+  uid_t uid;
+  pid_t pid;
+  unsigned int seq;
+  char *node;
+  char *service;
+  int address;
+  struct addrinfo hints;
+  struct addrinfo *results;
+  struct sockaddr dest_addr;
+  socklen_t addrlen;
+  t_socket socket;
+  // Packet buf ? + len
+  int send_flags;
+  struct icmp icmp;
+  // struct iphdr ipheader;
+  int rec_flags;
+  struct msghdr msg;
 } t_ftping;
 // getpid getuid;
-t_ftping *g_pingdata;
+extern t_ftping *g_ping;
 
 uid_t getuid(void);
 pid_t getpid(void);
@@ -130,3 +128,23 @@ int snprintf(char *str, size_t size, const char *format, ...);
 // int vdprintf(int fd, const char *format, va_list ap);
 // int vsprintf(char *str, const char *format, va_list ap);
 // int vsnprintf(char *str, size_t size, const char *format, va_list ap);
+//
+
+/* debug.c */
+const char *getFamilyName(int value);
+const char *getSocketName(int value);
+void printSocket(int family, int socktype, int protocol);
+void printTSocket(t_socket *sckt);
+
+/* socket.c */
+int getSocketFrom(t_socket *sckt, t_socket data);
+int getSimpleSocket();
+void getSockAddr(struct addrinfo *ptr, t_ftping *data);
+
+/* packet.c */
+void fillIcmp();
+
+/* address.c */
+void getAInfo();
+
+#endif

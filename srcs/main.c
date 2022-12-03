@@ -1,213 +1,36 @@
 #include "ft_ping.h"
 #include "libft.h"
-#include <asm-generic/socket.h>
-#include <errno.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <sys/types.h>
-#include <unistd.h>
 
-uid_t getuid(void);
-pid_t getpid(void);
+t_ftping *g_ping;
 
-int getaddrinfo(const char *node, const char *service,
-		const struct addrinfo *hints,
-		struct addrinfo **res);
-void freeaddrinfo(struct addrinfo *res);
-const char *gai_strerror(int errcode);
-
-const char *inet_ntop(int af, const void *src,
-		char *dst, socklen_t size);
-int inet_pton(int af, const char *src, void *dst);
-
-typedef void (*sighandler_t)(int);
-sighandler_t signal(int signum, sighandler_t handler);
-unsigned int alarm(unsigned int seconds);
-
-int socket(int domain, int type, int protocol);
-int setsockopt(int sockfd, int level, int optname,
-		const void *optval, socklen_t optlen);
-
-ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
-		const struct sockaddr *dest_addr, socklen_t addrlen);
-ssize_t recvmsg(int sockfd, struct msghdr *msg, int flags);
-int printf(const char *format, ...);
-
-int sockets[24] = {
-SOCK_CLOEXEC    ,
-SOCK_DGRAM      ,
-SOCK_NONBLOCK   ,
-SOCK_PACKET     ,
-SOCK_RAW        ,
-SOCK_RDM        ,
-SOCK_SEQPACKET  ,
-SOCK_STREAM     
-};
-
-const char* getFamilyName(int value) {
-#define NAME(ERR) case ERR: return #ERR;
-    switch (value) {
-		NAME(AF_ALG       );
-		NAME(AF_APPLETALK );
-		NAME(AF_AX25      );
-		NAME(AF_BLUETOOTH );
-		NAME(AF_CAN       );
-		NAME(AF_IB        );
-		NAME(AF_INET      );
-		NAME(AF_INET6     );
-		NAME(AF_IPX       );
-		NAME(AF_KCM       );
-		NAME(AF_KEY       );
-		NAME(AF_LLC       );
-		NAME(AF_UNIX      );
-		NAME(AF_MPLS      );
-		NAME(AF_NETLINK   );
-		NAME(AF_PACKET    );
-		NAME(AF_PPPOX     );
-		NAME(AF_RDS       );
-		NAME(AF_TIPC      );
-		NAME(AF_VSOCK     );
-		NAME(AF_X25       );
-		NAME(AF_XDP       );
-	}
-    return "unknown";
-#undef NAME
-}
-
-void getPacket() {
-	// Fill g_pingdata->icmp_header
-}
-
-const char* getSocketName(int value) {
-#define NAME(ERR) case ERR: return #ERR;
-    switch (value) {
-		NAME(SOCK_CLOEXEC    );
-		NAME(SOCK_DGRAM      );
-		NAME(SOCK_NONBLOCK   );
-		NAME(SOCK_PACKET     );
-		NAME(SOCK_RAW        );
-		NAME(SOCK_RDM        );
-		NAME(SOCK_SEQPACKET  );
-		NAME(SOCK_STREAM     );
-    }
-    return "unknown";
-#undef NAME
-}
-
-// /etc/protocols
-//
-void printSocket(int family, int socktype, int protocol) {
-	const char *fname;
-	const char *sname;
-	struct protoent *ptcl;
-	char *pname = NULL;
-
-	fname = getFamilyName(family);
-	sname = getSocketName(socktype);
-	ptcl = getprotobynumber(protocol);
-	if (ptcl != NULL) {
-		pname = ptcl->p_name;
-	}
-	printf("socket with:\n");
-	printf("family |%s| %d \n", fname, family);
-	printf("socket type |%s| %d \n", sname, socktype);
-	printf("protocol |%s| %d \n", pname, protocol);
-}
-void printTSocket(t_socket *sckt) {
-	struct sockaddr addr;
-	socklen_t len;
+void setup() {
 	int res;
+	g_ping->service = NULL;
+	g_ping->service = NULL;
 
-	len = sizeof(addr);
-	res = getsockname(sckt->sockfd, &addr, &len);
-	if (res == -1)
+	g_ping->uid = getuid();
+	if (g_ping->uid != 0)
 	{
-		printf("\n====\nERROR:%s\n====\n", strerror(errno));
+		res = setuid(0) != 0;
+		if (res)
+			exit(1);
 	}
-	printf("GOT SOCK %s |%s|\n",getFamilyName(addr.sa_family), addr.sa_data);
-	printSocket(sckt->family, sckt->socktype, sckt->protocol);
-	printf("sockfd |%d|\n", sckt->sockfd);
-}
+	g_ping->pid = getpid();
+	printf("PID=%10d | UID=%10d\n", g_ping->pid, g_ping->uid);
 
-int getSocketFrom(t_socket *sckt, t_socket data)
-{
-
+	printf("node => %s\n", g_ping->node);
+	printf("service => %s\n", g_ping->service);
+	printf("=====\n");
 
 
-	int family = data.family;
-	int socktype = data.socktype;
-	int protocol = data.protocol;
-	printf("+++socket\n");
-	sckt->family = family;
-	sckt->socktype = socktype;
-	sckt->protocol = protocol;
-	if (sckt->socktype == SOCK_RAW)
-	{
-		if (sckt->protocol == IPPROTO_IP) {
-			printf("switch from IP TO ICMP for %s\n", getSocketName(SOCK_RAW));
-			sckt->protocol = IPPROTO_ICMP;
-		}
-		if (g_pingdata->uid != 0) {
-			printf("no raw socket without sudo switching to DGRAM\n");
-			sckt->socktype = SOCK_DGRAM;
-		}
-		else
-		{
-			printf("shall we try as root to get a %s\n", getSocketName(SOCK_RAW));
-		}
-	}
-
-	printf("ask for ");
-	printSocket(sckt->family, sckt->socktype, sckt->protocol);
-	sckt->sockfd = socket(sckt->family, sckt->socktype, sckt->protocol);
-	if (sckt->sockfd == -1) {
-		printf("\n====\nERROR:%s\n====\n", strerror(errno));
-		printf("Failed getting a socket\n");
-		return FAILURE;
-	}
-	printf("got ");
-	printTSocket(sckt);
-	printf("---socket\n");
-	return SUCCESS;
-}
-
-int getSimpleSocket()
-{
-	int res;
-	int hdrincl;
-
-	hdrincl = 0;
-	g_pingdata->socket.family = AF_INET;
-	g_pingdata->socket.socktype = SOCK_RAW;
-	g_pingdata->socket.protocol = IPPROTO_ICMP;
-
-	printSocket(g_pingdata->socket.family, g_pingdata->socket.socktype, g_pingdata->socket.protocol);
-	res = getSocketFrom(&(g_pingdata->socket), g_pingdata->socket);
-	setsockopt(g_pingdata->socket.sockfd, SOL_SOCKET, IP_HDRINCL, &hdrincl, sizeof(hdrincl));
-	if (res == -1) {
-		printf("Failed getting a socket\n");
-		exit(1);
-	}
-	return 0;
-}
-
-void getSockAddr(struct addrinfo *ptr, t_ftping *data) {
-	struct sockaddr_in *sock_addr = (struct sockaddr_in *)ptr->ai_addr;
-	char addrstr[INET_ADDRSTRLEN];
-	char *addr;
-
-
-	addr = &(addrstr[0]);
-	(void)data;
-	inet_ntop(ptr->ai_family, &sock_addr->sin_addr, addr, INET_ADDRSTRLEN);
-	inet_pton(ptr->ai_family, addr, &data->address);
-
-	printf("addr => %d\n", data->address);
-	printf("address %s\t", addr);		
-	printf("canon name = %s\t",ptr->ai_canonname);		
-	data->dest_addr = *(ptr->ai_addr);
-	printf("\ndest_addr set to address\n");		
+	g_ping->hints.ai_family = AF_INET;
+	g_ping->hints.ai_socktype = 0;
+	g_ping->hints.ai_protocol = 0;
+	g_ping->hints.ai_flags = 0;
+	g_ping->hints.ai_canonname = NULL;
+	g_ping->hints.ai_addr = NULL;
+	g_ping->hints.ai_next = NULL;
+	g_ping->seq = 1;
 }
 
 int	main(void)
@@ -215,53 +38,30 @@ int	main(void)
 printf("IN\n");
 
 	t_ftping pingdata;
-	g_pingdata = &pingdata;
-	int res;
 	char node[40] = "google.com";
+	char *host;
 	// "9.9.9.9;www.42.fr;192.168.1.1;ms-17;google.com";
-	char service[] = "";
-	// struct addrinfo *rsltptr;
-	// t_socket sckt;
-	struct icmp *packet;
 
+	// Parse host from arg
+	g_ping = &pingdata;
+	host = &(node[0]);
 	ft_memset(&pingdata, 0, sizeof(pingdata));
-	g_pingdata->node = &(node[0]);
-	g_pingdata->service = &(service[0]);
-	g_pingdata->service = NULL;
+	setup();
+	g_ping->node = host;
 
-	g_pingdata->uid = getuid();
-	g_pingdata->pid = getpid();
-	printf("PID=%10d | UID=%10d\n", g_pingdata->pid, g_pingdata->uid);
+	getAInfo();
 
-	printf("node => %s\n", g_pingdata->node);
-	printf("service => %s\n", g_pingdata->service);
-	printf("=====\n");
-
-
-	g_pingdata->hints.ai_family = AF_INET;
-	g_pingdata->hints.ai_socktype = 0;
-	g_pingdata->hints.ai_protocol = 0;
-	g_pingdata->hints.ai_flags = 0;
-	g_pingdata->hints.ai_canonname = NULL;
-	g_pingdata->hints.ai_addr = NULL;
-	g_pingdata->hints.ai_next = NULL;
-
-	packet = NULL;
-
-	res = getaddrinfo(g_pingdata->node, g_pingdata->service, &(g_pingdata->hints), &(g_pingdata->results));
-	// set dest addr and addrlen
-	if (res < 0) {
-		printf("%s\n", gai_strerror(res));
-		return res;
-	}
-	freeaddrinfo(g_pingdata->results);
-	g_pingdata->results = NULL;
+	fillIcmp();
 
 	getSimpleSocket();
-	getPacket();
-	sendto(g_pingdata->socket.sockfd, packet, 8, 0, &g_pingdata->dest_addr, sizeof(g_pingdata->addrlen));
-	close(g_pingdata->socket.sockfd);
-	printf("closed sockfd %d\n",g_pingdata->socket.sockfd);
+
+	sendto(g_ping->socket.sockfd, &g_ping->icmp, ICMP_ADDR_LEN, 0, &g_ping->dest_addr, g_ping->addrlen);
+
+	close(g_ping->socket.sockfd);
+	printf("closed sockfd %d\n",g_ping->socket.sockfd);
+	freeaddrinfo(g_ping->results);
+	g_ping->results = NULL;
+
 
 printf("OUT\n");
 	return 0;

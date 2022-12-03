@@ -1,6 +1,10 @@
 NAME = ft_ping
 
 SRC = main.c\
+	  debug.c\
+	  address.c\
+	  socket.c\
+	  packet.c\
 
 
 SRCS = $(addprefix srcs/,$(SRCS))
