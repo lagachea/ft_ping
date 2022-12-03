@@ -5,34 +5,34 @@ int getSocketFrom(t_socket *sckt, t_socket data) {
   int family = data.family;
   int socktype = data.socktype;
   int protocol = data.protocol;
-  printf("+++socket\n");
+  // printf("+++socket\n");
   sckt->family = family;
   sckt->socktype = socktype;
   sckt->protocol = protocol;
   if (sckt->socktype == SOCK_RAW) {
     if (sckt->protocol == IPPROTO_IP) {
-      printf("switch from IP TO ICMP for %s\n", getSocketName(SOCK_RAW));
+      // printf("switch from IP TO ICMP for %s\n", getSocketName(SOCK_RAW));
       sckt->protocol = IPPROTO_ICMP;
     }
     if (g_ping->uid != 0) {
-      printf("no raw socket without sudo switching to DGRAM\n");
+      // printf("no raw socket without sudo switching to DGRAM\n");
       sckt->socktype = SOCK_DGRAM;
     } else {
-      printf("shall we try as root to get a %s\n", getSocketName(SOCK_RAW));
+      // printf("shall we try as root to get a %s\n", getSocketName(SOCK_RAW));
     }
   }
 
-  printf("ask for ");
-  printSocket(sckt->family, sckt->socktype, sckt->protocol);
+  // printf("ask for ");
+  // printSocket(sckt->family, sckt->socktype, sckt->protocol);
   sckt->sockfd = socket(sckt->family, sckt->socktype, sckt->protocol);
   if (sckt->sockfd == -1) {
     printf("\n====\nERROR:%s\n====\n", strerror(errno));
     printf("Failed getting a socket\n");
     return FAILURE;
   }
-  printf("got ");
-  printTSocket(sckt);
-  printf("---socket\n");
+  // printf("got ");
+  // printTSocket(sckt);
+  // printf("---socket\n");
   return SUCCESS;
 }
 

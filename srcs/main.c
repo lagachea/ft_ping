@@ -11,16 +11,19 @@ void setup() {
 	g_ping->uid = getuid();
 	if (g_ping->uid != 0)
 	{
-		res = setuid(0) != 0;
-		if (res)
+		res = setuid(0);
+		if (res == -1)
+		{
+			printf("\nERROR:%s\n", strerror(errno));
 			exit(1);
+		}
 	}
 	g_ping->pid = getpid();
-	printf("PID=%10d | UID=%10d\n", g_ping->pid, g_ping->uid);
-
-	printf("node => %s\n", g_ping->node);
-	printf("service => %s\n", g_ping->service);
-	printf("=====\n");
+	// printf("PID=%10d | UID=%10d\n", g_ping->pid, g_ping->uid);
+	//
+	// printf("node => %s\n", g_ping->node);
+	// printf("service => %s\n", g_ping->service);
+	// printf("=====\n");
 
 
 	g_ping->hints.ai_family = AF_INET;
@@ -37,6 +40,7 @@ int	main(void)
 {
 printf("IN\n");
 
+	int res;
 	t_ftping pingdata;
 	char node[40] = "google.com";
 	char *host;
@@ -55,10 +59,19 @@ printf("IN\n");
 
 	getSimpleSocket();
 
-	sendto(g_ping->socket.sockfd, &g_ping->icmp, ICMP_ADDR_LEN, 0, &g_ping->dest_addr, g_ping->addrlen);
+	printf("sending icmp header to %s\n", g_ping->dest_addr.sa_data);
+	res = sendto(g_ping->socket.sockfd, &g_ping->icmp, ICMP_ADDR_LEN, 0, &g_ping->dest_addr, g_ping->addrlen);
+	if (res == -1) {
+		printf("Error:{%s} sending packet to %s\n", strerror(errno), g_ping->dest_addr.sa_data);
+	}
+	else
+	{
+		printf("Packet sent\n");
+	}
+	// printf("closed sockfd %d\n",g_ping->socket.sockfd);
 
 	close(g_ping->socket.sockfd);
-	printf("closed sockfd %d\n",g_ping->socket.sockfd);
+	// printf("closed sockfd %d\n",g_ping->socket.sockfd);
 	freeaddrinfo(g_ping->results);
 	g_ping->results = NULL;
 

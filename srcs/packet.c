@@ -22,4 +22,5 @@ void fillIcmp() {
 	g_ping->icmp.icmp_hun.ih_idseq.icd_id = g_ping->pid;
 	g_ping->icmp.icmp_hun.ih_idseq.icd_seq = g_ping->seq;
 	icmpChecksum();
+	g_ping->seq++;
 }
