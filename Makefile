@@ -42,7 +42,7 @@ out/%.o: srcs/%.c
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o $@ -c $<
 
 json:
-	bear -- make re
+	bear -- make re -s
 
 test: all
 	python3 test.py
