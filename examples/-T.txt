@@ -1,0 +1,6 @@
+┌──(root㉿DESKTOP-RTD1524)-[~]
+└─# ping -T tsandaddr 192.168.1.1
+PING 192.168.1.1 (192.168.1.1) 56(124) bytes of data.
+^C
+--- 192.168.1.1 ping statistics ---
+14 packets transmitted, 0 received, 100% packet loss, time 13527ms

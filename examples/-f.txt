@@ -1,0 +1,7 @@
+┌──(root㉿DESKTOP-RTD1524)-[~]
+└─# ping -f 192.168.1.1
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+.^C
+--- 192.168.1.1 ping statistics ---
+2239 packets transmitted, 2238 received, 0.0446628% packet loss, time 4644ms
+rtt min/avg/max/mdev = 1.197/2.045/12.016/0.532 ms, ipg/ewma 2.074/2.036 ms

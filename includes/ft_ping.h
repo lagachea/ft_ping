@@ -21,6 +21,7 @@
 # define FAILURE -1
 # define SUCCESS 0
 # define ICMP_ADDR_LEN 8
+# define DEBUG true
 
 typedef struct s_socket t_socket;
 struct s_socket {

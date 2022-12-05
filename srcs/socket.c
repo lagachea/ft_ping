@@ -1,4 +1,5 @@
 #include "ft_ping.h"
+#include <asm-generic/socket.h>
 
 int getSocketFrom(t_socket *sckt, t_socket data) {
 
@@ -39,8 +40,10 @@ int getSocketFrom(t_socket *sckt, t_socket data) {
 int getSimpleSocket() {
   int res;
   int hdrincl;
+  int so_debug;
 
   hdrincl = 0;
+  so_debug = 1;
   g_ping->socket.family = AF_INET;
   g_ping->socket.socktype = SOCK_RAW;
   g_ping->socket.protocol = IPPROTO_ICMP;
@@ -52,6 +55,12 @@ int getSimpleSocket() {
   }
   setsockopt(g_ping->socket.sockfd, SOL_SOCKET, IP_HDRINCL, &hdrincl,
              sizeof(hdrincl));
+  if (res == -1) {
+    printf("Failed setting a socket option\n");
+    exit(1);
+  }
+  setsockopt(g_ping->socket.sockfd, SOL_SOCKET, SO_DEBUG, &so_debug,
+             sizeof(so_debug));
   if (res == -1) {
     printf("Failed setting a socket option\n");
     exit(1);

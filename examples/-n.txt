@@ -1,0 +1,13 @@
+┌──(root㉿DESKTOP-RTD1524)-[~]
+└─# ping -n google.com
+PING google.com (142.250.74.238) 56(84) bytes of data.
+64 bytes from 142.250.74.238: icmp_seq=1 ttl=115 time=7.71 ms
+64 bytes from 142.250.74.238: icmp_seq=2 ttl=115 time=11.2 ms
+64 bytes from 142.250.74.238: icmp_seq=3 ttl=115 time=8.44 ms
+64 bytes from 142.250.74.238: icmp_seq=4 ttl=115 time=7.91 ms
+64 bytes from 142.250.74.238: icmp_seq=5 ttl=115 time=6.91 ms
+64 bytes from 142.250.74.238: icmp_seq=6 ttl=115 time=10.4 ms
+^C
+--- google.com ping statistics ---
+6 packets transmitted, 6 received, 0% packet loss, time 5009ms
+rtt min/avg/max/mdev = 6.908/8.761/11.170/1.525 ms

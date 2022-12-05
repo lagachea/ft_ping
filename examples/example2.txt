@@ -1,0 +1,44 @@
+  -d                 use SO_DEBUG socket option
+ping -d 192.168.1.1
+
+  -f                 flood ping
+ping -f 192.168.1.1
+
+  -h                 print help and exit
+ping -h 192.168.1.1
+
+  -I <interface>     either interface name or address
+ping -I eth0 192.168.1.1
+
+  -l <preload>       send <preload> number of packages while waiting replies
+ping -l 21 192.168.1.1
+
+  -m <mark>          tag the packets going out
+ping -m 42 192.168.1.1
+
+  -M <pmtud opt>     define mtu discovery, can be one of <do|dont|want>
+ping -M do 192.168.1.1
+
+  -n                 no dns name resolution
+ping -n google.com
+
+  -O                 report outstanding replies
+ping -O 192.168.1.1
+
+  -Q <tclass>        use quality of service <tclass> bits
+ping -Q 42 192.168.1.1
+
+  -S <size>          use <size> as SO_SNDBUF socket option value
+ping -S 42 192.168.1.1
+
+  -t <ttl>           define time to live
+ping -t 30 192.168.1.1
+
+  -w <deadline>      reply wait <deadline> in seconds
+ping -w 3 192.168.1.1
+
+  -W <timeout>       time to wait for response
+ping -W 10 192.168.1.1
+
+  -T <timestamp>     define timestamp, can be one of <tsonly|tsandaddr|tsprespec>
+ping -T tsandaddr 192.168.1.1

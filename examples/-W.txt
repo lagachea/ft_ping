@@ -1,0 +1,18 @@
+┌──(root㉿DESKTOP-RTD1524)-[~]
+└─# ping -W 10 192.168.1.1
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+64 bytes from 192.168.1.1: icmp_seq=1 ttl=63 time=3.08 ms
+64 bytes from 192.168.1.1: icmp_seq=2 ttl=63 time=2.85 ms
+64 bytes from 192.168.1.1: icmp_seq=3 ttl=63 time=2.05 ms
+64 bytes from 192.168.1.1: icmp_seq=4 ttl=63 time=3.88 ms
+64 bytes from 192.168.1.1: icmp_seq=5 ttl=63 time=2.98 ms
+64 bytes from 192.168.1.1: icmp_seq=6 ttl=63 time=2.88 ms
+64 bytes from 192.168.1.1: icmp_seq=7 ttl=63 time=3.90 ms
+64 bytes from 192.168.1.1: icmp_seq=8 ttl=63 time=2.98 ms
+64 bytes from 192.168.1.1: icmp_seq=9 ttl=63 time=2.78 ms
+64 bytes from 192.168.1.1: icmp_seq=10 ttl=63 time=1.99 ms
+64 bytes from 192.168.1.1: icmp_seq=11 ttl=63 time=3.90 ms
+^C
+--- 192.168.1.1 ping statistics ---
+11 packets transmitted, 11 received, 0% packet loss, time 10015ms
+rtt min/avg/max/mdev = 1.988/3.023/3.902/0.632 ms
