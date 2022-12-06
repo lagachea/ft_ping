@@ -1,5 +1,6 @@
 #include "ft_ping.h"
 #include "libft.h"
+#include <signal.h>
 
 t_ftping *g_ping;
 
@@ -58,24 +59,20 @@ printf("IN\n");
 	fillIcmp();
 
 	getSimpleSocket();
+	setupRecv();
 
+	setHandlers();
 	printf("sending icmp header to %s\n", g_ping->dest_addr.sa_data);
 	res = sendto(g_ping->socket.sockfd, &g_ping->icmp, ICMP_ADDR_LEN, 0, &g_ping->dest_addr, g_ping->addrlen);
 	if (res == -1) {
 		printf("Error:{%s} sending packet to %s\n", strerror(errno), g_ping->dest_addr.sa_data);
 	}
-	else
-	{
-		printf("Packet sent\n");
+	else {
+		recieveMsg();
 	}
-	// printf("closed sockfd %d\n",g_ping->socket.sockfd);
-
-	close(g_ping->socket.sockfd);
-	// printf("closed sockfd %d\n",g_ping->socket.sockfd);
-	freeaddrinfo(g_ping->results);
-	g_ping->results = NULL;
 
 
 printf("OUT\n");
+	freePing();
 	return 0;
 }

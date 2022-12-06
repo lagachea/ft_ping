@@ -5,6 +5,8 @@ SRC = main.c\
 	  address.c\
 	  socket.c\
 	  packet.c\
+	  signals.c\
+	  recieve.c\
 
 
 SRCS = $(addprefix srcs/,$(SRCS))
@@ -64,5 +66,5 @@ fclean:
 
 re: fclean all
 
-.PHONY: fclean clean re FORCE
-.SILENT: fclean clean re FORCE $(NAME) $(OBJECT)
+.PHONY: fclean clean re FORCE json test sudotest
+.SILENT: fclean clean re FORCE $(NAME) $(OBJECT) json test sudotest

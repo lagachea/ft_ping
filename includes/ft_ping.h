@@ -48,8 +48,17 @@ typedef struct s_ftping {
   int send_flags;
   struct icmp icmp;
   // struct iphdr ipheader;
+ 
   int rec_flags;
   struct msghdr msg;
+  struct iovec iov[1];
+  struct cmsghdr *cmhdr;
+  struct sockaddr_in sin;
+  char control[1000];
+  char databuf[1500];
+  unsigned char tos;
+  struct cmsghdr *cmhdrptr;
+
 } t_ftping;
 // getpid getuid;
 extern t_ftping *g_ping;
@@ -144,8 +153,17 @@ void getSockAddr(struct addrinfo *ptr, t_ftping *data);
 
 /* packet.c */
 void fillIcmp();
+void setupRecv();
+void printMsg(int len);
 
 /* address.c */
 void getAInfo();
+
+/* signals.c */
+void setHandlers();
+void freePing();
+
+/* recieve.c */
+void recieveMsg( );
 
 #endif
