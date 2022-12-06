@@ -76,6 +76,7 @@ void setAddr() {
 }
 
 void setupOutput() {
+	setHandlers();
 	setupInput();
 	getAInfo();
 	fillIcmp();

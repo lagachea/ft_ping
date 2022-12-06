@@ -10,19 +10,29 @@ void freePing() {
 
 void	interruptHandler(int signal) {
 	(void)signal;
+	// printf("Ctrl C handler\n");
 	dprintf(STDERR_FILENO, "\nSIGINT RECIEVED\n");
 	freePing();
 	exit(0);
 }
 
-void	alarmHandler(int signal) {
-	(void)signal;
-	dprintf(STDERR_FILENO ,"\nSIGALRM RECIEVED\n");
+void	loopHandler(int signum) {
+	(void)signum;
+
+	// time for new send after recv msg
+	// printf("1 sec loop handler\n");
+	looping();
+}
+
+void	timeoutHandler(int signum) {
+	(void)signum;
+	// Alarm timeout after sending packet
+	dprintf(STDERR_FILENO ,"timeout handler\n");
 	freePing();
 	exit(1);
 }
 
 void setHandlers() {
 	signal(SIGINT, &interruptHandler);
-	signal(SIGALRM, &alarmHandler);
+	// signal(SIGALRM, &alarmHandler);
 }

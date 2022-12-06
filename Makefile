@@ -47,6 +47,9 @@ out/%.o: srcs/%.c
 json:
 	bear -- make re -s
 
+debug: all
+	clear; sudo gdb ./ft_ping
+
 test: all
 	# sudo python3 tests/test.py
 	clear; sudo ./ft_ping
@@ -63,5 +66,5 @@ fclean:
 
 re: fclean all
 
-.PHONY: fclean clean re FORCE json test
-.SILENT: fclean clean re FORCE $(NAME) $(OBJECT) json test
+.PHONY: fclean clean re FORCE json test debug
+.SILENT: fclean clean re FORCE $(NAME) $(OBJECT) json test debug

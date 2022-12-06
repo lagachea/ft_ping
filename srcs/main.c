@@ -10,7 +10,6 @@ void setup() {
 
 
 	getSimpleSocket();
-	setHandlers();
 
 	g_ping->pid = getpid();
 
@@ -38,6 +37,8 @@ int	main(void)
 	g_ping->node = &(node[0]);
 
 	looping();
+	while(1) {
+	}
 
 	freePing();
 	return 0;

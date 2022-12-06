@@ -35,31 +35,31 @@ struct s_socket {
 };
 
 typedef struct s_ftping {
-  uid_t uid;
-  pid_t pid;
-  unsigned int seq;
-  char *node;
-  char *service;
-  int address;
-  struct addrinfo hints;
-  struct addrinfo *results;
-  struct sockaddr dest_addr;
-  socklen_t addrlen;
-  t_socket socket;
-  // Packet buf ? + len
-  int send_flags;
-  struct icmp icmp;
-  // struct iphdr ipheader;
- 
-  char control[100];
-  char databuf[100];
-  int rec_flags;
-  struct msghdr msg;
-  struct iovec iov[1];
-  struct cmsghdr *cmhdr;
-  struct sockaddr_in sin;
-  unsigned char tos;
-  struct cmsghdr *cmhdrptr;
+	uid_t uid;
+	pid_t pid;
+	unsigned int seq;
+	char *node;
+	char *service;
+	int address;
+	struct addrinfo hints;
+	struct addrinfo *results;
+	struct sockaddr dest_addr;
+	socklen_t addrlen;
+	t_socket socket;
+	// Packet buf ? + len
+	int send_flags;
+	struct icmp icmp;
+	// struct iphdr ipheader;
+
+	char control[100];
+	char databuf[100];
+	int rec_flags;
+	struct msghdr msg;
+	struct iovec iov[1];
+	struct cmsghdr *cmhdr;
+	struct sockaddr_in sin;
+	unsigned char tos;
+	struct cmsghdr *cmhdrptr;
 
 } t_ftping;
 // getpid getuid;
@@ -164,6 +164,9 @@ void getAInfo();
 /* signals.c */
 void setHandlers();
 void freePing();
+void	loopHandler(int signum);
+void	interruptHandler(int signal);
+void	timeoutHandler(int signal);
 
 /* recieve.c */
 void recieveMsg();
