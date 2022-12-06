@@ -6,25 +6,27 @@ void	print_memory(const void *addr, size_t size)
 {
 	unsigned char *t = (unsigned char *)addr;
 	size_t		i = 0;
-	int			col;
+	size_t		col;
 	size_t		tmp = 0;
-	int			cut = 16;
+	size_t		cut = 16;
 
 	while (i < size)
 	{
+		col = 0;
 		tmp = i;
-
-		int count;
-		for (count = 0; count < cut; count++){
-			printf("%.2x ", t[count]);
+		while (col < cut)
+		{
+			printf("%.2x ", t[i]);
+			i++;
+			col++;
 		}
-		col = -1;
+		col = 0;
 		i = tmp;
-		while (++col < cut && i < size) {
+		while (col < cut && i < size) {
 			unsigned char c;
-
 			c = t[i++];
 			printf("%c", (c > 31 && c < 127) ? c : '.');
+			col++;
 		}
 		printf("\n");
 	}

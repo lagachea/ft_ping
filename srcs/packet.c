@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdio.h>
 
-void setupIn() {
+void setupInput() {
 	struct msghdr *msghdrptr;
 
 	msghdrptr = &g_ping->msg;
@@ -25,7 +25,6 @@ void setupIn() {
 
 
 	g_ping->rec_flags = 0;
-	printf("set rcv\n");
 }
 
 
@@ -45,15 +44,6 @@ static void icmpChecksum() {
 	g_ping->icmp.icmp_cksum = ~res;
 }
 
-void fillIcmp() {
-	g_ping->icmp.icmp_type = ICMP_ECHO;
-	g_ping->icmp.icmp_code = 0;
-	g_ping->icmp.icmp_hun.ih_idseq.icd_id = g_ping->pid;
-	g_ping->icmp.icmp_hun.ih_idseq.icd_seq = g_ping->seq;
-	icmpChecksum();
-	g_ping->seq++;
-}
-
 void getAInfo() {
 	int res;
 
@@ -64,18 +54,31 @@ void getAInfo() {
 	}
 }
 
-void setupOutput() {
-	getAInfo();
+void fillIcmp() {
+	g_ping->icmp.icmp_type = ICMP_ECHO;
+	g_ping->icmp.icmp_code = 0;
+	g_ping->icmp.icmp_hun.ih_idseq.icd_id = g_ping->pid;
+	g_ping->icmp.icmp_hun.ih_idseq.icd_seq = g_ping->seq;
+	icmpChecksum();
+	g_ping->seq++;
+}
+
+void setAddr() {
 	g_ping->dest_addr = *g_ping->results->ai_addr;
 	g_ping->addrlen = g_ping->results->ai_addrlen;
+}
+
+void setupOutput() {
+	getAInfo();
 	fillIcmp();
+	setAddr();
 }
 void printMsg(int len) {
-	printf("namelen= %d\n", g_ping->msg.msg_namelen);
-	printf("controllen= %zu\n", g_ping->msg.msg_controllen);
-	printf("iovlen= %zu\n", g_ping->msg.msg_iovlen);
+	// printf("namelen= %d\n", g_ping->msg.msg_namelen);
+	// printf("controllen= %zu\n", g_ping->msg.msg_controllen);
+	// printf("iovlen= %zu\n", g_ping->msg.msg_iovlen);
 
-	printf("read %d\n", len);
+	// printf("read %d\n", len);
 	print_memory(g_ping->databuf, len);
 
 	return;

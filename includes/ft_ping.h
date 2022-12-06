@@ -155,7 +155,7 @@ void getSockAddr(struct addrinfo *ptr, t_ftping *data);
 
 /* packet.c */
 void fillIcmp();
-void setupIn();
+void setupInput();
 void setupOutput();
 void printMsg(int len);
 void getAInfo();

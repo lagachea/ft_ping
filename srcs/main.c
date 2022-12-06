@@ -39,7 +39,7 @@ int	main(void)
 	ft_memset(&pingdata, 0, sizeof(pingdata));
 	g_ping->node = host;
 	setup();
-	setupIn();
+	setupInput();
 
 	// int i = -1;
 	// while (++i < 3) {
