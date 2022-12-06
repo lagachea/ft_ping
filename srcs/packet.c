@@ -67,6 +67,7 @@ void printMsg(int len) {
 	printf("read %d\n", len);
 	DumpHex(g_ping->databuf, len);
 
+	return;
 	if (g_ping->msg.msg_namelen > 0)
 	{
 		DumpHex(g_ping->msg.msg_name, g_ping->msg.msg_namelen);
