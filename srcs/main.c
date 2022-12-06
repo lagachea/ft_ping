@@ -5,6 +5,7 @@
 t_ftping *g_ping;
 
 void setup() {
+	ft_memset(g_ping, 0, sizeof(t_ftping));
 	g_ping->service = NULL;
 
 
@@ -27,31 +28,19 @@ void setup() {
 int	main(void)
 {
 
-	int res;
 	t_ftping pingdata;
 	char node[40] = "google.com";
-	char *host;
 	// "9.9.9.9;www.42.fr;192.168.1.1;ms-17;google.com";
 
 	// Parse host from arg
+
 	g_ping = &pingdata;
-	host = &(node[0]);
-	ft_memset(&pingdata, 0, sizeof(pingdata));
-	g_ping->node = host;
+
 	setup();
+	g_ping->node = &(node[0]);
 	setupInput();
 
-	// int i = -1;
-	// while (++i < 3) {
-	setupOutput();
-	res = sendto(g_ping->socket.sockfd, &g_ping->icmp, ICMP_PACKET_LEN, 0, &g_ping->dest_addr, g_ping->addrlen);
-	if (res == -1) {
-		printf("Error:{%s} sending packet to %s\n", strerror(errno), g_ping->dest_addr.sa_data);
-	}
-	else {
-		recieveMsg();
-	}
-	// }
+	looping();
 
 
 	freePing();

@@ -51,13 +51,13 @@ typedef struct s_ftping {
   struct icmp icmp;
   // struct iphdr ipheader;
  
+  char control[100];
+  char databuf[100];
   int rec_flags;
   struct msghdr msg;
   struct iovec iov[1];
   struct cmsghdr *cmhdr;
   struct sockaddr_in sin;
-  char control[1000];
-  char databuf[1500];
   unsigned char tos;
   struct cmsghdr *cmhdrptr;
 
@@ -170,5 +170,8 @@ void recieveMsg();
 
 /* tools.c */
 void	print_memory(const void *addr, size_t size);
+
+/* looping.c */
+void looping ();
 
 #endif

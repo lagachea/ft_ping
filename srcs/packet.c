@@ -5,23 +5,23 @@
 #include <stdio.h>
 
 void setupInput() {
-	struct msghdr *msghdrptr;
+	struct msghdr *msg;
 
-	msghdrptr = &g_ping->msg;
-	msghdrptr->msg_name = &g_ping->sin;
-	msghdrptr->msg_namelen = sizeof(g_ping->sin);
+	msg = &g_ping->msg;
+	msg->msg_name = &g_ping->sin;
+	msg->msg_namelen = sizeof(g_ping->sin);
 
-    msghdrptr->msg_iov = g_ping->iov;
-    msghdrptr->msg_iovlen = 1;
+    msg->msg_iov = g_ping->iov;
+    msg->msg_iovlen = 1;
 
-    msghdrptr->msg_iov[0].iov_base = g_ping->databuf;
-    msghdrptr->msg_iov[0].iov_len = sizeof(g_ping->databuf);
+    msg->msg_iov[0].iov_base = g_ping->databuf;
+    msg->msg_iov[0].iov_len = sizeof(g_ping->databuf);
 
 
-    msghdrptr->msg_control = &g_ping->control;
-    msghdrptr->msg_controllen = sizeof(g_ping->control);
+    msg->msg_control = &g_ping->control;
+    msg->msg_controllen = sizeof(g_ping->control);
 
-    msghdrptr->msg_flags = 0;
+    msg->msg_flags = 0;
 
 
 	g_ping->rec_flags = 0;
