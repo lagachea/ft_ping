@@ -173,6 +173,8 @@ void recieveMsg();
 
 /* tools.c */
 void	print_memory(const void *addr, size_t size);
+void printIcmp(struct icmp *icmptr);
+void printIp(struct ip *ipptr);
 
 /* looping.c */
 void looping ();

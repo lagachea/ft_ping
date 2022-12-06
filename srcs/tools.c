@@ -34,3 +34,12 @@ void	print_memory(const void *addr, size_t size)
 		printf("\n");
 	}
 }
+
+void printIp(struct ip *ipptr) {
+	printf("ip\n");
+	print_memory(ipptr, 20);
+}
+void printIcmp(struct icmp *icmptr) {
+	printf("icmp\n");
+	print_memory(icmptr, 8);
+}

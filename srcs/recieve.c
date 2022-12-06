@@ -4,14 +4,13 @@ void printMsg(int len) {
 	struct icmp *icmptr;
 	struct ip *ipptr;
 
-	icmptr = (void*)g_ping->databuf + 20;
-	ipptr = (void*)g_ping->databuf;
-
 	printf("read %d\n", len);
-	printf("ip\n");
-	print_memory(ipptr, 20);
-	printf("icmp\n");
-	print_memory(icmptr, 8);
+
+	ipptr = (void*)g_ping->databuf;
+	printIp(ipptr);
+
+	icmptr = (void*)g_ping->databuf + 20;
+	printIcmp(icmptr);
 
 	return;
 	// printf("namelen= %d\n", g_ping->msg.msg_namelen);
