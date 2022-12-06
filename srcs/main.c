@@ -33,15 +33,11 @@ int	main(void)
 	// "9.9.9.9;www.42.fr;192.168.1.1;ms-17;google.com";
 
 	// Parse host from arg
-
 	g_ping = &pingdata;
-
 	setup();
 	g_ping->node = &(node[0]);
-	setupInput();
 
 	looping();
-
 
 	freePing();
 	return 0;

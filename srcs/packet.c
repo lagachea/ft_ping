@@ -2,6 +2,7 @@
 #include "libft.h"
 #include <netdb.h>
 #include <netinet/in.h>
+#include <netinet/ip_icmp.h>
 #include <stddef.h>
 #include <stdio.h>
 
@@ -9,6 +10,7 @@ void setupInput() {
 	struct msghdr *msg;
 
 	msg = &g_ping->msg;
+	ft_memset(msg, 0, sizeof(struct msghdr));
 	msg->msg_name = &g_ping->sin;
 	msg->msg_namelen = sizeof(g_ping->sin);
 
@@ -29,23 +31,6 @@ void setupInput() {
 }
 
 
-static void icmpChecksum() {
-	uint16_t res;
-	uint16_t *ptr;
-	size_t count;
-
-	res = 0;
-	g_ping->icmp.icmp_cksum = 0;
-	ptr = (uint16_t *)&g_ping->icmp;
-	count = 0;
-	while (count < 8) {
-		res += *ptr;
-		ptr++;
-		count++;
-	}
-	g_ping->icmp.icmp_cksum = ~res;
-}
-
 void getAInfo() {
 	int res;
 
@@ -59,12 +44,29 @@ void getAInfo() {
 	}
 }
 
+static uint16_t icmpChecksum() {
+	uint16_t res;
+	uint16_t *ptr;
+	size_t count;
+
+	ptr = (uint16_t *)&g_ping->icmp;
+	res = 0;
+	count = 0;
+	while (count < 8) {
+		res += *ptr;
+		ptr++;
+		count++;
+	}
+	return ~res;
+}
+
 void fillIcmp() {
+	ft_memset(&g_ping->icmp, 0, sizeof(g_ping->icmp));
 	g_ping->icmp.icmp_type = ICMP_ECHO;
 	g_ping->icmp.icmp_code = 0;
 	g_ping->icmp.icmp_hun.ih_idseq.icd_id = g_ping->pid;
 	g_ping->icmp.icmp_hun.ih_idseq.icd_seq = g_ping->seq;
-	icmpChecksum();
+	g_ping->icmp.icmp_cksum = icmpChecksum();
 	g_ping->seq++;
 }
 
@@ -74,33 +76,8 @@ void setAddr() {
 }
 
 void setupOutput() {
+	setupInput();
 	getAInfo();
 	fillIcmp();
 	setAddr();
-}
-void printMsg(int len) {
-	// printf("namelen= %d\n", g_ping->msg.msg_namelen);
-	// printf("controllen= %zu\n", g_ping->msg.msg_controllen);
-	// printf("iovlen= %zu\n", g_ping->msg.msg_iovlen);
-
-	// printf("read %d\n", len);
-	print_memory(g_ping->databuf, len);
-
-	return;
-	if (g_ping->msg.msg_namelen > 0)
-	{
-		print_memory(g_ping->msg.msg_name, g_ping->msg.msg_namelen);
-	}
-	if (g_ping->msg.msg_controllen > 0)
-	{
-		print_memory(g_ping->msg.msg_control, g_ping->msg.msg_controllen);
-	}
-	if (g_ping->msg.msg_iovlen > 0)
-	{
-		size_t count = 0;
-		while (count < g_ping->msg.msg_iovlen) {
-			print_memory(g_ping->msg.msg_iov[count].iov_base, g_ping->msg.msg_iov[count].iov_len);
-			count++;
-		}
-	}
 }
