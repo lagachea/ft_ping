@@ -2,11 +2,11 @@ NAME = ft_ping
 
 SRC = main.c\
 	  debug.c\
-	  address.c\
 	  socket.c\
 	  packet.c\
 	  signals.c\
 	  recieve.c\
+	  tools.c\
 
 
 SRCS = $(addprefix srcs/,$(SRCS))
@@ -47,12 +47,8 @@ json:
 	bear -- make re -s
 
 test: all
-	python3 test.py
-	./ft_ping
-
-sudotest: all
-	sudo python3 test.py
-	sudo ./ft_ping
+	sudo python3 tests/test.py
+	clear; sudo ./ft_ping
 
 clean:
 	$(RM) -rf out
@@ -66,5 +62,5 @@ fclean:
 
 re: fclean all
 
-.PHONY: fclean clean re FORCE json test sudotest
-.SILENT: fclean clean re FORCE $(NAME) $(OBJECT) json test sudotest
+.PHONY: fclean clean re FORCE json test
+.SILENT: fclean clean re FORCE $(NAME) $(OBJECT) json test

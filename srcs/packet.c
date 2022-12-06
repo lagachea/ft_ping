@@ -1,15 +1,33 @@
 #include "ft_ping.h"
+#include "libft.h"
 #include <netinet/in.h>
 #include <stddef.h>
 #include <stdio.h>
 
-static void DumpHex(void *address, int size) {
-	int count;
-	for (count = 0; count < size; count++){
-		printf("%.2x ", ((unsigned char*)address)[count]);
-	}
-	printf("\n");
+void setupIn() {
+	struct msghdr *msghdrptr;
+
+	msghdrptr = &g_ping->msg;
+	msghdrptr->msg_name = &g_ping->sin;
+	msghdrptr->msg_namelen = sizeof(g_ping->sin);
+
+    msghdrptr->msg_iov = g_ping->iov;
+    msghdrptr->msg_iovlen = 1;
+
+    msghdrptr->msg_iov[0].iov_base = g_ping->databuf;
+    msghdrptr->msg_iov[0].iov_len = sizeof(g_ping->databuf);
+
+
+    msghdrptr->msg_control = &g_ping->control;
+    msghdrptr->msg_controllen = sizeof(g_ping->control);
+
+    msghdrptr->msg_flags = 0;
+
+
+	g_ping->rec_flags = 0;
+	printf("set rcv\n");
 }
+
 
 static void icmpChecksum() {
 	uint16_t res;
@@ -36,28 +54,21 @@ void fillIcmp() {
 	g_ping->seq++;
 }
 
-void setupRecv() {
-	struct msghdr *msghdrptr;
+void getAInfo() {
+	int res;
 
-	msghdrptr = &g_ping->msg;
-	msghdrptr->msg_name = &g_ping->sin;
-	msghdrptr->msg_namelen = sizeof(g_ping->sin);
+	res = getaddrinfo(g_ping->node, g_ping->service, &(g_ping->hints), &(g_ping->results));
+	if (res < 0) {
+		printf("%s\n", gai_strerror(res));
+		exit(FAILURE);
+	}
+}
 
-    msghdrptr->msg_iov = g_ping->iov;
-    msghdrptr->msg_iovlen = 1;
-
-    msghdrptr->msg_iov[0].iov_base = g_ping->databuf;
-    msghdrptr->msg_iov[0].iov_len = sizeof(g_ping->databuf);
-
-
-    msghdrptr->msg_control = &g_ping->control;
-    msghdrptr->msg_controllen = sizeof(g_ping->control);
-
-    msghdrptr->msg_flags = 0;
-
-
-	g_ping->rec_flags = 0;
-	printf("set rcv\n");
+void setupOutput() {
+	getAInfo();
+	g_ping->dest_addr = *g_ping->results->ai_addr;
+	g_ping->addrlen = g_ping->results->ai_addrlen;
+	fillIcmp();
 }
 void printMsg(int len) {
 	printf("namelen= %d\n", g_ping->msg.msg_namelen);
@@ -65,22 +76,22 @@ void printMsg(int len) {
 	printf("iovlen= %zu\n", g_ping->msg.msg_iovlen);
 
 	printf("read %d\n", len);
-	DumpHex(g_ping->databuf, len);
+	print_memory(g_ping->databuf, len);
 
 	return;
 	if (g_ping->msg.msg_namelen > 0)
 	{
-		DumpHex(g_ping->msg.msg_name, g_ping->msg.msg_namelen);
+		print_memory(g_ping->msg.msg_name, g_ping->msg.msg_namelen);
 	}
 	if (g_ping->msg.msg_controllen > 0)
 	{
-		DumpHex(g_ping->msg.msg_control, g_ping->msg.msg_controllen);
+		print_memory(g_ping->msg.msg_control, g_ping->msg.msg_controllen);
 	}
 	if (g_ping->msg.msg_iovlen > 0)
 	{
 		size_t count = 0;
 		while (count < g_ping->msg.msg_iovlen) {
-			DumpHex(g_ping->msg.msg_iov[count].iov_base, g_ping->msg.msg_iov[count].iov_len);
+			print_memory(g_ping->msg.msg_iov[count].iov_base, g_ping->msg.msg_iov[count].iov_len);
 			count++;
 		}
 	}

@@ -20,8 +20,10 @@
 
 # define FAILURE -1
 # define SUCCESS 0
-# define ICMP_ADDR_LEN 8
+# define ICMP_PACKET_LEN 8
 # define DEBUG true
+
+# include "libft.h"
 
 typedef struct s_socket t_socket;
 struct s_socket {
@@ -153,17 +155,20 @@ void getSockAddr(struct addrinfo *ptr, t_ftping *data);
 
 /* packet.c */
 void fillIcmp();
-void setupRecv();
+void setupIn();
+void setupOutput();
 void printMsg(int len);
-
-/* address.c */
 void getAInfo();
+
 
 /* signals.c */
 void setHandlers();
 void freePing();
 
 /* recieve.c */
-void recieveMsg( );
+void recieveMsg();
+
+/* tools.c */
+void	print_memory(const void *addr, size_t size);
 
 #endif
