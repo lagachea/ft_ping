@@ -16,7 +16,10 @@ void	print_memory(const void *addr, size_t size)
 		tmp = i;
 		while (col < cut)
 		{
-			printf("%.2x ", t[i]);
+			if (i < size)
+				printf("%-4.2x", t[i]);
+			else
+				printf("    ");
 			i++;
 			col++;
 		}
