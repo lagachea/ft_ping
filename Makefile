@@ -48,7 +48,7 @@ json:
 	bear -- make re -s
 
 test: all
-	sudo python3 tests/test.py
+	# sudo python3 tests/test.py
 	clear; sudo ./ft_ping
 
 clean:

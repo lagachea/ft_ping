@@ -1,5 +1,6 @@
 #include "ft_ping.h"
 #include "libft.h"
+#include <netdb.h>
 #include <netinet/in.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -34,6 +35,7 @@ static void icmpChecksum() {
 	size_t count;
 
 	res = 0;
+	g_ping->icmp.icmp_cksum = 0;
 	ptr = (uint16_t *)&g_ping->icmp;
 	count = 0;
 	while (count < 8) {
@@ -47,6 +49,9 @@ static void icmpChecksum() {
 void getAInfo() {
 	int res;
 
+	if (g_ping->results != NULL) {
+		freeaddrinfo(g_ping->results);
+	}
 	res = getaddrinfo(g_ping->node, g_ping->service, &(g_ping->hints), &(g_ping->results));
 	if (res < 0) {
 		printf("%s\n", gai_strerror(res));
