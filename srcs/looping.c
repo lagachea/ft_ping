@@ -14,10 +14,6 @@ void looping (){
 	else {
 		setAlarmHandler(10, &timeoutHandler);
 		recieveMsg();
-<<<<<<< HEAD
-		// Set next round alarm
-=======
->>>>>>> 7a438df (set handler set alarm)
 		setAlarmHandler(1, &loopHandler);
 		return;
 	}

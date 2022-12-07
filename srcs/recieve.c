@@ -38,6 +38,10 @@ void printMsg(int len) {
 void recieveMsg( ) {
 	int res = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> e0bc6b2 (set handler set alarm)
 	setAlarmHandler(10, &timeoutHandler);
 =======
 >>>>>>> 7a438df (set handler set alarm)
