@@ -18,9 +18,6 @@ void	interruptHandler(int signal) {
 
 void	loopHandler(int signum) {
 	(void)signum;
-
-	// time for new send after recv msg
-	// printf("1 sec loop handler\n");
 	looping();
 }
 

@@ -37,7 +37,10 @@ void printMsg(int len) {
 
 void recieveMsg( ) {
 	int res = 0;
+<<<<<<< HEAD
 	setAlarmHandler(10, &timeoutHandler);
+=======
+>>>>>>> 7a438df (set handler set alarm)
 	while (res == 0) {
 		res = recvmsg(g_ping->socket.sockfd, &g_ping->msg, g_ping->rec_flags);
 		if (res == -1) {
@@ -46,9 +49,9 @@ void recieveMsg( ) {
 			exit(FAILURE);
 		}
 		else if (res > 0) {
-			// Reset timeout alarm
 			alarm(0);
 			printMsg(res);
+			// do print packet reception
 			return ;
 		}
 	}
