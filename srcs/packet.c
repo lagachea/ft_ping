@@ -76,10 +76,6 @@ void setAddr() {
 }
 
 void setupOutput() {
-<<<<<<< HEAD
-	setHandler(SIGINT, &interruptHandler);
-=======
->>>>>>> 7a438df (set handler set alarm)
 	setupInput();
 	getAInfo();
 	fillIcmp();
