@@ -14,8 +14,7 @@ void looping (){
 	else {
 		recieveMsg();
 		// Set next round alarm
-		alarm(1);
-		signal(SIGALRM, &loopHandler);
+		setAlarmHandler(1, &loopHandler);
 		return;
 	}
 }

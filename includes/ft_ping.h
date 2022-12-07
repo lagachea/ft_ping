@@ -162,7 +162,8 @@ void getAInfo();
 
 
 /* signals.c */
-void setHandlers();
+void setHandler(int signum, sighandler_t handler);
+void setAlarmHandler(int sec, sighandler_t handler);
 void freePing();
 void	loopHandler(int signum);
 void	interruptHandler(int signal);

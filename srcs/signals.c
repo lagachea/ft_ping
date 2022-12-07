@@ -32,7 +32,11 @@ void	timeoutHandler(int signum) {
 	exit(1);
 }
 
-void setHandlers() {
-	signal(SIGINT, &interruptHandler);
-	// signal(SIGALRM, &alarmHandler);
+void setHandler(int signum, sighandler_t handler) {
+	signal(signum, handler);
+}
+
+void setAlarmHandler(int sec, sighandler_t handler) {
+	setHandler(SIGALRM, handler);
+	alarm(sec);
 }

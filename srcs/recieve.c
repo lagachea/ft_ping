@@ -37,8 +37,7 @@ void printMsg(int len) {
 
 void recieveMsg( ) {
 	int res = 0;
-	alarm(10);
-	signal(SIGALRM, &timeoutHandler);
+	setAlarmHandler(10, &timeoutHandler);
 	while (res == 0) {
 		res = recvmsg(g_ping->socket.sockfd, &g_ping->msg, g_ping->rec_flags);
 		if (res == -1) {

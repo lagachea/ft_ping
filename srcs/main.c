@@ -39,7 +39,5 @@ int	main(void)
 	looping();
 	while(1) {
 	}
-
-	freePing();
-	return 0;
+	return -1;
 }
