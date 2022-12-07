@@ -4,6 +4,7 @@
 void looping (){
 
 	int res;
+
 	setupOutput();
 	res = sendto(g_ping->socket.sockfd, &g_ping->icmp, ICMP_PACKET_LEN, 0, &g_ping->dest_addr, g_ping->addrlen);
 	if (res == -1) {
