@@ -54,15 +54,8 @@ test: all
 	# sudo python3 tests/test.py
 	clear; sudo ./ft_ping
 
-toggle:
-	sudo python3 ./tests/toogle.py
-	sudo cat /etc/ufw/before.rules | grep -E "icmp-type" | grep DROP
-
-restore:
-	sudo python3 ./tests/restore.py
-	sudo cat /etc/ufw/before.rules | grep -E "icmp-type" | grep DROP
-	sudo ufw reload
-	sudo ping 1.1.1.1
+firewall:
+	sudo python3 ./tests/firewall.py
 
 clean:
 	$(RM) -rf out
