@@ -1,10 +1,10 @@
 #!/bin/python3
 
+from __future__ import annotations
 import subprocess, shlex
 
 # (flush start) firewall
-firewall_cmd = 'iptables'
-subprocess.run([firewall_cmd, "-F"])
+subprocess.run(["iptables", "-F"])
 print('FLUSHED FIREWAL RULES')
 
 target = False
@@ -22,10 +22,18 @@ incoming = "iptables -I INPUT -p icmp -j DROP"
 outgoing = "iptables -I OUTPUT -p icmp -j DROP"
 
 if target == 1:
-    # print('output')
+    print('\nSetting outgoing rules')
     subprocess.run(shlex.split(outgoing))
 elif target == 2:
-    # print('input')
+    print('\nSetting incoming rules')
     subprocess.run(shlex.split(incoming))
+elif target == 3:
+    print('\nNo rules added')
+    exit(0)
 
-subprocess.run([firewall_cmd, "-S"])
+list_cmd = shlex.split('iptables -S')
+with subprocess.Popen(list_cmd, stdout=subprocess.PIPE) as list_rules:
+
+    grep_cmd = shlex.split('grep DROP')
+    with subprocess.Popen(grep_cmd, stdin=list_rules.stdout) as grep_rules:
+        grep_rules.communicate()
