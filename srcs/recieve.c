@@ -3,15 +3,19 @@
 void printMsg(int len) {
 	struct icmp *icmptr;
 	struct ip *ipptr;
+	t_clock *t;
 
-	printf("read %d\n", len);
+	// printf("read %d\n", len);
 
 	ipptr = (void*)g_ping->databuf;
-	printIp(ipptr);
+	// printIp(ipptr);
 
 	icmptr = (void*)g_ping->databuf + 20;
-	printIcmp(icmptr);
+	// printIcmp(icmptr);
 
+	t = &g_ping->time;
+	getTimeDiff();
+	printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n", len, "AD.DR.ES.S", icmptr->icmp_hun.ih_idseq.icd_seq, ipptr->ip_ttl, t->diff * 1000);
 	return;
 	// printf("namelen= %d\n", g_ping->msg.msg_namelen);
 	// printf("controllen= %zu\n", g_ping->msg.msg_controllen);
@@ -46,9 +50,9 @@ void recieveMsg( ) {
 			exit(FAILURE);
 		}
 		else if (res > 0) {
+			// do print packet reception
 			alarm(0);
 			printMsg(res);
-			// do print packet reception
 			return ;
 		}
 	}

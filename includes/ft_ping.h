@@ -34,7 +34,17 @@ struct s_socket {
   t_socket *next;
 };
 
+typedef struct s_clock{
+	unsigned char state;
+	struct timeval tvf;
+	struct timeval tvi;
+	long diff_sec;
+	long diff_usec;
+	double diff;
+} t_clock;
+
 typedef struct s_ftping {
+	t_clock time;
 	uid_t uid;
 	pid_t pid;
 	unsigned int seq;
@@ -159,6 +169,9 @@ void setupInput();
 void setupOutput();
 void printMsg(int len);
 void getAInfo();
+void setInitialClock();
+void setFinalClock();
+void getTimeDiff();
 
 
 /* signals.c */

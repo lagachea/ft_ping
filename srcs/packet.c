@@ -75,9 +75,51 @@ void setAddr() {
 	g_ping->addrlen = g_ping->results->ai_addrlen;
 }
 
+void setClock(struct timeval *tv) {
+	int ret;
+	ret = gettimeofday(tv, NULL);
+	if (ret != 0) {
+		printf("Error setting clock\n");
+		freePing();
+		exit(1);
+	}
+}
+
+void setInitialClock() {
+	struct timeval *tv;
+
+	ft_memset(&g_ping->time, 0, sizeof(t_clock));
+	tv = &g_ping->time.tvi;
+	setClock(tv);
+	// printf("\nInitial usec = %li | sec = %li |%lf|\n", tv->tv_usec, tv->tv_sec, tv->tv_sec + (1.0/1000000) * tv->tv_usec);
+}
+
+void setFinalClock() {
+	struct timeval *tv;
+
+	tv = &g_ping->time.tvf;
+	setClock(tv);
+	// printf("\nFinal usec = %li | sec = %li |%lf|\n", tv->tv_usec, tv->tv_sec, tv->tv_sec + (1.0/1000000) * tv->tv_usec);
+}
+
+void getTimeDiff() {
+	t_clock *t;
+	struct timeval *tvf;
+	struct timeval *tvi;
+
+	setFinalClock();
+	t = &g_ping->time;
+	tvf = &t->tvf;
+	tvi = &t->tvi;
+	t->diff_sec = tvf->tv_sec - tvi->tv_sec;
+	t->diff_usec = tvf->tv_usec - tvi->tv_usec;
+	t->diff = t->diff_sec + (t->diff_usec / 1000000.0);
+}
+
 void setupOutput() {
 	setupInput();
 	getAInfo();
 	fillIcmp();
 	setAddr();
+	setInitialClock();
 }

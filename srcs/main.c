@@ -1,5 +1,6 @@
 #include "ft_ping.h"
 #include "libft.h"
+#include <arpa/inet.h>
 #include <signal.h>
 
 t_ftping *g_ping;
@@ -37,6 +38,7 @@ int	main(void)
 	setup();
 	g_ping->node = &(node[0]);
 
+	printf("PING %s (%s) %d(%d) bytes of data.\n", node, "AD.DR.ES.S", 42, 42);
 	looping();
 	// loop trap to keep program running until new signal is sent
 	while(1) {
