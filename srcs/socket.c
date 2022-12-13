@@ -26,7 +26,7 @@ int getSocketFrom(t_socket *sckt, t_socket data) {
   // printSocket(sckt->family, sckt->socktype, sckt->protocol);
   sckt->sockfd = socket(sckt->family, sckt->socktype, sckt->protocol);
   if (sckt->sockfd == -1) {
-    printf("\n====\nERROR:%s\n====\n", strerror(errno));
+    printf("ERROR:%s\n", strerror(errno));
     printf("Failed getting a socket\n");
     return FAILURE;
   }
@@ -49,21 +49,23 @@ int getSimpleSocket() {
 
   res = getSocketFrom(&(g_ping->socket), g_ping->socket);
   if (res == -1) {
-    printf("Failed getting a socket\n");
     exit(1);
   }
+
   setsockopt(g_ping->socket.sockfd, SOL_SOCKET, IP_HDRINCL, &hdrincl,
              sizeof(hdrincl));
   if (res == -1) {
     printf("Failed setting a socket option\n");
     exit(1);
   }
+
   setsockopt(g_ping->socket.sockfd, SOL_SOCKET, SO_DEBUG, &so_debug,
              sizeof(so_debug));
   if (res == -1) {
     printf("Failed setting a socket option\n");
     exit(1);
   }
+
   return 0;
 }
 

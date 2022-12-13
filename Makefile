@@ -50,8 +50,11 @@ json:
 debug: all
 	clear; sudo gdb ./ft_ping google.com
 
-test: all
+run: all
 	clear; sudo ./ft_ping google.com
+
+test: all
+	clear; sudo python3 ./tests/test.py
 
 firewall:
 	sudo python3 ./tests/firewall.py

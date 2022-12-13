@@ -1,12 +1,34 @@
 #!/bin/python3
-import shlex, subprocess
-command_line = input()
+import subprocess
 
-args = shlex.split(command_line)
-print(args)
+hostnames = ["google.com"]
+timeout = 3
+to_str = str(timeout) + "s"
+original = "ping"
+to_test = "./ft_ping"
 
-p = subprocess.Popen(args) # Success!
+def getArgs(name: str) -> list:
+    args = [
+        "timeout",
+        "-s",
+        "SIGINT",
+        to_str,
+        original,
+        name
+    ]
+    return args
 
-# subprocess.run(["ls", "-l"])  # doesn't capture output
-# subprocess.run("exit 1", shell=True, check=True)
-# subprocess.run(["ls", "-l", "/dev/null"], capture_output=True)
+def getTArgs(name: str) -> list:
+    args = getArgs(name)
+    args[-2] = to_test
+    return args
+
+for hname in hostnames:
+    # do the original
+    args = getArgs(hname)
+    with subprocess.Popen(args, stdout=subprocess.PIPE) as ping:
+        ping.communicate()
+        # what to pipe to to be able to compare output with 
+
+    # do the same with to test ping
+    targs = getTArgs(hname)
