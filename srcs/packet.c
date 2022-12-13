@@ -1,10 +1,4 @@
 #include "ft_ping.h"
-#include "libft.h"
-#include <netdb.h>
-#include <netinet/in.h>
-#include <netinet/ip_icmp.h>
-#include <stddef.h>
-#include <stdio.h>
 
 void setupInput() {
 	struct msghdr *msg;
@@ -33,11 +27,13 @@ void setupInput() {
 
 void getAInfo() {
 	int res;
+	struct addrinfo **ai_res;
 
-	if (g_ping->results != NULL) {
-		freeaddrinfo(g_ping->results);
+	ai_res = &g_ping->results;
+	if (*ai_res != NULL) {
+		freeaddrinfo(*ai_res);
 	}
-	res = getaddrinfo(g_ping->node, g_ping->service, &(g_ping->hints), &(g_ping->results));
+	res = getaddrinfo(g_ping->node, g_ping->service, &(g_ping->hints), ai_res);
 	if (res < 0) {
 		printf("%s\n", gai_strerror(res));
 		exit(FAILURE);
@@ -64,15 +60,36 @@ void fillIcmp() {
 	ft_memset(&g_ping->icmp, 0, sizeof(g_ping->icmp));
 	g_ping->icmp.icmp_type = ICMP_ECHO;
 	g_ping->icmp.icmp_code = 0;
-	g_ping->icmp.icmp_hun.ih_idseq.icd_id = g_ping->pid;
-	g_ping->icmp.icmp_hun.ih_idseq.icd_seq = g_ping->seq;
+	g_ping->icmp.icmp_id = g_ping->pid;
+	g_ping->icmp.icmp_seq = g_ping->seq;
+	/* g_ping->icmp.icmp_otime = ;
+	g_ping->icmp.icmp_rtime = ;
+	g_ping->icmp.icmp_ttime = ; */
 	g_ping->icmp.icmp_cksum = icmpChecksum();
 	g_ping->seq++;
 }
 
 void setAddr() {
+	struct sockaddr_in *saddr_in;
+	struct in_addr *addr_in;
+
 	g_ping->dest_addr = *g_ping->results->ai_addr;
 	g_ping->addrlen = g_ping->results->ai_addrlen;
+
+	//
+	g_ping->canonname = g_ping->results->ai_canonname;
+
+	// ADDRESS as BYTES
+	saddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
+	addr_in = &saddr_in->sin_addr;
+	g_ping->addr_in = *addr_in;
+	inet_ntop(AF_INET, addr_in, g_ping->ip_str, INET_ADDRSTRLEN);
+	if (g_ping->seq == 1) {
+		printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->node, g_ping->ip_str, 8, 8);
+	}
+	// print_memory(addr_in, 4);
+	// printf("%s\n", g_ping->ip_str);
+
 }
 
 void setClock(struct timeval *tv) {
@@ -119,7 +136,7 @@ void getTimeDiff() {
 void setupOutput() {
 	setupInput();
 	getAInfo();
-	fillIcmp();
 	setAddr();
+	fillIcmp();
 	setInitialClock();
 }

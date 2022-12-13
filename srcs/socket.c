@@ -1,5 +1,4 @@
 #include "ft_ping.h"
-#include <asm-generic/socket.h>
 
 int getSocketFrom(t_socket *sckt, t_socket data) {
 
@@ -76,9 +75,9 @@ void getSockAddr(struct addrinfo *ptr, t_ftping *data) {
   addr = &(addrstr[0]);
   (void)data;
   inet_ntop(ptr->ai_family, &sock_addr->sin_addr, addr, INET_ADDRSTRLEN);
-  inet_pton(ptr->ai_family, addr, &data->address);
+  inet_pton(ptr->ai_family, addr, &data->addr_in);
 
-  printf("addr => %d\n", data->address);
+  // printf("addr => %d\n", data->addr_in);
   printf("address %s\t", addr);
   printf("canon name = %s\t", ptr->ai_canonname);
   data->dest_addr = *(ptr->ai_addr);

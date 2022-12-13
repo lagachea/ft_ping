@@ -18,12 +18,13 @@
 # include <sys/types.h>
 # include <unistd.h>
 
+# include "libft.h"
+
 # define FAILURE -1
 # define SUCCESS 0
 # define ICMP_PACKET_LEN 8
 # define DEBUG true
 
-# include "libft.h"
 
 typedef struct s_socket t_socket;
 struct s_socket {
@@ -50,10 +51,16 @@ typedef struct s_ftping {
 	unsigned int seq;
 	char *node;
 	char *service;
-	int address;
+
+	char *canonname;
 	struct addrinfo hints;
 	struct addrinfo *results;
 	struct sockaddr dest_addr;
+
+	struct in_addr  addr_in;
+	char rslv_node[INET_ADDRSTRLEN];
+	char *ip_str;
+
 	socklen_t addrlen;
 	t_socket socket;
 	// Packet buf ? + len

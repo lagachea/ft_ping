@@ -1,5 +1,4 @@
 #include "ft_ping.h"
-#include <unistd.h>
 
 void freePing() {
 	freeaddrinfo(g_ping->results);
@@ -10,8 +9,11 @@ void freePing() {
 
 void	interruptHandler(int signal) {
 	(void)signal;
-	// printf("Ctrl C handler\n");
-	dprintf(STDERR_FILENO, "\nSIGINT RECIEVED\n");
+	dprintf(STDERR_FILENO, "\nStopping gracefully\n");
+	// printf( "--- %s ping statistics ---", );
+	// printf("%d packets transmitted, %d received, %d%% packet loss, time 3005ms", transmitted, recieved, loss, sumtime);
+	// printf("rtt min/avg/max/mdev = %.3lf/%.3lf/%.3lf/%.3lf ms", min, avg, max, mdev);
+
 	freePing();
 	exit(0);
 }

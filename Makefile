@@ -48,11 +48,10 @@ json:
 	bear -- make re -s
 
 debug: all
-	clear; sudo gdb ./ft_ping
+	clear; sudo gdb ./ft_ping google.com
 
 test: all
-	# sudo python3 tests/test.py
-	clear; sudo ./ft_ping
+	clear; sudo ./ft_ping google.com
 
 firewall:
 	sudo python3 ./tests/firewall.py
