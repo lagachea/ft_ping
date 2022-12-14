@@ -123,16 +123,6 @@ void setAddr() {
 		printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->canonname, g_ping->ip_str, 8, 8);
 	}
 
-	// char *reverse_str;
-	//
-	// reverse_str = getReverseStr();
-	// int res;
-	// res = getaddrinfo(reverse_str, NULL, &g_ping->hints, &g_ping->reverse);
-	// if (res < 0) {
-	// 	printf("%s\n", gai_strerror(res));
-	// 	exit(FAILURE);
-	// }
-
 	// print_memory(addr_in, 4);
 	// printf("%s\n", g_ping->ip_str);
 
