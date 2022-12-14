@@ -72,38 +72,6 @@ void fillIcmp() {
 	g_ping->seq++;
 }
 
-char *getReverseStr() {
-	return NULL;
-	struct sockaddr_in *saddr_in;
-	struct in_addr *addr_in;
-	unsigned char *arr;
-	unsigned char swap;
-	char *reverse_str;
-	uint32_t	addr;
-
-	printf("%s reversed ", g_ping->ip_str);
-	saddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
-	addr_in = &saddr_in->sin_addr;
-	addr = *(uint32_t *)&g_ping->addr_in;
-	arr = (unsigned char *)&addr;
-	swap = arr[3];
-	arr[3] = arr[0];
-	arr[0] = swap;
-	swap = arr[2];
-	arr[2] = arr[1];
-	arr[1] = swap;
-	addr_in = (struct in_addr *)&addr;
-	inet_ntop(AF_INET, addr_in, g_ping->ip_str2, INET_ADDRSTRLEN);
-	printf("%s\n", g_ping->ip_str2);
-	reverse_str = ft_strjoin(g_ping->ip_str2, ".in-addr.arpa");
-	if (reverse_str == NULL) {
-		freePing();
-		exit(1);
-	}
-	printf("%s\n", reverse_str);
-	return reverse_str;
-}
-
 void setAddr() {
 	struct sockaddr_in *saddr_in;
 	struct in_addr *addr_in;
