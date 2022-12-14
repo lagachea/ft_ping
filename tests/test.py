@@ -1,8 +1,9 @@
 #!/bin/python3
 import subprocess
 
-hostnames = ["google.com"]
-timeout = 3
+	
+hostnames = ["google.com", "9.9.9.9", "www.42.fr", "192.168.1.1" ]
+timeout = 2
 to_str = str(timeout) + "s"
 original = "ping"
 to_test = "./ft_ping"

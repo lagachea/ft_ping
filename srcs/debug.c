@@ -92,3 +92,16 @@ void printTSocket(t_socket *sckt) {
 	printSocket(sckt->family, sckt->socktype, sckt->protocol);
 	printf("sockfd |%d|\n", sckt->sockfd);
 }
+
+void printAiInfo() {
+	struct addrinfo *ai_res;
+
+	ai_res = g_ping->results;
+	// printf("%s\n", ai_res->ai_canonname);
+	while (ai_res) {
+		// printf("\n");
+		// print_memory(ai_res, sizeof(struct addrinfo));
+		// printf("\n");
+		ai_res = (ai_res)->ai_next;
+	}
+}

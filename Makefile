@@ -20,7 +20,11 @@ LIBDIR = libft
 LIBA = $(LIBDIR)/libft.a
 
 CFLAGS = -Wall -Wextra -Werror
-CFLAGS += -g -fsanitize=address -fno-omit-frame-pointer
+CFLAGS += -g3 
+CFLAGS += -fsanitize=address,undefined 
+CFLAGS += -fno-omit-frame-pointer 
+# CFLAGS += -fsanitize=memory,undefined
+# CFLAGS += -fsanitize=thread,undefined 
 
 CC = clang
 #CC = gcc
@@ -36,7 +40,7 @@ LNECLR = "\\33[2K\\r"
 all: $(NAME)
 
 $(NAME): $(OBJECT)
-	make -s -C $(LIBDIR)
+	+ make -s -C $(LIBDIR)
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o $(NAME) $(OBJECT) $(LIBA)
 	printf "$(LNECLR)$(GREEN)make done$(WHITE)\n"
 
@@ -46,7 +50,7 @@ out/%.o: srcs/%.c $(HDRS)
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o $@ -c $<
 
 json:
-	bear -- make re -s
+	+ bear -- make re -s
 
 debug: all
 	clear; sudo gdb ./ft_ping google.com
@@ -62,15 +66,15 @@ firewall:
 
 clean:
 	$(RM) -rf out
-	make -s -C $(LIBDIR) clean
+	+ make -s -C $(LIBDIR) clean
 	printf "$(PURPLE)clean done$(WHITE)\n"
 
 fclean:
 	$(RM) -rf out $(NAME)
-	make -s -C $(LIBDIR) fclean
+	+ make -s -C $(LIBDIR) fclean
 	printf "$(PURPLE)fclean done$(WHITE)\n"
 
 re: fclean all
 
-.PHONY: fclean clean re FORCE json test debug
-.SILENT: fclean clean re FORCE $(NAME) $(OBJECT) json test debug
+.PHONY: fclean clean re FORCE json test debug firewall
+.SILENT: fclean clean re FORCE $(NAME) $(OBJECT) json test debug firewall

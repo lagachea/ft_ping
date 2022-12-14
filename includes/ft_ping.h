@@ -56,10 +56,13 @@ typedef struct s_ftping {
 	struct addrinfo hints;
 	struct addrinfo *results;
 	struct sockaddr dest_addr;
+	struct addrinfo *reverse;
 
 	struct in_addr  addr_in;
 	char rslv_node[INET_ADDRSTRLEN];
+	char rslv_node2[INET_ADDRSTRLEN];
 	char *ip_str;
+	char *ip_str2;
 
 	socklen_t addrlen;
 	t_socket socket;
@@ -164,6 +167,7 @@ const char *getFamilyName(int value);
 const char *getSocketName(int value);
 void printSocket(int family, int socktype, int protocol);
 void printTSocket(t_socket *sckt);
+void printAiInfo();
 
 /* socket.c */
 int getSocketFrom(t_socket *sckt, t_socket data);

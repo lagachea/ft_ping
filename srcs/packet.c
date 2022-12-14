@@ -1,4 +1,7 @@
 #include "ft_ping.h"
+#include "libft.h"
+#include <netdb.h>
+#include <stdio.h>
 
 void setupInput() {
 	struct msghdr *msg;
@@ -24,7 +27,6 @@ void setupInput() {
 	g_ping->rec_flags = 0;
 }
 
-
 void getAInfo() {
 	int res;
 	struct addrinfo **ai_res;
@@ -33,11 +35,12 @@ void getAInfo() {
 	if (*ai_res != NULL) {
 		freeaddrinfo(*ai_res);
 	}
-	res = getaddrinfo(g_ping->node, g_ping->service, &(g_ping->hints), ai_res);
+	res = getaddrinfo(g_ping->node, g_ping->service, &g_ping->hints, ai_res);
 	if (res < 0) {
 		printf("%s\n", gai_strerror(res));
 		exit(FAILURE);
 	}
+	// printAiInfo();
 }
 
 static uint16_t icmpChecksum() {
@@ -69,6 +72,38 @@ void fillIcmp() {
 	g_ping->seq++;
 }
 
+char *getReverseStr() {
+	return NULL;
+	struct sockaddr_in *saddr_in;
+	struct in_addr *addr_in;
+	unsigned char *arr;
+	unsigned char swap;
+	char *reverse_str;
+	uint32_t	addr;
+
+	printf("%s reversed ", g_ping->ip_str);
+	saddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
+	addr_in = &saddr_in->sin_addr;
+	addr = *(uint32_t *)&g_ping->addr_in;
+	arr = (unsigned char *)&addr;
+	swap = arr[3];
+	arr[3] = arr[0];
+	arr[0] = swap;
+	swap = arr[2];
+	arr[2] = arr[1];
+	arr[1] = swap;
+	addr_in = (struct in_addr *)&addr;
+	inet_ntop(AF_INET, addr_in, g_ping->ip_str2, INET_ADDRSTRLEN);
+	printf("%s\n", g_ping->ip_str2);
+	reverse_str = ft_strjoin(g_ping->ip_str2, ".in-addr.arpa");
+	if (reverse_str == NULL) {
+		freePing();
+		exit(1);
+	}
+	printf("%s\n", reverse_str);
+	return reverse_str;
+}
+
 void setAddr() {
 	struct sockaddr_in *saddr_in;
 	struct in_addr *addr_in;
@@ -85,8 +120,19 @@ void setAddr() {
 	g_ping->addr_in = *addr_in;
 	inet_ntop(AF_INET, addr_in, g_ping->ip_str, INET_ADDRSTRLEN);
 	if (g_ping->seq == 1) {
-		printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->node, g_ping->ip_str, 8, 8);
+		printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->canonname, g_ping->ip_str, 8, 8);
 	}
+
+	// char *reverse_str;
+	//
+	// reverse_str = getReverseStr();
+	// int res;
+	// res = getaddrinfo(reverse_str, NULL, &g_ping->hints, &g_ping->reverse);
+	// if (res < 0) {
+	// 	printf("%s\n", gai_strerror(res));
+	// 	exit(FAILURE);
+	// }
+
 	// print_memory(addr_in, 4);
 	// printf("%s\n", g_ping->ip_str);
 
