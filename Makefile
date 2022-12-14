@@ -1,5 +1,6 @@
 NAME = ft_ping
 
+HDRS = includes/ft_ping.h libft/includes/libft.h
 SRC = main.c\
 	  debug.c\
 	  socket.c\
@@ -39,7 +40,7 @@ $(NAME): $(OBJECT)
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o $(NAME) $(OBJECT) $(LIBA)
 	printf "$(LNECLR)$(GREEN)make done$(WHITE)\n"
 
-out/%.o: srcs/%.c
+out/%.o: srcs/%.c $(HDRS)
 	mkdir -p out
 	printf "$(LNECLR)$(NAME): $<"
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o $@ -c $<
