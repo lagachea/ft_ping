@@ -44,6 +44,7 @@ void setHandler(int signum, sighandler_t handler) {
 }
 
 void setAlarmHandler(int sec, sighandler_t handler) {
+	alarm(0);
 	setHandler(SIGALRM, handler);
 	alarm(sec);
 }

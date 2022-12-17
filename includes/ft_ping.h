@@ -23,6 +23,8 @@
 # define FAILURE -1
 # define SUCCESS 0
 # define ICMP_PACKET_LEN 8
+# define TIMEOUT 10
+# define NEXT 1
 # define DEBUG true
 
 

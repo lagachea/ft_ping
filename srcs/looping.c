@@ -12,10 +12,10 @@ void looping (){
 		exit(FAILURE);
 	}
 	else {
-		setAlarmHandler(10, &timeoutHandler);
+		setAlarmHandler(TIMEOUT, &timeoutHandler);
 		set_transmitted();
 		recieveMsg();
-		setAlarmHandler(1, &loopHandler);
+		setAlarmHandler(NEXT, &loopHandler);
 		return;
 	}
 }
