@@ -35,6 +35,17 @@ struct s_socket {
   t_socket *next;
 };
 
+typedef struct s_stats{
+	unsigned int transmitted;
+	unsigned int recieved;
+	unsigned int loss;
+	unsigned int sumtime;
+	double min;
+	double max;
+	double avg;
+	double mdev;
+} t_stats;
+
 typedef struct s_clock{
 	unsigned char state;
 	struct timeval tvf;
@@ -46,6 +57,7 @@ typedef struct s_clock{
 
 typedef struct s_ftping {
 	t_clock time;
+	t_stats counters;
 	uid_t uid;
 	pid_t pid;
 	unsigned int seq;
