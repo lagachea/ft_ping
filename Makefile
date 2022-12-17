@@ -9,6 +9,7 @@ SRC = main.c\
 	  recieve.c\
 	  tools.c\
 	  looping.c\
+	  stats.c\
 
 
 SRCS = $(addprefix srcs/,$(SRCS))

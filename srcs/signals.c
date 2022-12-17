@@ -14,7 +14,7 @@ void	interruptHandler(int signal) {
 	printf("%u packets transmitted, %u received, %u%% packet loss, time %ums\n",
 			g_ping->counters.transmitted,
 			g_ping->counters.recieved,
-			g_ping->counters.loss,
+			g_ping->counters.loss_percent,
 			g_ping->counters.sumtime);
 	printf("rtt min/avg/max/mdev = %.3lf/%.3lf/%.3lf/%.3lf ms\n",
 			g_ping->counters.min,

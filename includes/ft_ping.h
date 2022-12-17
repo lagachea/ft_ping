@@ -39,6 +39,7 @@ typedef struct s_stats{
 	unsigned int transmitted;
 	unsigned int recieved;
 	unsigned int loss;
+	unsigned int loss_percent;
 	unsigned int sumtime;
 	double min;
 	double max;
@@ -201,6 +202,11 @@ void freePing();
 void	loopHandler(int signum);
 void	interruptHandler(int signal);
 void	timeoutHandler(int signal);
+
+/* stats.c */
+void set_transmitted();
+void set_recieved();
+void set_loss();
 
 /* recieve.c */
 void recieveMsg();
