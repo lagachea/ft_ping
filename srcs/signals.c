@@ -9,19 +9,7 @@ void freePing() {
 
 void	interruptHandler(int signal) {
 	(void)signal;
-	printf( "\n--- %s ping statistics ---\n",
-			g_ping->canonname);
-	printf("%u packets transmitted, %u received, %u%% packet loss, time %ums\n",
-			g_ping->counters.transmitted,
-			g_ping->counters.recieved,
-			g_ping->counters.loss_percent,
-			g_ping->counters.sumtime);
-	printf("rtt min/avg/max/mdev = %.3lf/%.3lf/%.3lf/%.3lf ms\n",
-			g_ping->counters.min,
-			g_ping->counters.avg,
-			g_ping->counters.max,
-			g_ping->counters.mdev);
-
+	printStatistics();
 	freePing();
 	exit(0);
 }
@@ -34,7 +22,8 @@ void	loopHandler(int signum) {
 void	timeoutHandler(int signum) {
 	(void)signum;
 	// Alarm timeout after sending packet
-	dprintf(STDERR_FILENO ,"timeout handler\n");
+	dprintf(STDERR_FILENO ,"timeout detected\n");
+	printStatistics();
 	freePing();
 	exit(1);
 }

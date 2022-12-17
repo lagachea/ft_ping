@@ -41,3 +41,19 @@ void printIcmp(struct icmp *icmptr) {
 	printf("icmp\n");
 	print_memory(icmptr, 8);
 }
+
+void printStatistics() {
+	printf( "\n--- %s ping statistics ---\n",
+			g_ping->canonname);
+	printf("%u packets transmitted, %u received, %u%% packet loss, time %ums\n",
+			g_ping->counters.transmitted,
+			g_ping->counters.recieved,
+			g_ping->counters.loss_percent,
+			g_ping->counters.sumtime);
+	printf("rtt min/avg/max/mdev = %.3lf/%.3lf/%.3lf/%.3lf ms\n",
+			g_ping->counters.min,
+			g_ping->counters.avg,
+			g_ping->counters.max,
+			g_ping->counters.mdev);
+
+}
