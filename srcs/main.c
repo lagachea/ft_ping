@@ -4,21 +4,26 @@ t_ftping *g_ping;
 
 void setup() {
 	setHandler(SIGINT, &interruptHandler);
+	setHandler(SIGQUIT, &sigquitHandler);
+
 	ft_memset(g_ping, 0, sizeof(t_ftping));
+
 	g_ping->service = NULL;
 
-
+	g_ping->pid = getpid();
+	g_ping->uid = 0;
 	getSimpleSocket();
 
-	g_ping->pid = getpid();
-
+	g_ping->hints.ai_flags = AI_CANONNAME;
 	g_ping->hints.ai_family = AF_INET;
 	g_ping->hints.ai_socktype = 0;
 	g_ping->hints.ai_protocol = 0;
-	g_ping->hints.ai_flags = AI_CANONNAME;
-	g_ping->hints.ai_canonname = NULL;
+	// g_ping->hints.ai_addrlen = 0;
 	g_ping->hints.ai_addr = NULL;
+	g_ping->hints.ai_canonname = NULL;
 	g_ping->hints.ai_next = NULL;
+
+	g_ping->results = NULL;
 
 	g_ping->seq = 1;
 	g_ping->ip_str = &g_ping->rslv_node[0];

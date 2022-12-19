@@ -102,7 +102,7 @@ void setClock(struct timeval *tv) {
 	if (ret != 0) {
 		printf("Error setting clock\n");
 		freePing();
-		exit(1);
+		exit(FAILURE);
 	}
 }
 

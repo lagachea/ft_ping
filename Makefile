@@ -22,13 +22,12 @@ LIBA = $(LIBDIR)/libft.a
 
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -g3 
-CFLAGS += -fsanitize=address,undefined 
+CFLAGS += -fsanitize=address
 CFLAGS += -fno-omit-frame-pointer 
 # CFLAGS += -fsanitize=memory,undefined
 # CFLAGS += -fsanitize=thread,undefined 
 
 CC = clang
-#CC = gcc
 
 BLUE = "\\033[36m"
 RED = "\\033[31m"
@@ -43,6 +42,7 @@ all: $(NAME)
 $(NAME): $(OBJECT)
 	+ make -s -C $(LIBDIR)
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o $(NAME) $(OBJECT) $(LIBA)
+	sudo setcap cap_net_raw=pe ft_ping
 	printf "$(LNECLR)$(GREEN)make done$(WHITE)\n"
 
 out/%.o: srcs/%.c $(HDRS)

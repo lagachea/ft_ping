@@ -57,3 +57,10 @@ void printStatistics() {
 			g_ping->counters.mdev);
 
 }
+
+void printShortStatistics() {
+	printf("\r%u/%u packets, %u%% loss\n",
+			g_ping->counters.recieved,
+			g_ping->counters.transmitted,
+			g_ping->counters.loss_percent);
+}

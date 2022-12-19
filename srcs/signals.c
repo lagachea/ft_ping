@@ -7,6 +7,11 @@ void freePing() {
 	g_ping->socket.sockfd = -1;
 }
 
+void	sigquitHandler(int signal) {
+	(void)signal;
+	printShortStatistics();
+}
+
 void	interruptHandler(int signal) {
 	(void)signal;
 	printStatistics();
@@ -25,7 +30,7 @@ void	timeoutHandler(int signum) {
 	dprintf(STDERR_FILENO ,"timeout detected\n");
 	printStatistics();
 	freePing();
-	exit(1);
+	exit(FAILURE);
 }
 
 void setHandler(int signum, sighandler_t handler) {

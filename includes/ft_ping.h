@@ -20,7 +20,7 @@
 
 # include "libft.h"
 
-# define FAILURE -1
+# define FAILURE 1
 # define SUCCESS 0
 # define ICMP_PACKET_LEN 8
 # define TIMEOUT 10
@@ -204,6 +204,7 @@ void freePing();
 void	loopHandler(int signum);
 void	interruptHandler(int signal);
 void	timeoutHandler(int signal);
+void	sigquitHandler(int signal);
 
 /* stats.c */
 void set_transmitted();
@@ -218,6 +219,7 @@ void	print_memory(const void *addr, size_t size);
 void printIcmp(struct icmp *icmptr);
 void printIp(struct ip *ipptr);
 void printStatistics();
+void printShortStatistics();
 
 /* looping.c */
 void looping ();

@@ -84,8 +84,7 @@ void printTSocket(t_socket *sckt) {
 
 	len = sizeof(addr);
 	res = getsockname(sckt->sockfd, &addr, &len);
-	if (res == -1)
-	{
+	if (res == -1) {
 		printf("\n====\nERROR:%s\n====\n", strerror(errno));
 	}
 	printf("GOT SOCK %s |%s|\n",getFamilyName(addr.sa_family), addr.sa_data);
@@ -97,11 +96,11 @@ void printAiInfo() {
 	struct addrinfo *ai_res;
 
 	ai_res = g_ping->results;
-	// printf("%s\n", ai_res->ai_canonname);
+	printf("%s\n", ai_res->ai_canonname);
 	while (ai_res) {
-		// printf("\n");
-		// print_memory(ai_res, sizeof(struct addrinfo));
-		// printf("\n");
+		printf("\n");
+		print_memory(ai_res, sizeof(struct addrinfo));
+		printf("\n");
 		ai_res = (ai_res)->ai_next;
 	}
 }
