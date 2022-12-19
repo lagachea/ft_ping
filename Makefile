@@ -57,10 +57,10 @@ debug: all
 	clear; sudo gdb ./ft_ping google.com
 
 run: all
-	clear; sudo ./ft_ping google.com
+	clear; ./ft_ping google.com
 
 test: all
-	clear; sudo python3 ./tests/test.py
+	clear; python3 ./tests/test.py
 
 firewall:
 	sudo python3 ./tests/firewall.py
