@@ -3,7 +3,7 @@
 int getSocket(t_socket *sckt) {
   sckt->sockfd = socket(sckt->family, sckt->socktype, sckt->protocol);
   if (sckt->sockfd == -1) {
-    printf("ERROR:%s | Failed getting a socket\n", strerror(errno));
+    printError("ERROR:%s | Failed getting a socket\n", strerror(errno));
     return FAILURE;
   }
   return SUCCESS;
@@ -27,13 +27,13 @@ int getSimpleSocket() {
 
  //  res = setsockopt(g_ping->socket.sockfd, IPPROTO_IP, IP_HDRINCL, &off, sizeof(off));
  //  if (res == -1) {
-	// printf("ERROR:%s | Failed setting socket option 1\n", strerror(errno));
+	// printError("ERROR:%s | Failed setting socket option 1\n", strerror(errno));
  //    exit(FAILURE);
  //  }
 
  //  res = setsockopt(g_ping->socket.sockfd, SOL_SOCKET, SO_DEBUG, &on, sizeof(on));
  //  if (res == -1) {
-	// printf("ERROR:%s | Failed setting socket option 2\n", strerror(errno));
+	// printError("ERROR:%s | Failed setting socket option 2\n", strerror(errno));
  //    exit(FAILURE);
  //  }
 

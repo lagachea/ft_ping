@@ -40,7 +40,7 @@ struct s_socket {
 typedef struct s_stats{
 	unsigned int transmitted;
 	unsigned int recieved;
-	unsigned int loss;
+	unsigned int diff;
 	unsigned int loss_percent;
 	unsigned int sumtime;
 	double min;
@@ -225,6 +225,7 @@ void printIp(struct ip *ipptr);
 void printStatistics();
 void printShortStatistics();
 void printTimeval(struct timeval *tv);
+void printError(const char *fmt, const char *value);
 
 /* looping.c */
 void looping ();

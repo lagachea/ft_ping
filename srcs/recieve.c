@@ -46,7 +46,7 @@ void recieveMsg( ) {
 	while (res == 0) {
 		res = recvmsg(g_ping->socket.sockfd, &g_ping->msg, g_ping->rec_flags);
 		if (res == -1) {
-			printf("ERROR:%s | Error reading msg\n", strerror(errno));
+			printError("ERROR:%s | Error reading msg\n", strerror(errno));
 			freePing();
 			exit(FAILURE);
 		}

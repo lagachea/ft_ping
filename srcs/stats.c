@@ -20,7 +20,7 @@ void set_loss() {
 	float ratio;
 
 	ctrs = &g_ping->counters;
-	ctrs->loss = ctrs->transmitted - ctrs->recieved;
-	ratio = (float)ctrs->loss / ctrs->transmitted;
+	ctrs->diff = ctrs->transmitted - ctrs->recieved;
+	ratio = (float)ctrs->diff / ctrs->transmitted;
 	ctrs->loss_percent = ratio * 100;
 }

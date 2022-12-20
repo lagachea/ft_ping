@@ -1,4 +1,6 @@
 #include "ft_ping.h"
+#include <stdio.h>
+#include <unistd.h>
 
 void	print_memory(const void *addr, size_t size)
 {
@@ -55,6 +57,7 @@ void setSumTime() {
 
 void printStatistics() {
 	setSumTime();
+	set_loss();
 	printf( "\n--- %s ping statistics ---\n",
 			g_ping->canonname);
 	printf("%u packets transmitted, %u received, %u%% packet loss, time %ums\n",
@@ -71,6 +74,7 @@ void printStatistics() {
 }
 
 void printShortStatistics() {
+	set_loss();
 	printf("\r%u/%u packets, %u%% loss\n",
 			g_ping->counters.recieved,
 			g_ping->counters.transmitted,
@@ -82,4 +86,8 @@ void printTimeval(struct timeval *tv) {
 
 	t = tv->tv_sec * 1000000 + tv->tv_usec;
 	printf("%u\n", t);
+}
+
+void printError(const char *fmt, const char *value) {
+	dprintf(STDERR_FILENO, fmt, value);
 }
