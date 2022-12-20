@@ -15,8 +15,9 @@ void printMsg(int len) {
 
 	t = &g_ping->time;
 	getTimeDiff();
-	printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n", len, g_ping->ip_str, icmptr->icmp_seq, ipptr->ip_ttl, t->diff_ms);
+	update_stats();
 	set_recieved();
+	printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n", len, g_ping->ip_str, icmptr->icmp_seq, ipptr->ip_ttl, t->diff_ms);
 	return;
 	// printf("namelen= %d\n", g_ping->msg.msg_namelen);
 	// printf("controllen= %zu\n", g_ping->msg.msg_controllen);

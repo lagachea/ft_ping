@@ -214,6 +214,7 @@ void	sigquitHandler(int signal);
 void set_transmitted();
 void set_recieved();
 void set_loss();
+void update_stats();
 
 /* recieve.c */
 void recieveMsg();
