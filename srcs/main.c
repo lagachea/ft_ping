@@ -3,13 +3,13 @@
 t_ftping *g_ping;
 
 void setup() {
+	ft_memset(g_ping, 0, sizeof(t_ftping));
+	setClock(&g_ping->time.tvo);
+
 	setHandler(SIGINT, &interruptHandler);
 	setHandler(SIGQUIT, &sigquitHandler);
 
-	ft_memset(g_ping, 0, sizeof(t_ftping));
-
 	g_ping->service = NULL;
-
 	g_ping->pid = getpid();
 	g_ping->uid = 0;
 	getSimpleSocket();
@@ -27,16 +27,17 @@ void setup() {
 
 	g_ping->seq = 1;
 	g_ping->ip_str = &g_ping->rslv_node[0];
+
 }
 
 int	main(int ac, char **av)
 {
 
 	t_ftping pingdata;
-
-	// Parse host from arg
 	g_ping = &pingdata;
 	setup();
+
+	// Parse host from arg
 	g_ping->node = av[ac - 1];
 
 	looping();

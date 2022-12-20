@@ -42,7 +42,19 @@ void printIcmp(struct icmp *icmptr) {
 	print_memory(icmptr, 8);
 }
 
+void setSumTime() {
+	unsigned int diff;
+	struct timeval tv;
+	struct timeval *tvo;
+
+	tvo = &g_ping->time.tvo;
+	setClock(&tv);
+	diff = getDiff(&tv, tvo);
+	g_ping->counters.sumtime = diff / 1000;
+}
+
 void printStatistics() {
+	setSumTime();
 	printf( "\n--- %s ping statistics ---\n",
 			g_ping->canonname);
 	printf("%u packets transmitted, %u received, %u%% packet loss, time %ums\n",
@@ -63,4 +75,11 @@ void printShortStatistics() {
 			g_ping->counters.recieved,
 			g_ping->counters.transmitted,
 			g_ping->counters.loss_percent);
+}
+
+void printTimeval(struct timeval *tv) {
+	unsigned int t;
+
+	t = tv->tv_sec * 1000000 + tv->tv_usec;
+	printf("%u\n", t);
 }

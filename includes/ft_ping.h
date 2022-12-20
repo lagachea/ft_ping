@@ -51,11 +51,13 @@ typedef struct s_stats{
 
 typedef struct s_clock{
 	unsigned char state;
+	struct timeval tvo;
 	struct timeval tvf;
 	struct timeval tvi;
-	long diff_sec;
-	long diff_usec;
-	double diff;
+	unsigned int diff_sec;
+	unsigned int diff_usec;
+	unsigned int diff;
+	double diff_ms;
 } t_clock;
 
 typedef struct s_ftping {
@@ -192,9 +194,11 @@ void setupInput();
 void setupOutput();
 void printMsg(int len);
 void getAInfo();
+void setClock(struct timeval *tv);
 void setInitialClock();
 void setFinalClock();
 void getTimeDiff();
+unsigned int getDiff(struct timeval *tvf, struct timeval *tvi);
 
 
 /* signals.c */
@@ -220,6 +224,7 @@ void printIcmp(struct icmp *icmptr);
 void printIp(struct ip *ipptr);
 void printStatistics();
 void printShortStatistics();
+void printTimeval(struct timeval *tv);
 
 /* looping.c */
 void looping ();

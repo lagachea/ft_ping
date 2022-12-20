@@ -71,11 +71,15 @@ clean:
 	printf "$(PURPLE)clean done$(WHITE)\n"
 
 fclean:
-	$(RM) -rf out $(NAME)
+	$(RM) -rf out $(NAME) server client
 	+ make -s -C $(LIBDIR) fclean
 	printf "$(PURPLE)fclean done$(WHITE)\n"
 
 re: fclean all
+
+random:
+	$(CC) $(CFLAGS) -I includes -I libft/includes -o server srcs/test.c $(LIBA)
+	$(CC) $(CFLAGS) -I includes -I libft/includes -o client srcs/testcli.c $(LIBA)
 
 .PHONY: fclean clean re FORCE json test debug firewall
 .SILENT: fclean clean re FORCE $(NAME) $(OBJECT) json test debug firewall

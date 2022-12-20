@@ -1,13 +1,10 @@
 #include "ft_ping.h"
-#include "libft.h"
-#include <netdb.h>
-#include <stdio.h>
 
 void setupInput() {
 	struct msghdr *msg;
 
 	msg = &g_ping->msg;
-	ft_memset(msg, 0, sizeof(struct msghdr));
+	ft_memset(msg, 0, sizeof(*msg));
 	msg->msg_name = &g_ping->sin;
 	msg->msg_namelen = sizeof(g_ping->sin);
 
@@ -98,43 +95,43 @@ void setAddr() {
 
 void setClock(struct timeval *tv) {
 	int ret;
+
+	ft_memset(tv, 0, sizeof(*tv));
 	ret = gettimeofday(tv, NULL);
 	if (ret != 0) {
 		printf("Error setting clock\n");
 		freePing();
 		exit(FAILURE);
 	}
+	// printf( "--- set TV ---\n");
+	// printTimeval(tv);
 }
 
 void setInitialClock() {
-	struct timeval *tv;
-
-	ft_memset(&g_ping->time, 0, sizeof(t_clock));
-	tv = &g_ping->time.tvi;
-	setClock(tv);
-	// printf("\nInitial usec = %li | sec = %li |%lf|\n", tv->tv_usec, tv->tv_sec, tv->tv_sec + (1.0/1000000) * tv->tv_usec);
+	setClock(&g_ping->time.tvi);
 }
 
 void setFinalClock() {
-	struct timeval *tv;
-
-	tv = &g_ping->time.tvf;
-	setClock(tv);
-	// printf("\nFinal usec = %li | sec = %li |%lf|\n", tv->tv_usec, tv->tv_sec, tv->tv_sec + (1.0/1000000) * tv->tv_usec);
+	setClock(&g_ping->time.tvf);
 }
 
 void getTimeDiff() {
 	t_clock *t;
-	struct timeval *tvf;
-	struct timeval *tvi;
 
 	setFinalClock();
 	t = &g_ping->time;
-	tvf = &t->tvf;
-	tvi = &t->tvi;
-	t->diff_sec = tvf->tv_sec - tvi->tv_sec;
-	t->diff_usec = tvf->tv_usec - tvi->tv_usec;
-	t->diff = t->diff_sec + (t->diff_usec / 1000000.0);
+	t->diff = getDiff(&t->tvf, &t->tvi);
+	t->diff_ms = t->diff / 1000.0;
+}
+
+unsigned int getDiff(struct timeval *tvf, struct timeval *tvi) {
+	unsigned int diff;
+	unsigned int diff_sec;
+	unsigned int diff_usec;
+	diff_sec = tvf->tv_sec - tvi->tv_sec;
+	diff_usec = tvf->tv_usec - tvi->tv_usec;
+	diff = diff_sec * 1000000 + diff_usec;
+	return diff;
 }
 
 void setupOutput() {
