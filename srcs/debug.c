@@ -77,6 +77,7 @@ void printSocket(int family, int socktype, int protocol) {
 	printf("socket type |%s| %d \n", sname, socktype);
 	printf("protocol |%s| %d \n", pname, protocol);
 }
+
 void printTSocket(t_socket *sckt) {
 	struct sockaddr addr;
 	socklen_t len;

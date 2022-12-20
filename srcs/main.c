@@ -11,7 +11,8 @@ void setup() {
 
 	g_ping->service = NULL;
 	g_ping->pid = getpid();
-	g_ping->uid = 0;
+	// g_ping->uid = 0;
+
 	getSimpleSocket();
 
 	g_ping->hints.ai_flags = AI_CANONNAME;

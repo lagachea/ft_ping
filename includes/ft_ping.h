@@ -184,7 +184,7 @@ void printTSocket(t_socket *sckt);
 void printAiInfo();
 
 /* socket.c */
-int getSocketFrom(t_socket *sckt, t_socket data);
+int getSocket(t_socket *sckt);
 int getSimpleSocket();
 void getSockAddr(struct addrinfo *ptr, t_ftping *data);
 

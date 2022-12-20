@@ -1,31 +1,9 @@
 #include "ft_ping.h"
 
-int getSocketFrom(t_socket *sckt, t_socket data) {
-
-  int family = data.family;
-  int socktype = data.socktype;
-  int protocol = data.protocol;
-  // printf("+++socket\n");
-  sckt->family = family;
-  sckt->socktype = socktype;
-  sckt->protocol = protocol;
-  if (sckt->socktype == SOCK_RAW) {
-    if (sckt->protocol == IPPROTO_IP) {
-      // printf("switch from IP TO ICMP for %s\n", getSocketName(SOCK_RAW));
-      sckt->protocol = IPPROTO_ICMP;
-    }
-    if (g_ping->uid != 0) {
-      // printf("no raw socket without sudo switching to DGRAM\n");
-      sckt->socktype = SOCK_DGRAM;
-    } else {
-      // printf("shall we try as root to get a %s\n", getSocketName(SOCK_RAW));
-    }
-  }
-
+int getSocket(t_socket *sckt) {
   sckt->sockfd = socket(sckt->family, sckt->socktype, sckt->protocol);
   if (sckt->sockfd == -1) {
-    printf("ERROR:%s\n", strerror(errno));
-    printf("Failed getting a socket\n");
+    printf("ERROR:%s | Failed getting a socket\n", strerror(errno));
     return FAILURE;
   }
   return SUCCESS;
@@ -33,33 +11,31 @@ int getSocketFrom(t_socket *sckt, t_socket data) {
 
 int getSimpleSocket() {
   int res;
-  int hdrincl;
-  int so_debug;
+  // int off;
+  // int on;
 
-  hdrincl = 0;
-  so_debug = 1;
+  // off = 0;
+  // on = 1;
   g_ping->socket.family = AF_INET;
   g_ping->socket.socktype = SOCK_RAW;
   g_ping->socket.protocol = IPPROTO_ICMP;
 
-  res = getSocketFrom(&(g_ping->socket), g_ping->socket);
+  res = getSocket(&g_ping->socket);
   if (res == FAILURE) {
     exit(FAILURE);
   }
 
-  setsockopt(g_ping->socket.sockfd, SOL_SOCKET, IP_HDRINCL, &hdrincl,
-             sizeof(hdrincl));
-  if (res == -1) {
-    printf("Failed setting a socket option\n");
-    exit(FAILURE);
-  }
+ //  res = setsockopt(g_ping->socket.sockfd, IPPROTO_IP, IP_HDRINCL, &off, sizeof(off));
+ //  if (res == -1) {
+	// printf("ERROR:%s | Failed setting socket option 1\n", strerror(errno));
+ //    exit(FAILURE);
+ //  }
 
-  setsockopt(g_ping->socket.sockfd, SOL_SOCKET, SO_DEBUG, &so_debug,
-             sizeof(so_debug));
-  if (res == -1) {
-    printf("Failed setting a socket option\n");
-    exit(FAILURE);
-  }
+ //  res = setsockopt(g_ping->socket.sockfd, SOL_SOCKET, SO_DEBUG, &on, sizeof(on));
+ //  if (res == -1) {
+	// printf("ERROR:%s | Failed setting socket option 2\n", strerror(errno));
+ //    exit(FAILURE);
+ //  }
 
   return 0;
 }

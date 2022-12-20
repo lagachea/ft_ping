@@ -34,7 +34,7 @@ void getAInfo() {
 	}
 	res = getaddrinfo(g_ping->node, g_ping->service, &g_ping->hints, ai_res);
 	if (res < 0) {
-		printf("%s\n", gai_strerror(res));
+		printf("ERROR:%s | Error getting addrinfo\n", gai_strerror(res));
 		exit(FAILURE);
 	}
 	// printAiInfo();
@@ -99,7 +99,7 @@ void setClock(struct timeval *tv) {
 	ft_memset(tv, 0, sizeof(*tv));
 	ret = gettimeofday(tv, NULL);
 	if (ret != 0) {
-		printf("Error setting clock\n");
+		printf("ERROR:%s | Failed setting clock\n", strerror(errno));
 		freePing();
 		exit(FAILURE);
 	}
