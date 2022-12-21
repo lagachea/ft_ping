@@ -13,6 +13,7 @@ void looping (){
 	}
 	else {
 		setAlarmHandler(TIMEOUT, &timeoutHandler);
+		// setAlarmHandler(NEXT, &loopHandler);
 		set_transmitted();
 		recieveMsg();
 		setAlarmHandler(NEXT, &loopHandler);

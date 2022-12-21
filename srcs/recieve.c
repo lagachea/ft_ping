@@ -1,4 +1,5 @@
 #include "ft_ping.h"
+#include <stdio.h>
 
 void printMsg(int len) {
 	struct icmp *icmptr;
@@ -15,8 +16,8 @@ void printMsg(int len) {
 
 	t = &g_ping->time;
 	getTimeDiff();
-	update_stats();
 	set_recieved();
+	update_stats();
 	printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n", len, g_ping->ip_str, icmptr->icmp_seq, ipptr->ip_ttl, t->diff_ms);
 	return;
 	// printf("namelen= %d\n", g_ping->msg.msg_namelen);
@@ -44,18 +45,15 @@ void printMsg(int len) {
 void recieveMsg( ) {
 	int res = 0;
 
-	while (res == 0) {
-		res = recvmsg(g_ping->socket.sockfd, &g_ping->msg, g_ping->rec_flags);
-		if (res == -1) {
-			printError("ERROR:%s | Error reading msg\n", strerror(errno));
-			freePing();
-			exit(FAILURE);
-		}
-		else if (res > 0) {
-			// do print packet reception
-			alarm(0);
-			printMsg(res);
-			return ;
-		}
+	res = recvmsg(g_ping->socket.sockfd, &g_ping->msg, g_ping->rec_flags);
+	if (res == -1) {
+		printError("ERROR:%s | Error reading msg\n", strerror(errno));
+		freePing();
+		exit(FAILURE);
+	}
+	else if (res >= 0) {
+		alarm(0);
+		printMsg(res);
+		return ;
 	}
 }

@@ -17,6 +17,7 @@
 # include <sys/time.h>
 # include <sys/types.h>
 # include <unistd.h>
+# include <math.h>
 
 # include "libft.h"
 
@@ -47,6 +48,8 @@ typedef struct s_stats{
 	double max;
 	double avg;
 	double mdev;
+	double sum;
+	double sum2;
 } t_stats;
 
 typedef struct s_clock{

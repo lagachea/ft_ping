@@ -28,6 +28,7 @@ void setup() {
 
 	g_ping->seq = 1;
 	g_ping->ip_str = &g_ping->rslv_node[0];
+	g_ping->counters.min = 999999999999;
 
 }
 

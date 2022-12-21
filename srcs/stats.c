@@ -26,9 +26,18 @@ void set_loss() {
 }
 
 void update_stats() {
-	// set counters
-	// g_ping->counters.min = ;
-	// g_ping->counters.avg = ;
-	// g_ping->counters.max = ;
-	// g_ping->counters.mdev = ;
+	t_stats *ctrs;
+	double diff;
+	
+	ctrs = &g_ping->counters;
+	diff = g_ping->time.diff / 1000.0;
+
+	if (ctrs->min > diff)
+		ctrs->min = diff;
+	if (ctrs->max < diff)
+		ctrs->max = diff;
+	ctrs->sum += diff;
+	ctrs->sum2 += diff * diff;
+	ctrs->avg = ctrs->sum / ctrs->recieved;
+	ctrs->mdev = sqrt((ctrs->sum2 / ctrs->recieved) - (ctrs->avg * ctrs->avg));
 }
