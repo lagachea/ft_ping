@@ -36,14 +36,15 @@ for hname in hostnames:
     # do the original
     args = getArgs(hname)
     printCmd(args)
+    print("[[===================")
     with subprocess.Popen(args) as ping:
         ping.communicate()
+    print("                     ===================]]")
         # what to pipe to to be able to compare output with 
-
-    print("<=>")
-
     # do the same with to test ping
     targs = getTArgs(hname)
     printCmd(targs)
+    print("[[===================")
     with subprocess.Popen(targs) as test:
         test.communicate()
+    print("                     ===================]]")
