@@ -202,6 +202,7 @@ void setInitialClock();
 void setFinalClock();
 void getTimeDiff();
 unsigned int getDiff(struct timeval *tvf, struct timeval *tvi);
+void setOriginalClock();
 
 
 /* signals.c */

@@ -61,12 +61,12 @@ void fillIcmp() {
 	g_ping->icmp.icmp_type = ICMP_ECHO;
 	g_ping->icmp.icmp_code = 0;
 	g_ping->icmp.icmp_id = g_ping->pid;
+	g_ping->seq++;
 	g_ping->icmp.icmp_seq = g_ping->seq;
 	/* g_ping->icmp.icmp_otime = ;
 	g_ping->icmp.icmp_rtime = ;
 	g_ping->icmp.icmp_ttime = ; */
 	g_ping->icmp.icmp_cksum = icmpChecksum();
-	g_ping->seq++;
 }
 
 void setAddr() {
@@ -84,13 +84,9 @@ void setAddr() {
 	addr_in = &saddr_in->sin_addr;
 	g_ping->addr_in = *addr_in;
 	inet_ntop(AF_INET, addr_in, g_ping->ip_str, INET_ADDRSTRLEN);
-	if (g_ping->seq == 1) {
+	if (g_ping->seq == 0) {
 		printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->canonname, g_ping->ip_str, 8, 8);
 	}
-
-	// print_memory(addr_in, 4);
-	// printf("%s\n", g_ping->ip_str);
-
 }
 
 void setClock(struct timeval *tv) {
@@ -105,6 +101,10 @@ void setClock(struct timeval *tv) {
 	}
 	// printf( "--- set TV ---\n");
 	// printTimeval(tv);
+}
+
+void setOriginalClock() {
+	ft_memcpy(&g_ping->time.tvo, &g_ping->time.tvi, sizeof(struct timeval));
 }
 
 void setInitialClock() {
@@ -135,9 +135,12 @@ unsigned int getDiff(struct timeval *tvf, struct timeval *tvi) {
 }
 
 void setupOutput() {
+	setInitialClock();
+	if (g_ping->seq == 0) {
+		setOriginalClock();
+	}
 	setupInput();
 	getAInfo();
 	setAddr();
 	fillIcmp();
-	setInitialClock();
 }

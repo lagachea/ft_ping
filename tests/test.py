@@ -9,7 +9,8 @@ original = "ping"
 to_test = "./ft_ping"
 
 def printCmd(args: list):
-    print(f"Launching with following arguments\n{args}")
+    print(f"{args}")
+            #f"Launching with following arguments\n
 
 def getArgs(name: str) -> list:
     args = [
@@ -39,7 +40,7 @@ for hname in hostnames:
         ping.communicate()
         # what to pipe to to be able to compare output with 
 
-    print("\n<=>\n")
+    print("<=>")
 
     # do the same with to test ping
     targs = getTArgs(hname)

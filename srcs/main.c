@@ -4,7 +4,6 @@ t_ftping *g_ping;
 
 void setup() {
 	ft_memset(g_ping, 0, sizeof(t_ftping));
-	setClock(&g_ping->time.tvo);
 
 	setHandler(SIGINT, &interruptHandler);
 	setHandler(SIGQUIT, &sigquitHandler);
@@ -26,7 +25,6 @@ void setup() {
 
 	g_ping->results = NULL;
 
-	g_ping->seq = 1;
 	g_ping->ip_str = &g_ping->rslv_node[0];
 	g_ping->counters.min = 999999999999;
 
