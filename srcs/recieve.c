@@ -1,4 +1,5 @@
 #include "ft_ping.h"
+#include <netinet/in.h>
 #include <stdio.h>
 
 void printMsg(int len) {
@@ -18,7 +19,7 @@ void printMsg(int len) {
 	getTimeDiff();
 	set_recieved();
 	update_stats();
-	printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n", len, g_ping->ip_str, icmptr->icmp_seq, ipptr->ip_ttl, t->diff_ms);
+	printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n", len, g_ping->ip_str, ntohs(icmptr->icmp_seq), ipptr->ip_ttl, t->diff_ms);
 	return;
 	// printf("namelen= %d\n", g_ping->msg.msg_namelen);
 	// printf("controllen= %zu\n", g_ping->msg.msg_controllen);

@@ -18,6 +18,8 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include <math.h>
+# include <float.h>
+
 
 # include "libft.h"
 

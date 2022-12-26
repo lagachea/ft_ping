@@ -26,7 +26,8 @@ void setup() {
 	g_ping->results = NULL;
 
 	g_ping->ip_str = &g_ping->rslv_node[0];
-	g_ping->counters.min = 999999999999;
+	g_ping->counters.min = DBL_MAX;
+	g_ping->counters.max = DBL_MIN;
 
 }
 
