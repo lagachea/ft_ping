@@ -68,7 +68,7 @@ typedef struct s_ftping {
 	t_stats counters;
 	uid_t uid;
 	pid_t pid;
-	unsigned int seq;
+	unsigned short int seq;
 	char *node;
 	char *service;
 

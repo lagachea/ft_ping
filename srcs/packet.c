@@ -62,7 +62,7 @@ void fillIcmp() {
 	g_ping->icmp.icmp_code = 0;
 	g_ping->icmp.icmp_id = g_ping->pid;
 	g_ping->seq++;
-	g_ping->icmp.icmp_seq = g_ping->seq;
+	g_ping->icmp.icmp_seq = htons(g_ping->seq);
 	/* g_ping->icmp.icmp_otime = ;
 	g_ping->icmp.icmp_rtime = ;
 	g_ping->icmp.icmp_ttime = ; */
