@@ -50,8 +50,8 @@ out/%.o: srcs/%.c $(HDRS)
 	printf "$(LNECLR)$(NAME): $<"
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o $@ -c $<
 
-json:
-	+ bear -- make re -s
+json: fclean
+	+ bear -- make -s
 
 debug: all
 	clear; sudo gdb ./ft_ping google.com

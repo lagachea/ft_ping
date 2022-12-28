@@ -33,6 +33,7 @@ void setup() {
 
 int	main(int ac, char **av)
 {
+	// printArg(ac, av);
 
 	t_ftping pingdata;
 	g_ping = &pingdata;

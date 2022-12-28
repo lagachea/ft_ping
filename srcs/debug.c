@@ -105,3 +105,15 @@ void printAiInfo() {
 		ai_res = (ai_res)->ai_next;
 	}
 }
+
+void printArg(int ac, char **av) {
+	int iter = 0;
+	while (++iter < ac)
+	{
+	  printf("%s", av[iter]);
+	  if (iter > 1)
+		  printf(" | ");
+	  if (iter + 1 == ac)
+		  printf("\n");
+	}
+}

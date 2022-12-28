@@ -187,6 +187,7 @@ const char *getSocketName(int value);
 void printSocket(int family, int socktype, int protocol);
 void printTSocket(t_socket *sckt);
 void printAiInfo();
+void printArg(int ac, char **av);
 
 /* socket.c */
 int getSocket(t_socket *sckt);
