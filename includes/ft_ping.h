@@ -28,7 +28,7 @@
 # define ICMP_PACKET_LEN 8
 # define TIMEOUT 10
 # define NEXT 1
-# define DEBUG true
+// # define DEBUG true
 
 
 typedef struct s_socket t_socket;
