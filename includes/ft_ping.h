@@ -28,7 +28,10 @@
 # define ICMP_PACKET_LEN 8
 # define TIMEOUT 10
 # define NEXT 1
-// # define DEBUG true
+
+/* OPTIONS */
+# define HELP_OPTION 1
+# define VERBOSE_OPTION 2
 
 
 typedef struct s_socket t_socket;
@@ -66,6 +69,7 @@ typedef struct s_clock{
 } t_clock;
 
 typedef struct s_ftping {
+	char options;
 	t_clock time;
 	t_stats counters;
 	uid_t uid;
@@ -239,6 +243,6 @@ void printError(const char *fmt, const char *value);
 void looping ();
 
 /* options.c */
-void parseOpts(int ac, char **av);
+void parseArgs(int ac, char **av);
 
 #endif
