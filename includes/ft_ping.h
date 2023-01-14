@@ -238,4 +238,7 @@ void printError(const char *fmt, const char *value);
 /* looping.c */
 void looping ();
 
+/* options.c */
+void parseOpts(int ac, char **av);
+
 #endif

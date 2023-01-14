@@ -10,6 +10,7 @@ SRC = main.c\
 	  tools.c\
 	  looping.c\
 	  stats.c\
+	  options.c\
 
 
 SRCS = $(addprefix srcs/,$(SRCS))

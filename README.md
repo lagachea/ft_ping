@@ -20,3 +20,6 @@ to do the arg parsing and option handling
 
 -h adds:
     only prints usage and quit gracefully
+
+need a flag to tell if ip or hostname
+    if not hostname => no DNS query

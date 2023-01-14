@@ -10,7 +10,6 @@ void setup() {
 
 	g_ping->service = NULL;
 	g_ping->pid = getpid();
-	// g_ping->uid = 0;
 
 	getSimpleSocket();
 
@@ -33,14 +32,11 @@ void setup() {
 
 int	main(int ac, char **av)
 {
-	// printArg(ac, av);
-
 	t_ftping pingdata;
+
 	g_ping = &pingdata;
 	setup();
-
-	// Parse host from arg
-	g_ping->node = av[ac - 1];
+	parseOpts(ac, av);
 
 	looping();
 	// loop trap to keep program running until new signal is sent

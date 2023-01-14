@@ -140,6 +140,7 @@ void setupOutput() {
 		setOriginalClock();
 	}
 	setupInput();
+	/* if hostname */
 	getAInfo();
 	setAddr();
 	fillIcmp();
