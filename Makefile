@@ -52,7 +52,8 @@ out/%.o: srcs/%.c $(HDRS)
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o $@ -c $<
 
 json: fclean
-	+ bear -- make -s
+	# + bear -- make -s
+	intercept-build-14 make -s -j4 && analyze-build-14
 
 debug: all
 	clear; sudo gdb ./ft_ping google.com
