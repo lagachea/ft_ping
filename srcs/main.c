@@ -25,9 +25,6 @@ void setup() {
 	g_ping->addrlen = INET_ADDRSTRLEN;
 
 	g_ping->ip_str = &g_ping->rslv_node[0];
-	g_ping->counters.min = DBL_MAX;
-	g_ping->counters.max = DBL_MIN;
-
 }
 
 int	main(int ac, char **av)

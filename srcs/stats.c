@@ -32,9 +32,9 @@ void updateStatistics() {
 	ctrs = &g_ping->counters;
 	diff = g_ping->time.diff / 1000.0;
 
-	if (ctrs->min > diff)
+	if (ctrs->min > diff || ctrs->min == 0)
 		ctrs->min = diff;
-	if (ctrs->max < diff)
+	if (ctrs->max < diff || ctrs->max == 0)
 		ctrs->max = diff;
 	ctrs->sum += diff;
 	ctrs->sum2 += diff * diff;
