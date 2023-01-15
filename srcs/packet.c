@@ -24,7 +24,7 @@ void setupInput() {
 	g_ping->rec_flags = 0;
 }
 
-void getAInfo() {
+void getAddressInformation() {
 	int res;
 	struct addrinfo **ai_res;
 
@@ -69,7 +69,7 @@ void fillIcmp() {
 	g_ping->icmp.icmp_cksum = icmpChecksum();
 }
 
-void setAddr() {
+void setAddress() {
 	struct sockaddr_in *saddr_in;
 	struct in_addr *addr_in;
 
@@ -141,7 +141,7 @@ void setupOutput() {
 	}
 	setupInput();
 	/* if hostname */
-	getAInfo();
-	setAddr();
+	getAddressInformation();
+	setAddress();
 	fillIcmp();
 }

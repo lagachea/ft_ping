@@ -11,7 +11,7 @@ void setup() {
 	g_ping->service = NULL;
 	g_ping->pid = getpid();
 
-	getSimpleSocket();
+	getRawSocket();
 
 	g_ping->hints.ai_flags = AI_CANONNAME;
 	g_ping->hints.ai_family = AF_INET;
@@ -36,7 +36,7 @@ int	main(int ac, char **av)
 
 	g_ping = &pingdata;
 	setup();
-	parseArgs(ac, av);
+	parseArguments(ac, av);
 
 	looping();
 	// loop trap to keep program running until new signal is sent

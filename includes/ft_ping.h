@@ -189,21 +189,21 @@ int snprintf(char *str, size_t size, const char *format, ...);
 const char *getFamilyName(int value);
 const char *getSocketName(int value);
 void printSocket(int family, int socktype, int protocol);
-void printTSocket(t_socket *sckt);
-void printAiInfo();
-void printArg(int ac, char **av);
+void printSocketStruct(t_socket *sckt);
+void printAddressInformations();
+void printArguments(int ac, char **av);
 
 /* socket.c */
 int getSocket(t_socket *sckt);
-int getSimpleSocket();
+int getRawSocket();
 void getSockAddr(struct addrinfo *ptr, t_ftping *data);
 
 /* packet.c */
 void fillIcmp();
 void setupInput();
 void setupOutput();
-void printMsg(int len);
-void getAInfo();
+void printMessageStatistics(int len);
+void getAddressInformation();
 void setClock(struct timeval *tv);
 void setInitialClock();
 void setFinalClock();
@@ -222,13 +222,13 @@ void	timeoutHandler(int signal);
 void	sigquitHandler(int signal);
 
 /* stats.c */
-void set_transmitted();
-void set_recieved();
-void set_loss();
-void update_stats();
+void setTransmitted();
+void setRecieved();
+void setLoss();
+void updateStatistics();
 
 /* recieve.c */
-void recieveMsg();
+void recieveMessage();
 
 /* tools.c */
 void	print_memory(const void *addr, size_t size);
@@ -243,6 +243,6 @@ void printError(const char *fmt, const char *value);
 void looping ();
 
 /* options.c */
-void parseArgs(int ac, char **av);
+void parseArguments(int ac, char **av);
 
 #endif

@@ -14,8 +14,8 @@ void looping (){
 	else {
 		setAlarmHandler(TIMEOUT, &timeoutHandler);
 		// setAlarmHandler(NEXT, &loopHandler);
-		set_transmitted();
-		recieveMsg();
+		setTransmitted();
+		recieveMessage();
 		setAlarmHandler(NEXT, &loopHandler);
 		return;
 	}

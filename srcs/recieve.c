@@ -2,30 +2,26 @@
 #include <netinet/in.h>
 #include <stdio.h>
 
-void printMsg(int len) {
+void printMessageStatistics(int len) {
 	struct icmp *icmptr;
 	struct ip *ipptr;
-	t_clock *t;
 
-	// printf("read %d\n", len);
+	ipptr = (struct ip*)g_ping->databuf;
 
-	ipptr = (void*)g_ping->databuf;
-	// printIp(ipptr);
+	icmptr = (struct icmp*)g_ping->databuf + 20;
 
-	icmptr = (void*)g_ping->databuf + 20;
-	// printIcmp(icmptr);
-
-	t = &g_ping->time;
 	getTimeDiff();
-	set_recieved();
-	update_stats();
+	setRecieved();
+	updateStatistics();
+
 	/* if ip */
 	printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n",
-			len, g_ping->ip_str, ntohs(icmptr->icmp_seq), ipptr->ip_ttl, t->diff_ms);
+			len, g_ping->ip_str, ntohs(icmptr->icmp_seq), ipptr->ip_ttl, g_ping->time.diff_ms);
 	/* if hostname */
 	// printf("%d bytes from %s (%s): icmp_seq=%d ttl=%d time=%.1lf ms\n",
 	// 		len, g_ping->ip_str, g_ping->ip_str, ntohs(icmptr->icmp_seq), ipptr->ip_ttl, t->diff_ms);
 	return;
+
 	// printf("namelen= %d\n", g_ping->msg.msg_namelen);
 	// printf("controllen= %zu\n", g_ping->msg.msg_controllen);
 	// printf("iovlen= %zu\n", g_ping->msg.msg_iovlen);
@@ -48,7 +44,7 @@ void printMsg(int len) {
 	// }
 }
 
-void recieveMsg( ) {
+void recieveMessage( ) {
 	int res = 0;
 
 	res = recvmsg(g_ping->socket.sockfd, &g_ping->msg, g_ping->rec_flags);
@@ -59,7 +55,7 @@ void recieveMsg( ) {
 	}
 	else if (res >= 0) {
 		alarm(0);
-		printMsg(res);
+		printMessageStatistics(res);
 		return ;
 	}
 }

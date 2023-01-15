@@ -2,14 +2,14 @@
 #include "libft.h"
 #include <stdio.h>
 
-static void getDest(char *dest) {
+static void getDestination(char *dest) {
 	printf("dest: %s\n", dest);
 	/*
 	 * is hostname or ip?
 	*/
 }
 
-static void getOpt(char *opt) {
+static void getOption(char *opt) {
 	printf("opt: %s\n", opt);
 	char opt_value = *(opt + 1);
 	switch (opt_value) {
@@ -26,7 +26,7 @@ static void getOpt(char *opt) {
 	}
 }
 
-void parseArgs(int ac, char **av) {
+void parseArguments(int ac, char **av) {
 	// Parse host from arg
 	char *current_arg = NULL;
 	int iter = 0;
@@ -35,14 +35,14 @@ void parseArgs(int ac, char **av) {
 	{
 		current_arg = av[iter];
 		if (*current_arg == '-') {
-			getOpt(current_arg);
+			getOption(current_arg);
 		}
 		else {
-			getDest(current_arg);
+			getDestination(current_arg);
 		}
 	}
 	g_ping->node = av[ac - 1];
-	exit(0);
+	// exit(0);
 }
 
 /*

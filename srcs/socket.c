@@ -9,7 +9,7 @@ int getSocket(t_socket *sckt) {
   return SUCCESS;
 }
 
-int getSimpleSocket() {
+int getRawSocket() {
   int res;
   // int off;
   // int on;

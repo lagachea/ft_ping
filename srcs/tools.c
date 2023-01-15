@@ -57,7 +57,7 @@ void setSumTime() {
 
 void printStatistics() {
 	setSumTime();
-	set_loss();
+	setLoss();
 	printf( "\n--- %s ping statistics ---\n",
 			g_ping->canonname);
 	printf("%u packets transmitted, %u received, %u%% packet loss, time %ums\n",
@@ -74,7 +74,7 @@ void printStatistics() {
 }
 
 void printShortStatistics() {
-	set_loss();
+	setLoss();
 	printf("\r%u/%u packets, %u%% loss\n",
 			g_ping->counters.recieved,
 			g_ping->counters.transmitted,

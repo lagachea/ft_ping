@@ -78,7 +78,7 @@ void printSocket(int family, int socktype, int protocol) {
 	printf("protocol |%s| %d \n", pname, protocol);
 }
 
-void printTSocket(t_socket *sckt) {
+void printSocketStruct(t_socket *sckt) {
 	struct sockaddr addr;
 	socklen_t len;
 	int res;
@@ -93,7 +93,7 @@ void printTSocket(t_socket *sckt) {
 	printf("sockfd |%d|\n", sckt->sockfd);
 }
 
-void printAiInfo() {
+void printAddressInformations() {
 	struct addrinfo *ai_res;
 
 	ai_res = g_ping->results;
@@ -106,7 +106,7 @@ void printAiInfo() {
 	}
 }
 
-void printArg(int ac, char **av) {
+void printArguments(int ac, char **av) {
 	int iter = 0;
 	while (++iter < ac)
 	{

@@ -1,21 +1,21 @@
 #include "ft_ping.h"
 
-void set_transmitted() {
+void setTransmitted() {
 	t_stats *ctrs;
 
 	ctrs = &g_ping->counters;
 	ctrs->transmitted++;
 }
 
-void set_recieved() {
+void setRecieved() {
 	t_stats *ctrs;
 
 	ctrs = &g_ping->counters;
 	ctrs->recieved++;
-	set_loss();
+	setLoss();
 }
 
-void set_loss() {
+void setLoss() {
 	t_stats *ctrs;
 	float ratio;
 
@@ -25,7 +25,7 @@ void set_loss() {
 	ctrs->loss_percent = ratio * 100;
 }
 
-void update_stats() {
+void updateStatistics() {
 	t_stats *ctrs;
 	double diff;
 	
