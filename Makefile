@@ -42,7 +42,7 @@ all: $(NAME)
 
 $(NAME): $(OBJECT)
 	+ make -s -C $(LIBDIR)
-	$(CC) $(CFLAGS) -I includes -I libft/includes -o $(NAME) $(OBJECT) $(LIBA)
+	$(CC) $(CFLAGS) -I includes -I libft/includes -lm -o $(NAME) $(OBJECT) $(LIBA)
 	sudo setcap cap_net_raw=pe ft_ping
 	printf "$(LNECLR)$(GREEN)make done$(WHITE)\n"
 
