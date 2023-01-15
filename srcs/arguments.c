@@ -3,24 +3,26 @@
 #include <stdio.h>
 
 static void getDestination(char *dest) {
-	printf("dest: %s\n", dest);
+	g_ping->node = dest;
 	/*
 	 * is hostname or ip?
+	 * if looks like a.b.c.d and 0 <= a & b & c &d <= 255 => IP
+	 * else hostname let getAddInfo validate hostname
 	*/
 }
 
 static void getOption(char *opt) {
-	printf("opt: %s\n", opt);
 	char opt_value = *(opt + 1);
 	switch (opt_value) {
+		// add a warning when option is doubled
 		case 'h':
-			g_ping->options ^= HELP_OPTION;
+			g_ping->options |= HELP_OPTION;
 			break;
 		case 'v':
-			g_ping->options ^= VERBOSE_OPTION;
+			g_ping->options |= VERBOSE_OPTION;
 			break;
 		default:
-			printf("ERROR\n");
+			printf("ERROR: option not recognized\n");
 			/* ERROR unknown option */
 			break;
 	}
@@ -41,8 +43,6 @@ void parseArguments(int ac, char **av) {
 			getDestination(current_arg);
 		}
 	}
-	g_ping->node = av[ac - 1];
-	// exit(0);
 }
 
 /*
