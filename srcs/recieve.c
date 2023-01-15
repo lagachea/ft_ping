@@ -6,7 +6,7 @@ void printMessageStatistics(int len) {
 
 	ipptr = (struct ip*)g_ping->databuf;
 
-	icmptr = (struct icmp*)g_ping->databuf + 20;
+	icmptr = (struct icmp*)(g_ping->databuf + 20);
 
 	getTimeDiff();
 	setRecieved();
