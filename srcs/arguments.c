@@ -84,6 +84,14 @@ void parseArguments(int ac, char **av) {
 	}
 }
 
+/* state is set by parsedDestination */
+int parsedDestination() {
+	if (g_ping->state == 0) {
+		return FAILURE;
+	}
+	return SUCCESS;
+}
+
 /*
    -v adds:
 	only on iputiles 2022... print info about socket and ai family before sending packets

@@ -117,3 +117,7 @@ void printArguments(int ac, char **av) {
 		  printf("\n");
 	}
 }
+
+void printUsage() {
+	printf("USAGE: LOL\n");
+}

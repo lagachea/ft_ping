@@ -200,6 +200,7 @@ void printSocket(int family, int socktype, int protocol);
 void printSocketStruct(t_socket *sckt);
 void printAddressInformations();
 void printArguments(int ac, char **av);
+void printUsage();
 
 /* socket.c */
 int getSocket(t_socket *sckt);
@@ -251,7 +252,8 @@ int ft_strcountchr(char *str, int c);
 /* looping.c */
 void looping ();
 
-/* options.c */
+/* arguments.c */
 void parseArguments(int ac, char **av);
+int parsedDestination();
 
 #endif

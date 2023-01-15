@@ -35,8 +35,15 @@ int	main(int ac, char **av)
 	t_ftping pingdata;
 
 	g_ping = &pingdata;
+
 	setup();
+
 	parseArguments(ac, av);
+
+	if (parsedDestination() == FAILURE) {
+		printUsage();
+		exit(1);
+	}
 
 	looping();
 	// loop trap to keep program running until new signal is sent
