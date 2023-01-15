@@ -1,14 +1,23 @@
 #include "ft_ping.h"
-#include "libft.h"
-#include <stdio.h>
 
+static int isIPv4Address(int *destValue, char *dest) {
+	(void)dest;
+	(void)destValue;
+	return FALSE;
+}
 static void getDestination(char *dest) {
-	g_ping->node = dest;
+	int destination;
+
 	/*
 	 * is hostname or ip?
 	 * if looks like a.b.c.d and 0 <= a & b & c &d <= 255 => IP
 	 * else hostname let getAddInfo validate hostname
 	*/
+	if (isIPv4Address(&destination, dest) == TRUE) {
+	}
+	else {
+		g_ping->node = dest;
+	}
 }
 
 static void getOption(char *opt) {

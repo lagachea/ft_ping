@@ -82,5 +82,5 @@ random:
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o server srcs/test.c $(LIBA)
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o client srcs/testcli.c $(LIBA)
 
-.PHONY: fclean clean re FORCE json test debug firewall
-.SILENT: fclean clean re FORCE $(NAME) $(OBJECT) json test debug firewall
+.PHONY: all fclean clean re FORCE json test debug firewall
+.SILENT: all fclean clean re FORCE $(NAME) $(OBJECT) json test debug firewall

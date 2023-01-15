@@ -1,6 +1,4 @@
 #include "ft_ping.h"
-#include <netinet/in.h>
-#include <stdio.h>
 
 void printMessageStatistics(int len) {
 	struct icmp *icmptr;

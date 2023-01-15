@@ -19,8 +19,6 @@ void setupInput() {
     msg->msg_controllen = sizeof(g_ping->control);
 
     msg->msg_flags = 0;
-
-
 	g_ping->rec_flags = 0;
 }
 
@@ -37,7 +35,6 @@ void getAddressInformation() {
 		printError("ERROR:%s | Error getting addrinfo\n", gai_strerror(res));
 		exit(FAILURE);
 	}
-	// printAiInfo();
 }
 
 static uint16_t icmpChecksum() {
@@ -73,20 +70,20 @@ void setAddress() {
 	struct sockaddr_in *saddr_in;
 	struct in_addr *addr_in;
 
+	/* if hostname */
+	getAddressInformation();
 	g_ping->dest_addr = *g_ping->results->ai_addr;
 	g_ping->addrlen = g_ping->results->ai_addrlen;
-
-	//
 	g_ping->canonname = g_ping->results->ai_canonname;
-
 	// ADDRESS as BYTES
 	saddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
 	addr_in = &saddr_in->sin_addr;
 	g_ping->addr_in = *addr_in;
 	inet_ntop(AF_INET, addr_in, g_ping->ip_str, INET_ADDRSTRLEN);
-	if (g_ping->seq == 0) {
-		printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->canonname, g_ping->ip_str, 8, 8);
-	}
+
+	/* if ip */
+	// g_ping->canonname = g_ping->node;
+	// g_ping->ip_str = g_ping->node;
 }
 
 void setClock(struct timeval *tv) {
@@ -99,8 +96,6 @@ void setClock(struct timeval *tv) {
 		freePing();
 		exit(FAILURE);
 	}
-	// printf( "--- set TV ---\n");
-	// printTimeval(tv);
 }
 
 void setOriginalClock() {
@@ -109,6 +104,9 @@ void setOriginalClock() {
 
 void setInitialClock() {
 	setClock(&g_ping->time.tvi);
+	if (g_ping->seq == 0) {
+		setOriginalClock();
+	}
 }
 
 void setFinalClock() {
@@ -134,14 +132,21 @@ unsigned int getDiff(struct timeval *tvf, struct timeval *tvi) {
 	return diff;
 }
 
+void printInitialInformation() {
+	/* if hostname */
+	printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->canonname, g_ping->ip_str, 8, 8);
+	/* else ip */
+	// printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->canonname, g_ping->ip_str, 8, 8);
+}
+
 void setupOutput() {
 	setInitialClock();
-	if (g_ping->seq == 0) {
-		setOriginalClock();
-	}
 	setupInput();
-	/* if hostname */
-	getAddressInformation();
 	setAddress();
+
+	if (g_ping->seq == 0) {
+		printInitialInformation();
+	}
+
 	fillIcmp();
 }
