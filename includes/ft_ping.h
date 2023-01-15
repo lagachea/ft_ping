@@ -26,7 +26,6 @@
 
 # define FAILURE 1
 # define SUCCESS 0
-# define ICMP_PACKET_LEN 8
 # define TIMEOUT 10
 # define NEXT 1
 # define IP 1
@@ -47,7 +46,6 @@ struct s_socket {
   int socktype;
   int protocol;
   int sockfd;
-  t_socket *next;
 };
 
 typedef struct s_stats{
@@ -65,13 +63,10 @@ typedef struct s_stats{
 } t_stats;
 
 typedef struct s_clock{
-	unsigned char state;
 	struct timeval tvo;
 	struct timeval tvf;
 	struct timeval tvi;
-	unsigned int diff_sec;
-	unsigned int diff_usec;
-	unsigned int diff;
+	long int diff;
 	double diff_ms;
 } t_clock;
 
@@ -80,7 +75,6 @@ typedef struct s_ftping {
 	char state;
 	t_clock time;
 	t_stats counters;
-	uid_t uid;
 	pid_t pid;
 	unsigned short int seq;
 	char *node;
@@ -91,14 +85,11 @@ typedef struct s_ftping {
 	struct addrinfo *results;
 	struct sockaddr dest_addr;
 
-	struct in_addr  addr_in;
 	char rslv_node[INET_ADDRSTRLEN];
 	char *ip_str;
 
-	socklen_t addrlen;
 	t_socket socket;
 	// Packet buf ? + len
-	int send_flags;
 	struct icmp icmp;
 	// struct iphdr ipheader;
 
@@ -107,10 +98,7 @@ typedef struct s_ftping {
 	int rec_flags;
 	struct msghdr msg;
 	struct iovec iov[1];
-	struct cmsghdr *cmhdr;
 	struct sockaddr_in sin;
-	unsigned char tos;
-	struct cmsghdr *cmhdrptr;
 
 } t_ftping;
 // getpid getuid;

@@ -62,7 +62,7 @@ static void getOption(char *opt) {
 			break;
 		default:
 			printf("ERROR: option not recognized\n");
-			/* ERROR unknown option */
+			// add usage print
 			break;
 	}
 }

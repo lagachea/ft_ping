@@ -22,7 +22,6 @@ void setup() {
 	g_ping->hints.ai_next = NULL;
 
 	g_ping->results = NULL;
-	g_ping->addrlen = INET_ADDRSTRLEN;
 
 	g_ping->ip_str = &g_ping->rslv_node[0];
 }
@@ -38,8 +37,12 @@ int	main(int ac, char **av)
 	parseArguments(ac, av);
 
 	if (parsedDestination() == FAILURE) {
-		printUsage();
+		// print usage error
 		exit(1);
+	}
+
+	if ((g_ping->options & HELP_OPTION) != 0) {
+		printUsage();
 	}
 
 	looping();

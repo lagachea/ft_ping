@@ -1,5 +1,21 @@
 #include "ft_ping.h"
 
+void printMsghdr() {
+	struct msghdr *msg;
+	struct sockaddr_in *sosckaddr_in;
+	char rslv_node[INET_ADDRSTRLEN];
+
+	msg = &g_ping->msg;
+	print_memory(msg, sizeof(*msg));
+	sosckaddr_in = (struct sockaddr_in*)(msg->msg_name);
+
+	printf("Family: %s | Port: %hu | Addr: %s\n", 
+			getFamilyName(sosckaddr_in->sin_family)
+			, sosckaddr_in->sin_port
+			, inet_ntop(AF_INET, &sosckaddr_in->sin_addr.s_addr, &rslv_node[0], INET_ADDRSTRLEN)
+			);
+}
+
 void printMessageStatistics(int len) {
 	struct icmp *icmptr;
 	struct ip *ipptr;
@@ -12,6 +28,7 @@ void printMessageStatistics(int len) {
 	setRecieved();
 	updateStatistics();
 
+	/* if verbose add identifier */
 	/* if ip */
 	printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n",
 			len, g_ping->ip_str, icmptr->icmp_seq, ipptr->ip_ttl, g_ping->time.diff_ms);
@@ -19,27 +36,6 @@ void printMessageStatistics(int len) {
 	// printf("%d bytes from %s (%s): icmp_seq=%d ttl=%d time=%.1lf ms\n",
 	// 		len, g_ping->ip_str, g_ping->ip_str, ntohs(icmptr->icmp_seq), ipptr->ip_ttl, t->diff_ms);
 	return;
-
-	// printf("namelen= %d\n", g_ping->msg.msg_namelen);
-	// printf("controllen= %zu\n", g_ping->msg.msg_controllen);
-	// printf("iovlen= %zu\n", g_ping->msg.msg_iovlen);
-
-	// if (g_ping->msg.msg_namelen > 0)
-	// {
-	// 	print_memory(g_ping->msg.msg_name, g_ping->msg.msg_namelen);
-	// }
-	// if (g_ping->msg.msg_controllen > 0)
-	// {
-	// 	print_memory(g_ping->msg.msg_control, g_ping->msg.msg_controllen);
-	// }
-	// if (g_ping->msg.msg_iovlen > 0)
-	// {
-	// 	size_t count = 0;
-	// 	while (count < g_ping->msg.msg_iovlen) {
-	// 		print_memory(g_ping->msg.msg_iov[count].iov_base, g_ping->msg.msg_iov[count].iov_len);
-	// 		count++;
-	// 	}
-	// }
 }
 
 void recieveMessage( ) {

@@ -72,8 +72,7 @@ void setAddress() {
 
 	// ADDRESS as BYTES
 	addr_in = ((struct sockaddr_in*)(&g_ping->dest_addr))->sin_addr;
-	g_ping->addr_in = addr_in;
-	inet_ntop(AF_INET, &addr_in, g_ping->ip_str, g_ping->addrlen);
+	inet_ntop(AF_INET, &addr_in, g_ping->ip_str, INET_ADDRSTRLEN);
 }
 
 void setClock(struct timeval *tv) {
@@ -113,9 +112,9 @@ void getTimeDiff() {
 }
 
 unsigned int getDiff(struct timeval *tvf, struct timeval *tvi) {
-	unsigned int diff;
-	unsigned int diff_sec;
-	unsigned int diff_usec;
+	long int diff;
+	long int diff_sec;
+	long int diff_usec;
 	diff_sec = tvf->tv_sec - tvi->tv_sec;
 	diff_usec = tvf->tv_usec - tvi->tv_usec;
 	diff = diff_sec * 1000000 + diff_usec;
