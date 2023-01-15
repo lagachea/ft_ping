@@ -25,6 +25,7 @@ static int isIPv4Address(union networkAddress *destValue, char *dest) {
 }
 static void getDestination(char *dest) {
 	union networkAddress destination;
+	struct sockaddr_in *sosckaddr_in;
 
 	destination.integer = 0;
 	/*
@@ -39,9 +40,9 @@ static void getDestination(char *dest) {
 		if (destination.integer == 0) {
 			// address is 0.0.0.0 we should redirect to 127.0.0.1
 		}
-		struct sockaddr_in *saddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
-		saddr_in->sin_family = AF_INET;
-		saddr_in->sin_addr.s_addr = destination.integer;
+		sosckaddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
+		sosckaddr_in->sin_family = AF_INET;
+		sosckaddr_in->sin_addr.s_addr = destination.integer;
 	}
 	else {
 		g_ping->state = HOSTNAME;
