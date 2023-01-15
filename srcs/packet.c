@@ -59,31 +59,21 @@ void fillIcmp() {
 	g_ping->icmp.icmp_code = 0;
 	g_ping->icmp.icmp_id = g_ping->pid;
 	g_ping->seq++;
-	g_ping->icmp.icmp_seq = htons(g_ping->seq);
-	/* g_ping->icmp.icmp_otime = ;
-	g_ping->icmp.icmp_rtime = ;
-	g_ping->icmp.icmp_ttime = ; */
+	g_ping->icmp.icmp_seq = g_ping->seq;
 	g_ping->icmp.icmp_cksum = icmpChecksum();
 }
 
 void setAddress() {
-	struct sockaddr_in *saddr_in;
-	struct in_addr *addr_in;
+	struct in_addr addr_in;
 
-	/* if hostname */
 	getAddressInformation();
 	g_ping->dest_addr = *g_ping->results->ai_addr;
-	g_ping->addrlen = g_ping->results->ai_addrlen;
 	g_ping->canonname = g_ping->results->ai_canonname;
-	// ADDRESS as BYTES
-	saddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
-	addr_in = &saddr_in->sin_addr;
-	g_ping->addr_in = *addr_in;
-	inet_ntop(AF_INET, addr_in, g_ping->ip_str, INET_ADDRSTRLEN);
 
-	/* if ip */
-	// g_ping->canonname = g_ping->node;
-	// g_ping->ip_str = g_ping->node;
+	// ADDRESS as BYTES
+	addr_in = ((struct sockaddr_in*)(&g_ping->dest_addr))->sin_addr;
+	g_ping->addr_in = addr_in;
+	inet_ntop(AF_INET, &addr_in, g_ping->ip_str, g_ping->addrlen);
 }
 
 void setClock(struct timeval *tv) {
@@ -142,7 +132,10 @@ void printInitialInformation() {
 void setupOutput() {
 	setInitialClock();
 	setupInput();
-	setAddress();
+	/* if hostname */
+	if (g_ping->state == HOSTNAME) {
+		setAddress();
+	}
 
 	if (g_ping->seq == 0) {
 		printInitialInformation();

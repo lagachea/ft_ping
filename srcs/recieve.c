@@ -14,7 +14,7 @@ void printMessageStatistics(int len) {
 
 	/* if ip */
 	printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n",
-			len, g_ping->ip_str, ntohs(icmptr->icmp_seq), ipptr->ip_ttl, g_ping->time.diff_ms);
+			len, g_ping->ip_str, icmptr->icmp_seq, ipptr->ip_ttl, g_ping->time.diff_ms);
 	/* if hostname */
 	// printf("%d bytes from %s (%s): icmp_seq=%d ttl=%d time=%.1lf ms\n",
 	// 		len, g_ping->ip_str, g_ping->ip_str, ntohs(icmptr->icmp_seq), ipptr->ip_ttl, t->diff_ms);

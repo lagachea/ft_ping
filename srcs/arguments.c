@@ -1,21 +1,50 @@
 #include "ft_ping.h"
 
-static int isIPv4Address(int *destValue, char *dest) {
-	(void)dest;
-	(void)destValue;
-	return FALSE;
+static int isIPv4Address(union networkAddress *destValue, char *dest) {
+	int count = ft_strcountchr(dest, '.');
+	int iter = -1;
+	int byte;
+
+	// need 4 .
+	if (count != 3) {
+		return FALSE;
+	}
+	// need 4 bytes with value <= 255
+	while (++iter < 4) {
+		byte = ft_atoi(dest);
+		if (byte > 255 || byte < 0) {
+			return FALSE;
+		}
+		else {
+			destValue->bytes[iter] = (unsigned char)byte;
+		}
+		dest = ft_strchr(dest, '.') + 1;
+	}
+	
+	return TRUE;
 }
 static void getDestination(char *dest) {
-	int destination;
+	union networkAddress destination;
 
+	destination.integer = 0;
 	/*
 	 * is hostname or ip?
 	 * if looks like a.b.c.d and 0 <= a & b & c &d <= 255 => IP
 	 * else hostname let getAddInfo validate hostname
 	*/
 	if (isIPv4Address(&destination, dest) == TRUE) {
+		g_ping->state = IP;
+		g_ping->canonname = dest;
+		g_ping->ip_str = dest;
+		if (destination.integer == 0) {
+			// address is 0.0.0.0 we should redirect to 127.0.0.1
+		}
+		struct sockaddr_in *saddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
+		saddr_in->sin_family = AF_INET;
+		saddr_in->sin_addr.s_addr = destination.integer;
 	}
 	else {
+		g_ping->state = HOSTNAME;
 		g_ping->node = dest;
 	}
 }

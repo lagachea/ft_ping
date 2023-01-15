@@ -17,6 +17,7 @@
 # include <sys/time.h>
 # include <sys/types.h>
 # include <unistd.h>
+# include <stdint.h>
 # include <math.h>
 # include <float.h>
 
@@ -28,11 +29,17 @@
 # define ICMP_PACKET_LEN 8
 # define TIMEOUT 10
 # define NEXT 1
+# define IP 1
+# define HOSTNAME -1
 
 /* OPTIONS */
 # define HELP_OPTION 1
 # define VERBOSE_OPTION 2
 
+union networkAddress {
+	uint32_t integer;
+	unsigned char bytes[4];
+};
 
 typedef struct s_socket t_socket;
 struct s_socket {
@@ -70,6 +77,7 @@ typedef struct s_clock{
 
 typedef struct s_ftping {
 	char options;
+	char state;
 	t_clock time;
 	t_stats counters;
 	uid_t uid;
@@ -238,6 +246,7 @@ void printStatistics();
 void printShortStatistics();
 void printTimeval(struct timeval *tv);
 void printError(const char *fmt, const char *value);
+int ft_strcountchr(char *str, int c);
 
 /* looping.c */
 void looping ();

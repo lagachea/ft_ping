@@ -17,12 +17,12 @@ void setup() {
 	g_ping->hints.ai_family = AF_INET;
 	g_ping->hints.ai_socktype = 0;
 	g_ping->hints.ai_protocol = 0;
-	// g_ping->hints.ai_addrlen = 0;
 	g_ping->hints.ai_addr = NULL;
 	g_ping->hints.ai_canonname = NULL;
 	g_ping->hints.ai_next = NULL;
 
 	g_ping->results = NULL;
+	g_ping->addrlen = INET_ADDRSTRLEN;
 
 	g_ping->ip_str = &g_ping->rslv_node[0];
 	g_ping->counters.min = DBL_MAX;

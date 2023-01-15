@@ -1,5 +1,16 @@
 #include "ft_ping.h"
 
+int ft_strcountchr(char *str, int c) {
+	int count = 0;
+	while(*str) {
+		if (c == *str) {
+			count++;
+		}
+		str++;
+	}
+	return count;
+}
+
 void	print_memory(const void *addr, size_t size)
 {
 	unsigned char *t = (unsigned char *)addr;
