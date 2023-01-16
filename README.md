@@ -24,4 +24,4 @@ to do the arg parsing and option handling
 need a flag to tell if ip or hostname
     if not hostname => no DNS query
 
-if state nor IP nor hostname => usage
+if state nor IP nor hostname => error usage

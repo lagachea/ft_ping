@@ -36,13 +36,14 @@ int	main(int ac, char **av)
 
 	parseArguments(ac, av);
 
+	if ((g_ping->options & HELP_OPTION) != 0) {
+		printUsage();
+		exit(0);
+	}
+
 	if (parsedDestination() == FAILURE) {
 		// print usage error
 		exit(1);
-	}
-
-	if ((g_ping->options & HELP_OPTION) != 0) {
-		printUsage();
 	}
 
 	looping();
