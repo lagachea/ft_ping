@@ -11,6 +11,7 @@ static int isIPv4Address(union networkAddress *destValue, char *dest) {
 	}
 	// need 4 bytes with value <= 255
 	while (++iter < 4) {
+		//REFACTO TO PREVENT ATOI ERROR
 		byte = ft_atoi(dest);
 		if (byte > 255 || byte < 0) {
 			return FALSE;

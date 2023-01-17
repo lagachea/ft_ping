@@ -13,7 +13,6 @@ print info on SIGQUIT
 quit gracefully on SIGINT
 
 ### My next goal is:
-to do the arg parsing and option handling
 -v adds:
     <!-- print info about socket and ai family before sending packets -->
     ident at each response print
@@ -21,7 +20,4 @@ to do the arg parsing and option handling
 -h adds:
     only prints usage and quit gracefully
 
-need a flag to tell if ip or hostname
-    if not hostname => no DNS query
-
-if state nor IP nor hostname => error usage
+replace atoi with a safe version for IP parsing (up to 3 char and . || safe value for byte)
