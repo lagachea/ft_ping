@@ -32,7 +32,7 @@ void getAddressInformation() {
 	}
 	res = getaddrinfo(g_ping->node, g_ping->service, &g_ping->hints, ai_res);
 	if (res < 0) {
-		printError("ERROR: %s | Error getting addrinfo\n", gai_strerror(res));
+		printError("ERROR: %s for address \"%s\" | Error getting addrinfo\n", gai_strerror(res), g_ping->node);
 		exit(FAILURE);
 	}
 }

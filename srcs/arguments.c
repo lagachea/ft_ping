@@ -52,18 +52,22 @@ static void getDestination(char *dest) {
 
 static void getOption(char *opt) {
 	char opt_value = *(opt + 1);
+	char invalid[] = "invalid option  ";
+
 	switch (opt_value) {
 		// add a warning when option is doubled
 		case 'h':
-			g_ping->options |= HELP_OPTION;
+			printUsage();
+			exit(0);
 			break;
 		case 'v':
 			g_ping->options |= VERBOSE_OPTION;
 			break;
 		default:
-			printf("ERROR: option not recognized\n");
-			// add usage print
-			break;
+			invalid[15] = opt_value;
+			printError("ERROR: %s | option not recognized\n", &invalid[0]);
+			printUsage();
+			exit(1);
 	}
 }
 
@@ -74,7 +78,7 @@ void parseArguments(int ac, char **av) {
 	while (++iter < ac)
 	{
 		current_arg = av[iter];
-		if (*current_arg == '-') {
+		if (current_arg[0] == '-' && current_arg[1] != '\0') {
 			getOption(current_arg);
 		}
 		else {

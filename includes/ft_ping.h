@@ -33,8 +33,7 @@
 # define PACKET_LEN 20 + ICMP_MINLEN
 
 /* OPTIONS */
-# define HELP_OPTION 1
-# define VERBOSE_OPTION 2
+# define VERBOSE_OPTION 1
 
 union networkAddress {
 	uint32_t integer;
@@ -245,5 +244,5 @@ void parseArguments(int ac, char **av);
 int parsedDestination();
 
 /* error.c */
-void printError(const char *fmt, const char *value);
+int printError(const char *fmt, ...);
 #endif

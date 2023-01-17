@@ -36,11 +36,6 @@ int	main(int ac, char **av)
 
 	parseArguments(ac, av);
 
-	if ((g_ping->options & HELP_OPTION) != 0) {
-		printUsage();
-		exit(0);
-	}
-
 	if (parsedDestination() == FAILURE) {
 		printError("ERROR: %s | Usage error\n", "destination address required");
 		// print usage error
