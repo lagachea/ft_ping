@@ -30,6 +30,7 @@
 # define NEXT 1
 # define IP 1
 # define HOSTNAME -1
+# define PACKET_LEN 20 + ICMP_MINLEN
 
 /* OPTIONS */
 # define HELP_OPTION 1
@@ -93,17 +94,17 @@ typedef struct s_ftping {
 	struct icmp icmp;
 	// struct iphdr ipheader;
 
-	char control[100];
-	char databuf[100];
+	char control[50];
+	char databuf[50];
 	int rec_flags;
 	struct msghdr msg;
 	struct iovec iov[1];
 	struct sockaddr_in sin;
 
 } t_ftping;
-// getpid getuid;
 extern t_ftping *g_ping;
 
+// getpid getuid;
 uid_t getuid(void);
 pid_t getpid(void);
 
@@ -234,7 +235,6 @@ void printIp(struct ip *ipptr);
 void printStatistics();
 void printShortStatistics();
 void printTimeval(struct timeval *tv);
-void printError(const char *fmt, const char *value);
 int ft_strcountchr(char *str, int c);
 
 /* looping.c */
@@ -244,4 +244,6 @@ void looping ();
 void parseArguments(int ac, char **av);
 int parsedDestination();
 
+/* error.c */
+void printError(const char *fmt, const char *value);
 #endif

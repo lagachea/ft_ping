@@ -42,6 +42,7 @@ int	main(int ac, char **av)
 	}
 
 	if (parsedDestination() == FAILURE) {
+		printError("ERROR: %s | Usage error\n", "destination address required");
 		// print usage error
 		exit(1);
 	}

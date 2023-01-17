@@ -3,7 +3,7 @@
 int getSocket(t_socket *sckt) {
   sckt->sockfd = socket(sckt->family, sckt->socktype, sckt->protocol);
   if (sckt->sockfd == -1) {
-    printError("ERROR:%s | Failed getting a socket\n", strerror(errno));
+    printError("ERROR: %s | Failed getting a socket\n", strerror(errno));
     return FAILURE;
   }
   return SUCCESS;

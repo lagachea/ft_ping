@@ -68,7 +68,6 @@ static void getOption(char *opt) {
 }
 
 void parseArguments(int ac, char **av) {
-	// Parse host from arg
 	char *current_arg = NULL;
 	int iter = 0;
 

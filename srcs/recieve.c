@@ -16,17 +16,26 @@ void printMsghdr() {
 			);
 }
 
+
+static int getIPHeaderLengthInBytes(struct ip *ipptr) {
+	/* IP header encode the number of 32 bits packet there is in ip_hl field */
+	/* as 32 bits is 4 bytes the ip_hl * (32 / 8) can be reduced to  */
+	/* ip_hl * 4 */
+	return ipptr->ip_hl * 4;
+}
+
 void printMessageStatistics(int len) {
 	struct icmp *icmptr;
 	struct ip *ipptr;
+	int bytesOffset;
 
 	ipptr = (struct ip*)g_ping->databuf;
 
-	icmptr = (struct icmp*)(g_ping->databuf + 20);
+	bytesOffset = getIPHeaderLengthInBytes(ipptr);
 
-	getTimeDiff();
-	setRecieved();
-	updateStatistics();
+	len -= bytesOffset;
+
+	icmptr = (struct icmp*)(g_ping->databuf + bytesOffset);
 
 	/* if verbose add identifier */
 	/* if ip */
@@ -43,12 +52,15 @@ void recieveMessage( ) {
 
 	res = recvmsg(g_ping->socket.sockfd, &g_ping->msg, g_ping->rec_flags);
 	if (res == -1) {
-		printError("ERROR:%s | Error reading msg\n", strerror(errno));
+		printError("ERROR: %s | Error reading msg\n", strerror(errno));
 		freePing();
 		exit(FAILURE);
 	}
 	else if (res >= 0) {
 		alarm(0);
+		getTimeDiff();
+		setRecieved();
+		updateStatistics();
 		printMessageStatistics(res);
 		return ;
 	}

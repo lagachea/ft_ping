@@ -32,7 +32,7 @@ void getAddressInformation() {
 	}
 	res = getaddrinfo(g_ping->node, g_ping->service, &g_ping->hints, ai_res);
 	if (res < 0) {
-		printError("ERROR:%s | Error getting addrinfo\n", gai_strerror(res));
+		printError("ERROR: %s | Error getting addrinfo\n", gai_strerror(res));
 		exit(FAILURE);
 	}
 }
@@ -81,7 +81,7 @@ void setClock(struct timeval *tv) {
 	ft_memset(tv, 0, sizeof(*tv));
 	ret = gettimeofday(tv, NULL);
 	if (ret != 0) {
-		printError("ERROR:%s | Failed setting clock\n", strerror(errno));
+		printError("ERROR: %s | Failed setting clock\n", strerror(errno));
 		freePing();
 		exit(FAILURE);
 	}
@@ -123,7 +123,7 @@ unsigned int getDiff(struct timeval *tvf, struct timeval *tvi) {
 
 void printInitialInformation() {
 	/* if hostname */
-	printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->canonname, g_ping->ip_str, 8, 8);
+	printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->canonname, g_ping->ip_str, ICMP_MINLEN, PACKET_LEN);
 	/* else ip */
 	// printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->canonname, g_ping->ip_str, 8, 8);
 }

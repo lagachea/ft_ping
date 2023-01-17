@@ -96,7 +96,3 @@ void printTimeval(struct timeval *tv) {
 	t = tv->tv_sec * 1000000 + tv->tv_usec;
 	printf("%u\n", t);
 }
-
-void printError(const char *fmt, const char *value) {
-	dprintf(STDERR_FILENO, fmt, value);
-}

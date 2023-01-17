@@ -11,6 +11,7 @@ SRC = main.c\
 	  looping.c\
 	  stats.c\
 	  arguments.c\
+	  error.c\
 
 
 SRCS = $(addprefix srcs/,$(SRCS))
