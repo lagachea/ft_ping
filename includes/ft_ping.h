@@ -235,6 +235,7 @@ void printStatistics();
 void printShortStatistics();
 void printTimeval(struct timeval *tv);
 int ft_strcountchr(char *str, int c);
+int parseByte(char *dest);
 
 /* looping.c */
 void looping ();

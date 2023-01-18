@@ -1,28 +1,28 @@
 #include "ft_ping.h"
 
-static int isIPv4Address(union networkAddress *destValue, char *dest) {
+static int parseIPv4Address(union networkAddress *destValue, char *dest) {
 	int count = ft_strcountchr(dest, '.');
 	int iter = -1;
 	int byte;
 
 	// need 4 .
 	if (count != 3) {
-		return FALSE;
+		return FAILURE;
 	}
 	// need 4 bytes with value <= 255
 	while (++iter < 4) {
-		//REFACTO TO PREVENT ATOI ERROR
-		byte = ft_atoi(dest);
-		if (byte > 255 || byte < 0) {
-			return FALSE;
+		byte = parseByte(dest);
+		if (byte == -1) {
+			return FAILURE;
 		}
 		else {
 			destValue->bytes[iter] = (unsigned char)byte;
 		}
-		dest = ft_strchr(dest, '.') + 1;
+		if (iter < 3)
+			dest = ft_strchr(dest, '.') + 1;
 	}
 	
-	return TRUE;
+	return SUCCESS;
 }
 static void getDestination(char *dest) {
 	union networkAddress destination;
@@ -34,7 +34,7 @@ static void getDestination(char *dest) {
 	 * if looks like a.b.c.d and 0 <= a & b & c &d <= 255 => IP
 	 * else hostname let getAddInfo validate hostname
 	*/
-	if (isIPv4Address(&destination, dest) == TRUE) {
+	if (parseIPv4Address(&destination, dest) == SUCCESS) {
 		g_ping->state = IP;
 		g_ping->canonname = dest;
 		g_ping->ip_str = dest;

@@ -14,6 +14,7 @@ int ft_strcountchr(char *str, int c) {
 void	print_memory(const void *addr, size_t size)
 {
 	unsigned char *t = (unsigned char *)addr;
+	char		print;
 	size_t		i = 0;
 	size_t		col;
 	size_t		tmp = 0;
@@ -37,7 +38,12 @@ void	print_memory(const void *addr, size_t size)
 		while (col < cut && i < size) {
 			unsigned char c;
 			c = t[i++];
-			printf("%c", (c > 31 && c < 127) ? c : '.');
+			// print = (c > 31 && c < 127) ? c : '.';
+			print = '.';
+			if (ft_isprint(c)) {
+				print = c;
+			}
+			printf("%c", print);
 			col++;
 		}
 		printf("\n");
@@ -95,4 +101,22 @@ void printTimeval(struct timeval *tv) {
 
 	t = tv->tv_sec * 1000000 + tv->tv_usec;
 	printf("%u\n", t);
+}
+
+int parseByte(char *dest) {
+	int byte = 0;
+	int iter = -1;
+	//REFACTO TO PREVENT ATOI ERROR
+	while (++iter < 3 && dest[iter] != '\0' && dest[iter] != '.') {
+		if (iter > 0) {
+			byte *= 10;
+		}
+		byte += dest[iter] - '0';
+		// printf("%d %c ||", byte, dest[iter]);
+	}
+	if (byte > 255 || byte < 0) {
+		return -1;
+	}
+	// printf(".\n");
+	return byte;
 }

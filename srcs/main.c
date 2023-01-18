@@ -13,17 +13,21 @@ void setup() {
 
 	getRawSocket();
 
+	ft_memset(&g_ping->hints, 0, sizeof(struct addrinfo));
 	g_ping->hints.ai_flags = AI_CANONNAME;
 	g_ping->hints.ai_family = AF_INET;
-	g_ping->hints.ai_socktype = 0;
-	g_ping->hints.ai_protocol = 0;
-	g_ping->hints.ai_addr = NULL;
-	g_ping->hints.ai_canonname = NULL;
-	g_ping->hints.ai_next = NULL;
 
 	g_ping->results = NULL;
 
 	g_ping->ip_str = &g_ping->rslv_node[0];
+	g_ping->state = 0;
+	g_ping->seq = 0;
+	g_ping->counters.min = 0;
+	g_ping->counters.max = 0;
+	g_ping->counters.sum = 0;
+	g_ping->counters.sum2 = 0;
+	g_ping->counters.avg = 0;
+	g_ping->counters.mdev = 0;
 }
 
 int	main(int ac, char **av)

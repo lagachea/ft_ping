@@ -24,10 +24,10 @@ LIBA = $(LIBDIR)/libft.a
 
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -g3 
-CFLAGS += -fsanitize=address
-CFLAGS += -fno-omit-frame-pointer 
-# CFLAGS += -fsanitize=memory,undefined
-# CFLAGS += -fsanitize=thread,undefined 
+# CFLAGS += -fsanitize=address,leak,undefined
+# CFLAGS += -fno-omit-frame-pointer 
+# Don't forget to change the lib flags too
+CFLAGS += -fsanitize=memory,undefined
 
 CC = clang
 
@@ -43,14 +43,14 @@ all: $(NAME)
 
 $(NAME): $(OBJECT)
 	+ make -s -C $(LIBDIR)
-	$(CC) $(CFLAGS) -I includes -I libft/includes -lm -o $(NAME) $(OBJECT) $(LIBA)
+	$(CC) -I includes -I libft/includes -lm -o $(NAME) $(OBJECT) $(LIBA) $(CFLAGS)
 	sudo setcap cap_net_raw=pe ft_ping
 	printf "$(LNECLR)$(GREEN)make done$(WHITE)\n"
 
 out/%.o: srcs/%.c $(HDRS)
 	mkdir -p out
 	printf "$(LNECLR)$(NAME): $<"
-	$(CC) $(CFLAGS) -I includes -I libft/includes -o $@ -c $<
+	$(CC) -I includes -I libft/includes -o $@ -c $< $(CFLAGS)
 
 json: fclean
 	# + bear -- make -s
