@@ -24,10 +24,9 @@ LIBA = $(LIBDIR)/libft.a
 
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -g3 
-# CFLAGS += -fsanitize=address,leak,undefined
-# CFLAGS += -fno-omit-frame-pointer 
+CFLAGS += -fsanitize=address,leak,undefined -fno-omit-frame-pointer 
 # Don't forget to change the lib flags too
-CFLAGS += -fsanitize=memory,undefined
+# CFLAGS += -fsanitize=memory,undefined
 
 CC = clang
 
