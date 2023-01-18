@@ -1,5 +1,23 @@
 #include "ft_ping.h"
 
+static int parseByte(char *dest) {
+	int byte = 0;
+	int iter = -1;
+
+	while (++iter < 3 && dest[iter] != '\0' && dest[iter] != '.') {
+		if (iter > 0) {
+			byte *= 10;
+		}
+		if (dest[iter] < '0' || dest[iter] > '9')
+			return -1;
+		byte += dest[iter] - '0';
+	}
+	if (byte > 255 || byte < 0) {
+		return -1;
+	}
+	return byte;
+}
+
 static int parseIPv4Address(union networkAddress *destValue, char *dest) {
 	int count = ft_strcountchr(dest, '.');
 	int iter = -1;

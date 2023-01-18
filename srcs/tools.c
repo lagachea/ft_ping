@@ -102,21 +102,3 @@ void printTimeval(struct timeval *tv) {
 	t = tv->tv_sec * 1000000 + tv->tv_usec;
 	printf("%u\n", t);
 }
-
-int parseByte(char *dest) {
-	int byte = 0;
-	int iter = -1;
-	//REFACTO TO PREVENT ATOI ERROR
-	while (++iter < 3 && dest[iter] != '\0' && dest[iter] != '.') {
-		if (iter > 0) {
-			byte *= 10;
-		}
-		byte += dest[iter] - '0';
-		// printf("%d %c ||", byte, dest[iter]);
-	}
-	if (byte > 255 || byte < 0) {
-		return -1;
-	}
-	// printf(".\n");
-	return byte;
-}
