@@ -70,12 +70,16 @@ static void getDestination(char *dest) {
 		g_ping->node = dest;
 
 		getAddressInformation();
-		g_ping->dest_addr = *g_ping->results->ai_addr;
-		g_ping->canonname = g_ping->results->ai_canonname;
 
-		// ADDRESS as BYTES
+		ft_memcpy(&g_ping->dest_addr, g_ping->results->ai_addr, sizeof(struct sockaddr));
+		g_ping->canonname = &g_ping->hostname[0]; 
+		ft_memcpy(g_ping->canonname,  g_ping->results->ai_canonname, ft_strlen(g_ping->results->ai_canonname));
+
 		addr_in = ((struct sockaddr_in*)(&g_ping->dest_addr))->sin_addr;
 		inet_ntop(AF_INET, &addr_in, g_ping->ip_str, INET_ADDRSTRLEN);
+
+		freeaddrinfo(g_ping->results);
+		g_ping->results = NULL;
 	}
 }
 

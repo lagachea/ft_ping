@@ -80,6 +80,7 @@ typedef struct s_ftping {
 	char *node;
 	char *service;
 
+	char hostname[NI_MAXHOST];
 	char *canonname;
 	struct addrinfo hints;
 	struct addrinfo *results;

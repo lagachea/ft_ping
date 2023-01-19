@@ -24,13 +24,8 @@ void setupInput() {
 
 void getAddressInformation() {
 	int res;
-	struct addrinfo **ai_res;
 
-	ai_res = &g_ping->results;
-	if (*ai_res != NULL) {
-		freeaddrinfo(*ai_res);
-	}
-	res = getaddrinfo(g_ping->node, g_ping->service, &g_ping->hints, ai_res);
+	res = getaddrinfo(g_ping->node, g_ping->service, &g_ping->hints, &g_ping->results);
 	if (res < 0) {
 		printError("ERROR: %s for address \"%s\" | Error getting addrinfo\n", gai_strerror(res), g_ping->node);
 		exit(FAILURE);
