@@ -19,5 +19,3 @@ quit gracefully on SIGINT
 
 -h adds:
     only prints usage and quit gracefully
-
-dns query at each packet is the reverse not the regular one so let's simplify this

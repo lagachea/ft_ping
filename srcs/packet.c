@@ -63,18 +63,6 @@ void fillIcmp() {
 	g_ping->icmp.icmp_cksum = icmpChecksum();
 }
 
-void setAddress() {
-	struct in_addr addr_in;
-
-	getAddressInformation();
-	g_ping->dest_addr = *g_ping->results->ai_addr;
-	g_ping->canonname = g_ping->results->ai_canonname;
-
-	// ADDRESS as BYTES
-	addr_in = ((struct sockaddr_in*)(&g_ping->dest_addr))->sin_addr;
-	inet_ntop(AF_INET, &addr_in, g_ping->ip_str, INET_ADDRSTRLEN);
-}
-
 void setClock(struct timeval *tv) {
 	int ret;
 
@@ -131,10 +119,6 @@ void printInitialInformation() {
 void setupOutput() {
 	setInitialClock();
 	setupInput();
-	/* if hostname */
-	if (g_ping->state == HOSTNAME) {
-		setAddress();
-	}
 
 	if (g_ping->seq == 0) {
 		printInitialInformation();

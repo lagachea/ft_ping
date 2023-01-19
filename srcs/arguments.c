@@ -42,9 +42,11 @@ static int parseIPv4Address(union networkAddress *destValue, char *dest) {
 	
 	return SUCCESS;
 }
+
 static void getDestination(char *dest) {
 	union networkAddress destination;
 	struct sockaddr_in *sosckaddr_in;
+	struct in_addr addr_in;
 
 	destination.integer = 0;
 	/*
@@ -66,6 +68,14 @@ static void getDestination(char *dest) {
 	else {
 		g_ping->state = HOSTNAME;
 		g_ping->node = dest;
+
+		getAddressInformation();
+		g_ping->dest_addr = *g_ping->results->ai_addr;
+		g_ping->canonname = g_ping->results->ai_canonname;
+
+		// ADDRESS as BYTES
+		addr_in = ((struct sockaddr_in*)(&g_ping->dest_addr))->sin_addr;
+		inet_ntop(AF_INET, &addr_in, g_ping->ip_str, INET_ADDRSTRLEN);
 	}
 }
 
