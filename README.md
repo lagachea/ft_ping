@@ -20,4 +20,4 @@ quit gracefully on SIGINT
 -h adds:
     only prints usage and quit gracefully
 
-replace atoi with a safe version for IP parsing (up to 3 char and . || safe value for byte)
+dns query at each packet is the reverse not the regular one so let's simplify this

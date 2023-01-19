@@ -80,11 +80,16 @@ void printStatistics() {
 			g_ping->counters.recieved,
 			g_ping->counters.loss_percent,
 			g_ping->counters.sumtime);
-	printf("rtt min/avg/max/mdev = %.3lf/%.3lf/%.3lf/%.3lf ms\n",
-			g_ping->counters.min,
-			g_ping->counters.avg,
-			g_ping->counters.max,
-			g_ping->counters.mdev);
+	if (g_ping->counters.recieved > 0) {
+		printf("rtt min/avg/max/mdev = %.3lf/%.3lf/%.3lf/%.3lf ms\n",
+				g_ping->counters.min,
+				g_ping->counters.avg,
+				g_ping->counters.max,
+				g_ping->counters.mdev);
+	}
+	else {
+		printf("\n");
+	}
 
 }
 

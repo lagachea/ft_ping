@@ -35,15 +35,17 @@ void printMessageStatistics(int len) {
 
 	len -= bytesOffset;
 
-	icmptr = *(struct icmp*)(&g_ping->databuf + bytesOffset);
+	icmptr = *(struct icmp*)(&g_ping->databuf[bytesOffset]);
 
 	/* if verbose add identifier */
-	/* if ip */
-	printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n",
-			len, g_ping->ip_str, icmptr.icmp_seq, ipptr.ip_ttl, g_ping->time.diff_ms);
-	/* if hostname */
-	// printf("%d bytes from %s (%s): icmp_seq=%d ttl=%d time=%.1lf ms\n",
-	// 		len, g_ping->ip_str, g_ping->ip_str, ntohs(icmptr->icmp_seq), ipptr->ip_ttl, t->diff_ms);
+	if ((g_ping->options & VERBOSE_OPTION) != 0) {
+		printf("%d bytes from %s: icmp_seq=%d ident=%d ttl=%d time=%.1lf ms\n",
+				len, g_ping->ip_str, icmptr.icmp_seq, icmptr.icmp_id, ipptr.ip_ttl, g_ping->time.diff_ms);
+	}
+	else {
+		printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n",
+				len, g_ping->ip_str, icmptr.icmp_seq, ipptr.ip_ttl, g_ping->time.diff_ms);
+	}
 	return;
 }
 
