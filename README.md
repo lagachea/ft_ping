@@ -13,9 +13,16 @@ print info on SIGQUIT
 quit gracefully on SIGINT
 
 ### My next goal is:
--v adds:
-    <!-- print info about socket and ai family before sending packets -->
-    ident at each response print
+Validate response before print
 
--h adds:
-    only prints usage and quit gracefully
+Write a usage
+
+Handle next packet wait time without alarm?
+
+using state 
+    SENDING(sendto)
+    RECIEVING(recvmsg)
+    WAITING(post print rcv)
+    READY(post wait)
+
+move looping inside loop and use if state READY

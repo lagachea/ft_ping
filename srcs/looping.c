@@ -16,6 +16,7 @@ void looping (){
 		// setAlarmHandler(NEXT, &loopHandler);
 		setTransmitted();
 		recieveMessage();
+		// Replace this function to wait 10 sec with gettimeofday and then return (README state)
 		setAlarmHandler(NEXT, &loopHandler);
 		return;
 	}
