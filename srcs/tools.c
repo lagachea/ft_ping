@@ -66,7 +66,7 @@ void setSumTime() {
 
 	tvo = &g_ping->time.tvo;
 	setClock(&tv);
-	diff = getDiff(&tv, tvo);
+	diff = getTimeDiff(&tv, tvo);
 	g_ping->counters.sumtime = diff / 1000;
 }
 

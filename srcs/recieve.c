@@ -24,6 +24,12 @@ static int getIPHeaderLengthInBytes(struct ip *ipptr) {
 	return ipptr->ip_hl * 4;
 }
 
+// static int validateMessage(struct ip *ipptr, struct icmp *icmptr) {
+// 	(void)icmptr;
+// 	(void)ipptr;
+// 	return FAILURE;
+// }
+
 void printMessageStatistics(int len) {
 	struct icmp icmptr;
 	struct ip ipptr;
@@ -36,6 +42,10 @@ void printMessageStatistics(int len) {
 	len -= bytesOffset;
 
 	icmptr = *(struct icmp*)(&g_ping->databuf[bytesOffset]);
+
+	// if (validateMessage(&ipptr, &icmptr) == FAILURE) {
+	// 	message was invalid
+	// }
 
 	/* if verbose add identifier */
 	if ((g_ping->options & VERBOSE_OPTION) != 0) {
@@ -52,6 +62,7 @@ void printMessageStatistics(int len) {
 void recieveMessage( ) {
 	int res = 0;
 
+	g_ping->step.count = RECIEVE;
 	res = recvmsg(g_ping->socket.sockfd, &g_ping->msg, g_ping->rec_flags);
 	if (res == -1) {
 		printError("ERROR: %s | Error reading msg\n", strerror(errno));
@@ -60,10 +71,11 @@ void recieveMessage( ) {
 	}
 	else if (res >= 0) {
 		alarm(0);
-		getTimeDiff();
+		getRoudTripTime();
 		setRecieved();
 		updateStatistics();
 		printMessageStatistics(res);
+		g_ping->step.count = WAIT;
 		return ;
 	}
 }

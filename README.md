@@ -14,15 +14,3 @@ quit gracefully on SIGINT
 
 ### My next goal is:
 Validate response before print
-
-Write a usage
-
-Handle next packet wait time without alarm?
-
-using state 
-    SENDING(sendto)
-    RECIEVING(recvmsg)
-    WAITING(post print rcv)
-    READY(post wait)
-
-move looping inside loop and use if state READY

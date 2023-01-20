@@ -29,8 +29,12 @@
 # define TIMEOUT 10
 # define NEXT 1
 # define IP 1
-# define HOSTNAME -1
+# define HOSTNAME 2
 # define PACKET_LEN 20 + ICMP_MINLEN
+# define READY 0
+# define SEND 1
+# define RECIEVE 2
+# define WAIT 3
 
 /* OPTIONS */
 # define VERBOSE_OPTION 1
@@ -66,13 +70,19 @@ typedef struct s_clock{
 	struct timeval tvo;
 	struct timeval tvf;
 	struct timeval tvi;
+	struct timeval tvw;
 	long int diff;
 	double diff_ms;
 } t_clock;
 
+typedef struct s_step {
+	unsigned char count: 2;
+} t_step;
+
 typedef struct s_ftping {
-	char options;
-	char state;
+	unsigned char options;
+	unsigned char state;
+	t_step	step;
 	t_clock time;
 	t_stats counters;
 	pid_t pid;
@@ -129,8 +139,9 @@ void getAddressInformation();
 void setClock(struct timeval *tv);
 void setInitialClock();
 void setFinalClock();
-void getTimeDiff();
-unsigned int getDiff(struct timeval *tvf, struct timeval *tvi);
+void updateWaitClock();
+void getRoudTripTime();
+unsigned int getTimeDiff(struct timeval *tvf, struct timeval *tvi);
 void setOriginalClock();
 
 

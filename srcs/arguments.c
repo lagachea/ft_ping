@@ -1,10 +1,12 @@
 #include "ft_ping.h"
 
 static int parseByte(char *dest) {
+	int state = -1;
 	int byte = 0;
 	int iter = -1;
 
 	while (++iter < 3 && dest[iter] != '\0' && dest[iter] != '.') {
+		state = 0;
 		if (iter > 0) {
 			byte *= 10;
 		}
@@ -12,7 +14,7 @@ static int parseByte(char *dest) {
 			return -1;
 		byte += dest[iter] - '0';
 	}
-	if (byte > 255 || byte < 0) {
+	if (state == -1 || byte > 255 || byte < 0) {
 		return -1;
 	}
 	return byte;
@@ -23,6 +25,7 @@ static int parseIPv4Address(union networkAddress *destValue, char *dest) {
 	int iter = -1;
 	int byte;
 
+	destValue->integer = 0;
 	// need 4 .
 	if (count != 3) {
 		return FAILURE;
@@ -43,12 +46,24 @@ static int parseIPv4Address(union networkAddress *destValue, char *dest) {
 	return SUCCESS;
 }
 
+static int hasDestination(int state) {
+	if ((state & (IP | HOSTNAME)) == 0) {
+		return FALSE;
+	}
+	return TRUE;
+}
+
 static void getDestination(char *dest) {
 	union networkAddress destination;
 	struct sockaddr_in *sosckaddr_in;
 	struct in_addr addr_in;
 
-	destination.integer = 0;
+	if (hasDestination(g_ping->state) == TRUE) {
+		printError("ERROR: %s | Usage error\n", "only one destination can be set");
+		printUsage();
+		exit(1);
+	}
+
 	/*
 	 * is hostname or ip?
 	 * if looks like a.b.c.d and 0 <= a & b & c &d <= 255 => IP
@@ -118,14 +133,12 @@ void parseArguments(int ac, char **av) {
 			getDestination(current_arg);
 		}
 	}
-}
 
-/* state is set by parsedDestination */
-int parsedDestination() {
 	if (g_ping->state == 0) {
-		return FAILURE;
+		printError("ERROR: %s | Usage error\n", "destination address required");
+		printUsage();
+		exit(1);
 	}
-	return SUCCESS;
 }
 
 /*

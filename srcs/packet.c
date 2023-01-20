@@ -27,7 +27,7 @@ void getAddressInformation() {
 
 	res = getaddrinfo(g_ping->node, g_ping->service, &g_ping->hints, &g_ping->results);
 	if (res < 0) {
-		printError("ERROR: %s for address \"%s\" | Error getting addrinfo\n", gai_strerror(res), g_ping->node);
+		printError("ERROR: %s for \"%s\" | Error getting addrinfo\n", gai_strerror(res), g_ping->node);
 		exit(FAILURE);
 	}
 }
@@ -85,16 +85,20 @@ void setFinalClock() {
 	setClock(&g_ping->time.tvf);
 }
 
-void getTimeDiff() {
+void updateWaitClock() {
+	setClock(&g_ping->time.tvw);
+}
+
+void getRoudTripTime() {
 	t_clock *t;
 
 	setFinalClock();
 	t = &g_ping->time;
-	t->diff = getDiff(&t->tvf, &t->tvi);
+	t->diff = getTimeDiff(&t->tvf, &t->tvi);
 	t->diff_ms = t->diff / 1000.0;
 }
 
-unsigned int getDiff(struct timeval *tvf, struct timeval *tvi) {
+unsigned int getTimeDiff(struct timeval *tvf, struct timeval *tvi) {
 	long int diff;
 	long int diff_sec;
 	long int diff_usec;

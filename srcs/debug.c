@@ -119,5 +119,5 @@ void printArguments(int ac, char **av) {
 }
 
 void printUsage() {
-	printf("USAGE: LOL\n");
+	printf("./ft_ping [-vh] destination\n");
 }

@@ -19,11 +19,6 @@ void	interruptHandler(int signal) {
 	exit(0);
 }
 
-void	loopHandler(int signum) {
-	(void)signum;
-	looping();
-}
-
 void	timeoutHandler(int signum) {
 	(void)signum;
 	// Alarm timeout after sending packet
