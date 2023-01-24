@@ -38,29 +38,30 @@ static int validateMessage(struct iphdr *ipptr, struct icmp *icmptr) {
 
 void printMessageStatistics(int len) {
 	struct icmp icmptr;
-	struct iphdr ipptr;
+	struct iphdr iphdr;
 	int bytesOffset;
 
-	ipptr = *(struct iphdr*)(&g_ping->databuf);
+	iphdr = *(struct iphdr*)(&g_ping->databuf);
 
-	bytesOffset = getIPHeaderLengthInBytes(&ipptr);
+	bytesOffset = getIPHeaderLengthInBytes(&iphdr);
 
 	len -= bytesOffset;
 
 	icmptr = *(struct icmp*)(&g_ping->databuf[bytesOffset]);
 
-	if (validateMessage(&ipptr, &icmptr) == FAILURE) {
-		// message was invalid print
+	if (validateMessage(&iphdr, &icmptr) == FAILURE) {
+		printError("ERROR: %s | Error validating msg\n", "the recieved message has unexpected content");
+		exit(1);
 	}
 
 	/* if verbose add identifier */
 	if ((g_ping->options & VERBOSE_OPTION) != 0) {
 		printf("%d bytes from %s: icmp_seq=%d ident=%d ttl=%d time=%.1lf ms\n",
-				len, g_ping->ip_str, icmptr.icmp_seq, icmptr.icmp_id, ipptr.ip_ttl, g_ping->time.diff_ms);
+				len, g_ping->ip_str, icmptr.icmp_seq, icmptr.icmp_id, iphdr.ttl, g_ping->time.diff_ms);
 	}
 	else {
 		printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n",
-				len, g_ping->ip_str, icmptr.icmp_seq, ipptr.ip_ttl, g_ping->time.diff_ms);
+				len, g_ping->ip_str, icmptr.icmp_seq, iphdr.ttl, g_ping->time.diff_ms);
 	}
 	return;
 }
