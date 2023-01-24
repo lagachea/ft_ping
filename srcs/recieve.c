@@ -17,25 +17,31 @@ void printMsghdr() {
 }
 
 
-static int getIPHeaderLengthInBytes(struct ip *ipptr) {
+static int getIPHeaderLengthInBytes(struct iphdr *ipptr) {
 	/* IP header encode the number of 32 bits packet there is in ip_hl field */
 	/* as 32 bits is 4 bytes the ip_hl * (32 / 8) can be reduced to  */
 	/* ip_hl * 4 */
-	return ipptr->ip_hl * 4;
+	return ipptr->ihl * 4;
 }
 
-// static int validateMessage(struct ip *ipptr, struct icmp *icmptr) {
-// 	(void)icmptr;
-// 	(void)ipptr;
-// 	return FAILURE;
-// }
+static int validateMessage(struct iphdr *ipptr, struct icmp *icmptr) {
+	// check if ip src of msg is dest of last sent packet
+	// check if icmp type is echo reply seq and id matches the last sent packet
+	if (ipptr->saddr != g_ping->sin.sin_addr.s_addr
+			|| icmptr->icmp_type != ICMP_ECHOREPLY
+			|| icmptr->icmp_seq != g_ping->icmp.icmp_seq
+			|| icmptr->icmp_id != g_ping->icmp.icmp_id) {
+		return FAILURE;
+	}
+	return SUCCESS;
+}
 
 void printMessageStatistics(int len) {
 	struct icmp icmptr;
-	struct ip ipptr;
+	struct iphdr ipptr;
 	int bytesOffset;
 
-	ipptr = *(struct ip*)(&g_ping->databuf);
+	ipptr = *(struct iphdr*)(&g_ping->databuf);
 
 	bytesOffset = getIPHeaderLengthInBytes(&ipptr);
 
@@ -43,9 +49,9 @@ void printMessageStatistics(int len) {
 
 	icmptr = *(struct icmp*)(&g_ping->databuf[bytesOffset]);
 
-	// if (validateMessage(&ipptr, &icmptr) == FAILURE) {
-	// 	message was invalid
-	// }
+	if (validateMessage(&ipptr, &icmptr) == FAILURE) {
+		// message was invalid print
+	}
 
 	/* if verbose add identifier */
 	if ((g_ping->options & VERBOSE_OPTION) != 0) {

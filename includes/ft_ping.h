@@ -6,7 +6,7 @@
 # include <bits/types/struct_timeval.h>
 # include <errno.h>
 # include <netdb.h>
-# include <netinet/in.h>
+# include <netinet/ip.h>
 # include <netinet/ip_icmp.h>
 # include <signal.h>
 # include <stdarg.h>
@@ -35,6 +35,7 @@
 # define SEND 1
 # define RECIEVE 2
 # define WAIT 3
+# define ONE_SEC 1000000
 
 /* OPTIONS */
 # define VERBOSE_OPTION 1

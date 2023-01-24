@@ -38,7 +38,7 @@ int	main(int ac, char **av)
 		else if (g_ping->step.count == WAIT) {
 			updateWaitClock();
 			wait_diff = getTimeDiff(&g_ping->time.tvw, &g_ping->time.tvf);
-			if (wait_diff > 1000000) {
+			if (wait_diff > ONE_SEC) {
 				g_ping->step.count = READY;
 			}
 		}
