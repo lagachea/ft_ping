@@ -71,22 +71,22 @@ void setClock(struct timeval *tv) {
 }
 
 void setOriginalClock() {
-	ft_memcpy(&g_ping->time.tvo, &g_ping->time.tvi, sizeof(struct timeval));
+	ft_memcpy(&g_ping->time.original, &g_ping->time.emission, sizeof(struct timeval));
 }
 
 void setInitialClock() {
-	setClock(&g_ping->time.tvi);
+	setClock(&g_ping->time.emission);
 	if (g_ping->seq == 0) {
 		setOriginalClock();
 	}
 }
 
 void setFinalClock() {
-	setClock(&g_ping->time.tvf);
+	setClock(&g_ping->time.reception);
 }
 
 void updateWaitClock() {
-	setClock(&g_ping->time.tvw);
+	setClock(&g_ping->time.wait);
 }
 
 void getRoudTripTime() {
@@ -94,7 +94,7 @@ void getRoudTripTime() {
 
 	setFinalClock();
 	t = &g_ping->time;
-	t->diff = getTimeDiff(&t->tvf, &t->tvi);
+	t->diff = getTimeDiff(&t->reception, &t->emission);
 	t->diff_ms = t->diff / 1000.0;
 }
 

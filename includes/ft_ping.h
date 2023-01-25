@@ -27,7 +27,6 @@
 # define FAILURE 1
 # define SUCCESS 0
 # define TIMEOUT 10
-# define NEXT 1
 # define IP 1
 # define HOSTNAME 2
 # define PACKET_LEN 20 + ICMP_MINLEN
@@ -42,7 +41,7 @@
 
 union networkAddress {
 	uint32_t integer;
-	unsigned char bytes[4];
+	uint8_t bytes[4];
 };
 
 typedef struct s_socket t_socket;
@@ -68,10 +67,10 @@ typedef struct s_stats{
 } t_stats;
 
 typedef struct s_clock{
-	struct timeval tvo;
-	struct timeval tvf;
-	struct timeval tvi;
-	struct timeval tvw;
+	struct timeval original;
+	struct timeval reception;
+	struct timeval emission;
+	struct timeval wait;
 	long int diff;
 	double diff_ms;
 } t_clock;
@@ -138,7 +137,7 @@ void setupOutput();
 void printMessageStatistics(int len);
 void getAddressInformation();
 void setClock(struct timeval *tv);
-void setInitialClock();
+void setInitialTimestamp();
 void setFinalClock();
 void updateWaitClock();
 void getRoudTripTime();

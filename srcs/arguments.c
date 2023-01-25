@@ -37,7 +37,7 @@ static int parseIPv4Address(union networkAddress *destValue, char *dest) {
 			return FAILURE;
 		}
 		else {
-			destValue->bytes[iter] = (unsigned char)byte;
+			destValue->bytes[iter] = (uint8_t)byte;
 		}
 		if (iter < 3)
 			dest = ft_strchr(dest, '.') + 1;

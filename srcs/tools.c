@@ -62,11 +62,9 @@ void printIcmp(struct icmp *icmptr) {
 void setSumTime() {
 	unsigned int diff;
 	struct timeval tv;
-	struct timeval *tvo;
 
-	tvo = &g_ping->time.tvo;
 	setClock(&tv);
-	diff = getTimeDiff(&tv, tvo);
+	diff = getTimeDiff(&tv, &g_ping->time.original);
 	g_ping->counters.sumtime = diff / 1000;
 }
 
