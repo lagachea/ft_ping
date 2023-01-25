@@ -29,7 +29,7 @@
 # define TIMEOUT 10
 # define IP 1
 # define HOSTNAME 2
-# define PACKET_LEN 20 + ICMP_MINLEN
+# define PACKET_LEN sizeof(struct iphdr) + ICMP_MINLEN
 # define READY 0
 # define SEND 1
 # define RECIEVE 2
@@ -132,14 +132,14 @@ void getSockAddr(struct addrinfo *ptr, t_ftping *data);
 
 /* packet.c */
 void fillIcmp();
-void setupInput();
-void setupOutput();
+void setupReception();
+void setupRoundTrip();
 void printMessageStatistics(int len);
 void getAddressInformation();
 void setClock(struct timeval *tv);
 void setInitialTimestamp();
-void setFinalClock();
-void updateWaitClock();
+void setReceptionClock();
+void setWaitClock();
 void getRoudTripTime();
 unsigned int getTimeDiff(struct timeval *tvf, struct timeval *tvi);
 void setOriginalClock();
@@ -173,7 +173,7 @@ void printTimeval(struct timeval *tv);
 int ft_strcountchr(char *str, int c);
 
 /* looping.c */
-void looping ();
+void pingRoundTrip ();
 
 /* arguments.c */
 void parseArguments(int ac, char **av);

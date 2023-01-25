@@ -30,13 +30,12 @@ int	main(int ac, char **av)
 
 	parseArguments(ac, av);
 
-	// loop trap to keep program running until new signal is sent
 	while(1) {
 		if (g_ping->step.count == READY) {
-			looping();
+			pingRoundTrip();
 		}
 		else if (g_ping->step.count == WAIT) {
-			updateWaitClock();
+			setWaitClock();
 			wait_diff = getTimeDiff(&g_ping->time.wait, &g_ping->time.reception);
 			if (wait_diff > ONE_SEC) {
 				g_ping->step.count = READY;

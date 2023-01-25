@@ -1,10 +1,10 @@
 #include "ft_ping.h"
 
-void looping (){
+void pingRoundTrip (){
 
 	int res;
 
-	setupOutput();
+	setupRoundTrip();
 	g_ping->step.count = SEND;
 	res = sendto(g_ping->socket.sockfd, &g_ping->icmp, ICMP_MINLEN, 0, &g_ping->dest_addr, INET_ADDRSTRLEN);
 	if (res == -1) {

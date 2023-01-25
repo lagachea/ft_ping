@@ -1,6 +1,6 @@
 #include "ft_ping.h"
 
-void setupInput() {
+void setupReception() {
 	struct msghdr *msg;
 
 	msg = &g_ping->msg;
@@ -74,25 +74,22 @@ void setOriginalClock() {
 	ft_memcpy(&g_ping->time.original, &g_ping->time.emission, sizeof(struct timeval));
 }
 
-void setInitialClock() {
+void setEmissionClock() {
 	setClock(&g_ping->time.emission);
-	if (g_ping->seq == 0) {
-		setOriginalClock();
-	}
 }
 
-void setFinalClock() {
+void setReceptionClock() {
 	setClock(&g_ping->time.reception);
 }
 
-void updateWaitClock() {
+void setWaitClock() {
 	setClock(&g_ping->time.wait);
 }
 
 void getRoudTripTime() {
 	t_clock *t;
 
-	setFinalClock();
+	setReceptionClock();
 	t = &g_ping->time;
 	t->diff = getTimeDiff(&t->reception, &t->emission);
 	t->diff_ms = t->diff / 1000.0;
@@ -109,17 +106,15 @@ unsigned int getTimeDiff(struct timeval *tvf, struct timeval *tvi) {
 }
 
 void printInitialInformation() {
-	/* if hostname */
-	printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->canonname, g_ping->ip_str, ICMP_MINLEN, PACKET_LEN);
-	/* else ip */
-	// printf("PING %s (%s) %d(%d) bytes of data.\n", g_ping->canonname, g_ping->ip_str, 8, 8);
+	printf("PING %s (%s) %d(%lu) bytes of data.\n", g_ping->canonname, g_ping->ip_str, ICMP_MINLEN, PACKET_LEN);
 }
 
-void setupOutput() {
-	setInitialClock();
-	setupInput();
+void setupRoundTrip() {
+	setEmissionClock();
+	setupReception();
 
 	if (g_ping->seq == 0) {
+		setOriginalClock();
 		printInitialInformation();
 	}
 
