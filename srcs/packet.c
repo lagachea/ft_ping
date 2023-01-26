@@ -101,7 +101,7 @@ long int getTimeDiff(struct timeval *tvf, struct timeval *tvi) {
 	long int diff_usec;
 	diff_sec = tvf->tv_sec - tvi->tv_sec;
 	diff_usec = tvf->tv_usec - tvi->tv_usec;
-	diff = diff_sec * 1000000 + diff_usec;
+	diff = diff_sec * ONE_SEC + diff_usec;
 	return diff;
 }
 

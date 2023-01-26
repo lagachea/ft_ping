@@ -102,6 +102,6 @@ void printShortStatistics() {
 void printTimeval(struct timeval *tv) {
 	unsigned int t;
 
-	t = tv->tv_sec * 1000000 + tv->tv_usec;
+	t = tv->tv_sec * ONE_SEC + tv->tv_usec;
 	printf("%u\n", t);
 }
