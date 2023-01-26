@@ -2,11 +2,12 @@
 
 t_ftping *g_ping;
 
-void setup() {
+static void setup() {
 	ft_memset(g_ping, 0, sizeof(t_ftping));
 
 	setHandler(SIGINT, &interruptHandler);
 	setHandler(SIGQUIT, &sigquitHandler);
+	setHandler(SIGALRM, &timeoutHandler);
 
 	g_ping->service = NULL;
 	g_ping->pid = getpid();

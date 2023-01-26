@@ -123,7 +123,6 @@ void printSocket(int family, int socktype, int protocol);
 void printSocketStruct(t_socket *sckt);
 void printAddressInformations();
 void printArguments(int ac, char **av);
-void printUsage();
 
 /* socket.c */
 int getSocket(t_socket *sckt);
@@ -131,11 +130,8 @@ int getRawSocket();
 void getSockAddr(struct addrinfo *ptr, t_ftping *data);
 
 /* packet.c */
-void fillIcmp();
-void setupReception();
 void setupRoundTrip();
 void printMessageStatistics(int len);
-void getAddressInformation();
 void setClock(struct timeval *tv);
 void setInitialTimestamp();
 void setReceptionClock();
@@ -147,7 +143,8 @@ void setOriginalClock();
 
 /* signals.c */
 void setHandler(int signum, sighandler_t handler);
-void setAlarmHandler(int sec, sighandler_t handler);
+void setAlarm(int sec);
+void resetAlarm();
 void freePing();
 void	loopHandler(int signum);
 void	interruptHandler(int signal);
@@ -171,6 +168,7 @@ void printStatistics();
 void printShortStatistics();
 void printTimeval(struct timeval *tv);
 int ft_strcountchr(char *str, int c);
+void printUsage();
 
 /* looping.c */
 void pingRoundTrip ();

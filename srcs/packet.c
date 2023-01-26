@@ -1,6 +1,6 @@
 #include "ft_ping.h"
 
-void setupReception() {
+static void setupReception() {
 	struct msghdr *msg;
 
 	msg = &g_ping->msg;
@@ -22,16 +22,6 @@ void setupReception() {
 	g_ping->rec_flags = 0;
 }
 
-void getAddressInformation() {
-	int res;
-
-	res = getaddrinfo(g_ping->node, g_ping->service, &g_ping->hints, &g_ping->results);
-	if (res < 0) {
-		printError("ERROR: %s for \"%s\" | Error getting addrinfo\n", gai_strerror(res), g_ping->node);
-		exit(FAILURE);
-	}
-}
-
 static uint16_t icmpChecksum() {
 	uint16_t res;
 	uint16_t *ptr;
@@ -48,7 +38,7 @@ static uint16_t icmpChecksum() {
 	return ~res;
 }
 
-void fillIcmp() {
+static void fillIcmp() {
 	ft_memset(&g_ping->icmp, 0, sizeof(g_ping->icmp));
 	g_ping->icmp.icmp_type = ICMP_ECHO;
 	g_ping->icmp.icmp_code = 0;
@@ -105,7 +95,7 @@ long int getTimeDiff(struct timeval *tvf, struct timeval *tvi) {
 	return diff;
 }
 
-void printInitialInformation() {
+static void printInitialInformation() {
 	printf("PING %s (%s) %d(%lu) bytes of data.\n", g_ping->canonname, g_ping->ip_str, ICMP_MINLEN, PACKET_LEN);
 }
 

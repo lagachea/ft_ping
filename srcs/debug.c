@@ -118,6 +118,19 @@ void printArguments(int ac, char **av) {
 	}
 }
 
-void printUsage() {
-	printf("./ft_ping [-vh] destination\n");
+void printMsghdr() {
+	struct msghdr *msg;
+	struct sockaddr_in *sosckaddr_in;
+	char rslv_node[INET_ADDRSTRLEN];
+
+	msg = &g_ping->msg;
+	print_memory(msg, sizeof(*msg));
+	sosckaddr_in = (struct sockaddr_in*)(msg->msg_name);
+
+	printf("Family: %s | Port: %hu | Addr: %s\n", 
+			getFamilyName(sosckaddr_in->sin_family)
+			, sosckaddr_in->sin_port
+			, inet_ntop(AF_INET, &sosckaddr_in->sin_addr.s_addr, &rslv_node[0], INET_ADDRSTRLEN)
+			);
 }
+

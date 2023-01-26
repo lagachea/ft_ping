@@ -2,7 +2,6 @@ NAME = ft_ping
 
 HDRS = includes/ft_ping.h libft/includes/libft.h
 SRC = main.c\
-	  debug.c\
 	  socket.c\
 	  packet.c\
 	  signals.c\
@@ -12,6 +11,8 @@ SRC = main.c\
 	  stats.c\
 	  arguments.c\
 	  error.c\
+	  
+# debug.c\
 
 
 SRCS = $(addprefix srcs/,$(SRCS))

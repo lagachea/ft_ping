@@ -105,3 +105,7 @@ void printTimeval(struct timeval *tv) {
 	t = tv->tv_sec * ONE_SEC + tv->tv_usec;
 	printf("%u\n", t);
 }
+
+void printUsage() {
+	printf("./ft_ping [-vh] destination\n");
+}

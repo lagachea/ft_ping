@@ -1,5 +1,15 @@
 #include "ft_ping.h"
 
+static void getAddressInformation() {
+	int res;
+
+	res = getaddrinfo(g_ping->node, g_ping->service, &g_ping->hints, &g_ping->results);
+	if (res < 0) {
+		printError("ERROR: %s for \"%s\" | Error getting addrinfo\n", gai_strerror(res), g_ping->node);
+		exit(FAILURE);
+	}
+}
+
 static int parseByte(char *dest) {
 	int state = -1;
 	int byte = 0;
