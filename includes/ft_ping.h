@@ -53,11 +53,11 @@ struct s_socket {
 };
 
 typedef struct s_stats{
-	unsigned int transmitted;
-	unsigned int recieved;
-	unsigned int diff;
-	unsigned int loss_percent;
-	unsigned int sumtime;
+	long int transmitted;
+	long int recieved;
+	long int diff;
+	long int loss_percent;
+	long int sumtime;
 	double min;
 	double max;
 	double avg;
@@ -141,7 +141,7 @@ void setInitialTimestamp();
 void setReceptionClock();
 void setWaitClock();
 void getRoudTripTime();
-unsigned int getTimeDiff(struct timeval *tvf, struct timeval *tvi);
+long int getTimeDiff(struct timeval *tvf, struct timeval *tvi);
 void setOriginalClock();
 
 

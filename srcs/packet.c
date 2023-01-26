@@ -95,7 +95,7 @@ void getRoudTripTime() {
 	t->diff_ms = t->diff / 1000.0;
 }
 
-unsigned int getTimeDiff(struct timeval *tvf, struct timeval *tvi) {
+long int getTimeDiff(struct timeval *tvf, struct timeval *tvi) {
 	long int diff;
 	long int diff_sec;
 	long int diff_usec;
