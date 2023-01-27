@@ -14,3 +14,5 @@ quit gracefully on SIGINT
 
 ### My next goal is:
 Validate response before print
+in case of 127.0.0.0 subnet recvmsg read the message we just sent
+add a loop waiting for correct response in case of local routing ?
