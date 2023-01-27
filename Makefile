@@ -45,16 +45,13 @@ $(NAME): $(OBJECT)
 	+ make -s -C $(LIBDIR)
 	$(CC) -I includes -I libft/includes -lm -o $(NAME) $(OBJECT) $(LIBA) $(CFLAGS)
 	sudo setcap cap_net_raw=pe ft_ping
+	sed -e '1s/^/[\'$$'\n''/' -e '$$s/,$$/\'$$'\n'']/' out/*.o.json > compile_commands.json
 	printf "$(LNECLR)$(GREEN)make done$(WHITE)\n"
 
 out/%.o: srcs/%.c $(HDRS)
 	mkdir -p out
 	printf "$(LNECLR)$(NAME): $<"
-	$(CC) -I includes -I libft/includes -o $@ -c $< $(CFLAGS)
-
-json: fclean
-	# + bear -- make -s
-	intercept-build-14 make -s -j4 && analyze-build-14
+	$(CC) -MJ $@.json -I includes -I libft/includes -o $@ -c $< $(CFLAGS)
 
 debug: all
 	clear; sudo gdb ./ft_ping google.com
@@ -84,5 +81,5 @@ random:
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o server srcs/test.c $(LIBA)
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o client srcs/testcli.c $(LIBA)
 
-.PHONY: all fclean clean re FORCE json test debug firewall
-.SILENT: all fclean clean re FORCE $(NAME) $(OBJECT) json test debug firewall
+.PHONY: all fclean clean re FORCE test debug firewall
+.SILENT: all fclean clean re FORCE $(NAME) $(OBJECT) test debug firewall
