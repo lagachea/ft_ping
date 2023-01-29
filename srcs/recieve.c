@@ -7,16 +7,25 @@ static int getIPHeaderLengthInBytes(struct iphdr *ipptr) {
 	return ipptr->ihl * 4;
 }
 
-static int validateMessage(struct iphdr *ipptr, struct icmp *icmptr) {
+static void validateMessage(struct iphdr *ipptr, struct icmp *icmptr) {
 	// check if ip src of msg is dest of last sent packet
 	// check if icmp type is echo reply seq and id matches the last sent packet
-	if (ipptr->saddr != g_ping->sin.sin_addr.s_addr
-			|| icmptr->icmp_type != ICMP_ECHOREPLY
-			|| icmptr->icmp_seq != g_ping->icmp.icmp_seq
-			|| icmptr->icmp_id != g_ping->icmp.icmp_id) {
-		return FAILURE;
+	if (icmptr->icmp_type != ICMP_ECHOREPLY) {
+		printError("ERROR: %s | Error validating msg\n", "the recieved message isn't an echo reply");
+		exit(1);
 	}
-	return SUCCESS;
+	if (ipptr->saddr != g_ping->sin.sin_addr.s_addr) {
+		printError("ERROR: %s | Error validating msg\n", "the recieved message comes from an unknown source");
+		exit(1);
+	}
+	if (icmptr->icmp_seq != g_ping->icmp.icmp_seq) {
+		printError("ERROR: %s | Error validating msg\n", "the recieved message has an unexpected sequence number");
+		exit(1);
+	}
+	if (icmptr->icmp_id != g_ping->icmp.icmp_id) {
+		printError("ERROR: %s | Error validating msg\n", "the recieved message has an unexpected identifier");
+		exit(1);
+	}
 }
 
 void printMessageStatistics(int len) {
@@ -32,10 +41,7 @@ void printMessageStatistics(int len) {
 
 	icmptr = *(struct icmp*)(&g_ping->databuf[bytesOffset]);
 
-	if (validateMessage(&iphdr, &icmptr) == FAILURE) {
-		printError("ERROR: %s | Error validating msg\n", "the recieved message has unexpected content");
-		exit(1);
-	}
+	validateMessage(&iphdr, &icmptr);
 
 	/* if verbose add identifier */
 	if ((g_ping->options & VERBOSE_OPTION) != 0) {

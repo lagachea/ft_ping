@@ -29,6 +29,7 @@
 # define TIMEOUT 10
 # define IP 1
 # define HOSTNAME 2
+# define LOCAL 4
 # define PACKET_LEN sizeof(struct iphdr) + ICMP_MINLEN
 # define READY 0
 # define SEND 1
@@ -41,7 +42,7 @@
 
 union networkAddress {
 	uint32_t integer;
-	uint8_t bytes[4];
+	uint8_t bytes[sizeof(struct in_addr)];
 };
 
 typedef struct s_socket t_socket;

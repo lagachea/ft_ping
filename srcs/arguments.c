@@ -56,11 +56,11 @@ static int parseIPv4Address(union networkAddress *destValue, char *dest) {
 	return SUCCESS;
 }
 
-static int hasDestination(int state) {
-	if ((state & (IP | HOSTNAME)) == 0) {
-		return FALSE;
+static int hasDestination() {
+	if ((g_ping->state & (IP | HOSTNAME)) != 0) {
+		return TRUE;
 	}
-	return TRUE;
+	return FALSE;
 }
 
 static void getDestination(char *dest) {
@@ -68,32 +68,41 @@ static void getDestination(char *dest) {
 	struct sockaddr_in *sosckaddr_in;
 	struct in_addr addr_in;
 
-	if (hasDestination(g_ping->state) == TRUE) {
-		printError("ERROR: %s | Usage error\n", "only one destination can be set");
+	if (hasDestination() == TRUE) {
+		printError("ERROR: destination %s (%s) is already set cannot add destination %s | Usage error\n",
+			g_ping->canonname, g_ping->ip_str, dest);
 		printUsage();
 		exit(1);
 	}
 
+
+	// int ret = inet_pton(AF_INET, dest, &destination.bytes);
+	// print_memory(&destination, sizeof(union networkAddress));
+	// if (ret == 1) {
 	/*
-	 * is hostname or ip?
+	 * is hostname or ip? clever IDEA pton
 	 * if looks like a.b.c.d and 0 <= a & b & c &d <= 255 => IP
 	 * else hostname let getAddInfo validate hostname
 	*/
 	if (parseIPv4Address(&destination, dest) == SUCCESS) {
-		g_ping->state = IP;
+		g_ping->state |= IP;
 		g_ping->canonname = dest;
 		g_ping->ip_str = dest;
 		if (destination.integer == 0) {
 			// address is 0.0.0.0 we should redirect to 127.0.0.1
+			g_ping->state |= LOCAL;
 		}
 		sosckaddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
 		sosckaddr_in->sin_family = AF_INET;
 		sosckaddr_in->sin_addr.s_addr = destination.integer;
 	}
 	else {
-		g_ping->state = HOSTNAME;
+		g_ping->state |= HOSTNAME;
 		g_ping->node = dest;
 
+		// if (strcmp("localhost", dest) == 0){
+		// 	g_ping->state |= LOCAL;
+		// }
 		getAddressInformation();
 
 		ft_memcpy(&g_ping->dest_addr, g_ping->results->ai_addr, sizeof(struct sockaddr));
@@ -144,7 +153,7 @@ void parseArguments(int ac, char **av) {
 		}
 	}
 
-	if (g_ping->state == 0) {
+	if (hasDestination() == FALSE) {
 		printError("ERROR: %s | Usage error\n", "destination address required");
 		printUsage();
 		exit(1);
