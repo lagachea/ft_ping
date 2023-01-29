@@ -88,10 +88,6 @@ static void getDestination(char *dest) {
 		g_ping->state |= IP;
 		g_ping->canonname = dest;
 		g_ping->ip_str = dest;
-		if (destination.integer == 0) {
-			// address is 0.0.0.0 we should redirect to 127.0.0.1
-			g_ping->state |= LOCAL;
-		}
 		sosckaddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
 		sosckaddr_in->sin_family = AF_INET;
 		sosckaddr_in->sin_addr.s_addr = destination.integer;
@@ -100,9 +96,6 @@ static void getDestination(char *dest) {
 		g_ping->state |= HOSTNAME;
 		g_ping->node = dest;
 
-		// if (strcmp("localhost", dest) == 0){
-		// 	g_ping->state |= LOCAL;
-		// }
 		getAddressInformation();
 
 		ft_memcpy(&g_ping->dest_addr, g_ping->results->ai_addr, sizeof(struct sockaddr));
@@ -110,10 +103,20 @@ static void getDestination(char *dest) {
 		ft_memcpy(g_ping->canonname,  g_ping->results->ai_canonname, ft_strlen(g_ping->results->ai_canonname));
 
 		addr_in = ((struct sockaddr_in*)(&g_ping->dest_addr))->sin_addr;
+		destination.integer = addr_in.s_addr;
 		inet_ntop(AF_INET, &addr_in, g_ping->ip_str, INET_ADDRSTRLEN);
 
 		freeaddrinfo(g_ping->results);
 		g_ping->results = NULL;
+	}
+	if (destination.integer == 0u 
+			|| (destination.integer >= LOCAL_MIN && destination.integer <= LOCAL_MAX)) {
+		g_ping->state |= LOCAL;
+		printf("LOCAL %x %u\n",destination.integer, destination.integer);
+		// if (strcmp("localhost", dest) == 0){
+		// 	g_ping->state |= LOCAL;
+		// }
+		// address is 0.0.0.0 we should redirect to 127.0.0.1
 	}
 }
 

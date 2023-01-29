@@ -36,6 +36,8 @@
 # define RECIEVE 2
 # define WAIT 3
 # define ONE_SEC 1000000
+# define LOCAL_MIN 0x0000007Fu
+# define LOCAL_MAX 0xFFFFFF7Fu
 
 /* OPTIONS */
 # define VERBOSE_OPTION 1
