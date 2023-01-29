@@ -15,6 +15,7 @@ void pingRoundTrip (){
 	else {
 		setAlarm(TIMEOUT);
 		setTransmitted();
+		//while step send or recieve
 		recieveMessage();
 		return;
 	}

@@ -112,11 +112,8 @@ static void getDestination(char *dest) {
 	if (destination.integer == 0u 
 			|| (destination.integer >= LOCAL_MIN && destination.integer <= LOCAL_MAX)) {
 		g_ping->state |= LOCAL;
-		printf("LOCAL %x %u\n",destination.integer, destination.integer);
-		// if (strcmp("localhost", dest) == 0){
-		// 	g_ping->state |= LOCAL;
-		// }
 		// address is 0.0.0.0 we should redirect to 127.0.0.1
+		printf("LOCAL %x %u\n",destination.integer, destination.integer);
 	}
 }
 

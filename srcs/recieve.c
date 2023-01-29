@@ -66,6 +66,8 @@ void recieveMessage( ) {
 		exit(FAILURE);
 	}
 	else if (res >= 0) {
+		//validate msg
+		//return if true error
 		resetAlarm();
 		getRoudTripTime();
 		setRecieved();
