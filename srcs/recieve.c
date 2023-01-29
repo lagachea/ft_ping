@@ -7,10 +7,10 @@ static int getIPHeaderLengthInBytes(struct iphdr *ipptr) {
 	return ipptr->ihl * 4;
 }
 
-static void validateMessage(struct iphdr *ipptr, struct icmp *icmptr) {
+static void validateMessage(struct iphdr *ipptr, struct icmphdr *icmptr) {
 	// check if ip src of msg is dest of last sent packet
 	// check if icmp type is echo reply seq and id matches the last sent packet
-	if (icmptr->icmp_type != ICMP_ECHOREPLY) {
+	if (icmptr->type != ICMP_ECHOREPLY) {
 		printError("ERROR: %s | Error validating msg\n", "the recieved message isn't an echo reply");
 		exit(1);
 	}
@@ -18,18 +18,18 @@ static void validateMessage(struct iphdr *ipptr, struct icmp *icmptr) {
 		printError("ERROR: %s | Error validating msg\n", "the recieved message comes from an unknown source");
 		exit(1);
 	}
-	if (icmptr->icmp_seq != g_ping->icmp.icmp_seq) {
+	if (icmptr->un.echo.sequence != g_ping->icmp.un.echo.sequence) {
 		printError("ERROR: %s | Error validating msg\n", "the recieved message has an unexpected sequence number");
 		exit(1);
 	}
-	if (icmptr->icmp_id != g_ping->icmp.icmp_id) {
+	if (icmptr->un.echo.id != g_ping->icmp.un.echo.id) {
 		printError("ERROR: %s | Error validating msg\n", "the recieved message has an unexpected identifier");
 		exit(1);
 	}
 }
 
 void printMessageStatistics(int len) {
-	struct icmp icmptr;
+	struct icmphdr icmptr;
 	struct iphdr iphdr;
 	int bytesOffset;
 
@@ -39,18 +39,18 @@ void printMessageStatistics(int len) {
 
 	len -= bytesOffset;
 
-	icmptr = *(struct icmp*)(&g_ping->databuf[bytesOffset]);
+	icmptr = *(struct icmphdr*)(&g_ping->databuf[bytesOffset]);
 
 	validateMessage(&iphdr, &icmptr);
 
 	/* if verbose add identifier */
 	if ((g_ping->options & VERBOSE_OPTION) != 0) {
 		printf("%d bytes from %s: icmp_seq=%d ident=%d ttl=%d time=%.1lf ms\n",
-				len, g_ping->ip_str, icmptr.icmp_seq, icmptr.icmp_id, iphdr.ttl, g_ping->time.diff_ms);
+				len, g_ping->ip_str, icmptr.un.echo.sequence, icmptr.un.echo.id, iphdr.ttl, g_ping->time.diff_ms);
 	}
 	else {
 		printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n",
-				len, g_ping->ip_str, icmptr.icmp_seq, iphdr.ttl, g_ping->time.diff_ms);
+				len, g_ping->ip_str, icmptr.un.echo.sequence, iphdr.ttl, g_ping->time.diff_ms);
 	}
 	return;
 }

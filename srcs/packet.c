@@ -40,12 +40,12 @@ static uint16_t icmpChecksum() {
 
 static void fillIcmp() {
 	ft_memset(&g_ping->icmp, 0, sizeof(g_ping->icmp));
-	g_ping->icmp.icmp_type = ICMP_ECHO;
-	g_ping->icmp.icmp_code = 0;
-	g_ping->icmp.icmp_id = g_ping->pid;
+	g_ping->icmp.type = ICMP_ECHO;
+	g_ping->icmp.code = 0;
+	g_ping->icmp.un.echo.id = g_ping->pid;
 	g_ping->seq++;
-	g_ping->icmp.icmp_seq = g_ping->seq;
-	g_ping->icmp.icmp_cksum = icmpChecksum();
+	g_ping->icmp.un.echo.id = g_ping->seq;
+	g_ping->icmp.checksum = icmpChecksum();
 }
 
 void setClock(struct timeval *tv) {

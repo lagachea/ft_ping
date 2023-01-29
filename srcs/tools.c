@@ -50,11 +50,11 @@ void	print_memory(const void *addr, size_t size)
 	}
 }
 
-void printIp(struct ip *ipptr) {
+void printIp(struct iphdr *ipptr) {
 	printf("ip\n");
 	print_memory(ipptr, 20);
 }
-void printIcmp(struct icmp *icmptr) {
+void printIcmp(struct icmphdr *icmptr) {
 	printf("icmp\n");
 	print_memory(icmptr, 8);
 }

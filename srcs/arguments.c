@@ -109,12 +109,6 @@ static void getDestination(char *dest) {
 		freeaddrinfo(g_ping->results);
 		g_ping->results = NULL;
 	}
-	if (destination.integer == 0u 
-			|| (destination.integer >= LOCAL_MIN && destination.integer <= LOCAL_MAX)) {
-		g_ping->state |= LOCAL;
-		// address is 0.0.0.0 we should redirect to 127.0.0.1
-		printf("LOCAL %x %u\n",destination.integer, destination.integer);
-	}
 }
 
 static void getOption(char *opt) {

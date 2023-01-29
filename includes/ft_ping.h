@@ -6,8 +6,10 @@
 # include <bits/types/struct_timeval.h>
 # include <errno.h>
 # include <netdb.h>
-# include <netinet/ip.h>
-# include <netinet/ip_icmp.h>
+// # include <netinet/ip.h>
+// # include <netinet/ip_icmp.h>
+# include <linux/icmp.h>
+# include <linux/ip.h>
 # include <signal.h>
 # include <stdarg.h>
 # include <stdio.h>
@@ -30,6 +32,7 @@
 # define IP 1
 # define HOSTNAME 2
 # define LOCAL 4
+# define ICMP_MINLEN 8
 # define PACKET_LEN sizeof(struct iphdr) + ICMP_MINLEN
 # define READY 0
 # define SEND 1
@@ -104,7 +107,7 @@ typedef struct s_ftping {
 
 	t_socket socket;
 	// Packet buf ? + len
-	struct icmp icmp;
+	struct icmphdr icmp;
 	// struct iphdr ipheader;
 
 	char control[50];
@@ -128,9 +131,7 @@ void printAddressInformations();
 void printArguments(int ac, char **av);
 
 /* socket.c */
-int getSocket(t_socket *sckt);
 int getRawSocket();
-void getSockAddr(struct addrinfo *ptr, t_ftping *data);
 
 /* packet.c */
 void setupRoundTrip();
@@ -165,8 +166,8 @@ void recieveMessage();
 
 /* tools.c */
 void	print_memory(const void *addr, size_t size);
-void printIcmp(struct icmp *icmptr);
-void printIp(struct ip *ipptr);
+void printIcmp(struct icmphdr *icmptr);
+void printIp(struct iphdr *ipptr);
 void printStatistics();
 void printShortStatistics();
 void printTimeval(struct timeval *tv);
