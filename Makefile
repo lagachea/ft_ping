@@ -1,4 +1,5 @@
 NAME = ft_ping
+REF = ping
 
 HDRS = includes/ft_ping.h libft/includes/libft.h
 SRC = main.c\
@@ -39,7 +40,7 @@ PURPLE = "\\033[35m"
 
 LNECLR = "\\33[2K\\r"
 
-all: $(NAME)
+all: $(NAME) $(REF)
 
 $(NAME): $(OBJECT)
 	+ make -s -C $(LIBDIR)
@@ -71,9 +72,19 @@ clean:
 	printf "$(PURPLE)clean done$(WHITE)\n"
 
 fclean:
-	$(RM) -rf out $(NAME) server client
+	$(RM) -rf out $(NAME) server client tmp/ inetutils-2.0
 	+ make -s -C $(LIBDIR) fclean
 	printf "$(PURPLE)fclean done$(WHITE)\n"
+
+$(REF):
+	mkdir -p tmp/
+	curl "https://ftp.gnu.org/gnu/inetutils/inetutils-2.0.tar.gz" > tmp/inetutils-2.0.tar.gz
+	tar -xf tmp/inetutils-2.0.tar.gz
+	cd ./inetutils-2.0; ./configure; make
+	cp ./inetutils-2.0/ping/ping .
+	sudo chown root:root ping
+	sudo chmod u+s ping
+	printf "$(LNECLR)$(GREEN)make download done$(WHITE)\n"
 
 re: fclean all
 

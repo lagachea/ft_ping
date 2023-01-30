@@ -7,3 +7,6 @@ compile_commands.json
 logs/
 client
 server
+tmp/
+inetutils-2.0
+ping
