@@ -19,7 +19,7 @@ static void setupReception() {
     msg->msg_controllen = sizeof(g_ping->control);
 
     msg->msg_flags = 0;
-	g_ping->rec_flags = 0;
+	g_ping->rec_flags = MSG_DONTWAIT;
 }
 
 static uint16_t icmpChecksum() {
