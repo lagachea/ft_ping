@@ -44,7 +44,7 @@ static void fillIcmp() {
 	g_ping->icmp.code = 0;
 	g_ping->icmp.un.echo.id = g_ping->pid;
 	g_ping->seq++;
-	g_ping->icmp.un.echo.id = g_ping->seq;
+	g_ping->icmp.un.echo.sequence = g_ping->seq;
 	g_ping->icmp.checksum = icmpChecksum();
 }
 
