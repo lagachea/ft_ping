@@ -61,6 +61,8 @@ void recieveMessage( ) {
 
 	g_ping->step.count = RECIEVE;
 	res = recvmsg(g_ping->socket.sockfd, &g_ping->msg, g_ping->rec_flags);
+	// if res -1 and errno is EAGAIN || EWOULDBLOCK
+	// no message was found
 	if (res == -1) {
 		printError("ERROR: %s | Error reading msg\n", strerror(errno));
 		freePing();
