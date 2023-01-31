@@ -13,5 +13,10 @@ print info on SIGQUIT
 quit gracefully on SIGINT
 
 ### My next goal is:
-Validate response to filter other processes replies
-break recieve steps into a loop to wait for our reply
+now that we have non blocking msg reception we can extends the main loop
+to Send / Recieve / Wait blocks
+
+use a bigger icmp packet to add timestamp in packet data
+
+we should be able to add a server to respond to packet and modify them to test
+program sturdiness
