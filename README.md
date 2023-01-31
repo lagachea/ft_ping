@@ -18,5 +18,4 @@ to Send / Recieve / Wait blocks
 
 use a bigger icmp packet to add timestamp in packet data
 
-we should be able to add a server to respond to packet and modify them to test
-program sturdiness
+add a server to respond to packet and modify them to test program
