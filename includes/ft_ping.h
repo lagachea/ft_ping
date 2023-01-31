@@ -7,9 +7,7 @@
 # include <errno.h>
 # include <netdb.h>
 # include <netinet/ip.h>
-// # include <netinet/ip_icmp.h>
-# include <linux/icmp.h>
-// # include <linux/ip.h>
+# include <netinet/ip_icmp.h>
 # include <signal.h>
 # include <stdarg.h>
 # include <stdio.h>
@@ -23,6 +21,15 @@
 # include <math.h>
 # include <float.h>
 
+/* THIS IS FROM <linux/icmp.h> but we cannot use both this and <netinet/ip_icmp.h>
+*/
+#define ICMP_FILTER			1
+
+struct icmp_filter {
+	uint32_t data;
+};
+/* end
+*/
 
 # include "libft.h"
 
