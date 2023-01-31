@@ -1,6 +1,6 @@
 #include "ft_ping.h"
 
-void freePing() {
+void cleanPing() {
 	close(g_ping->socket.sockfd);
 	g_ping->socket.sockfd = -1;
 }
@@ -13,7 +13,7 @@ void	sigquitHandler(int signal) {
 void	interruptHandler(int signal) {
 	(void)signal;
 	printStatistics();
-	freePing();
+	cleanPing();
 	exit(0);
 }
 
@@ -21,7 +21,7 @@ void	timeoutHandler(int signum) {
 	(void)signum;
 	printError("timeout detected\n");
 	printStatistics();
-	freePing();
+	cleanPing();
 	exit(FAILURE);
 }
 
@@ -29,10 +29,11 @@ void setHandler(int signum, sighandler_t handler) {
 	signal(signum, handler);
 }
 
-void setAlarm(int sec) {
-	alarm(sec);
+void setTimeoutAlarm() {
+	alarm(TIMEOUT);
 }
 
 void resetAlarm() {
 	alarm(0);
+	setTimeoutAlarm();
 }

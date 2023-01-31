@@ -1,27 +1,5 @@
 #include "ft_ping.h"
 
-static void setupReception() {
-	struct msghdr *msg;
-
-	msg = &g_ping->msg;
-	ft_memset(msg, 0, sizeof(*msg));
-	msg->msg_name = &g_ping->sin;
-	msg->msg_namelen = sizeof(g_ping->sin);
-
-    msg->msg_iov = g_ping->iov;
-    msg->msg_iovlen = 1;
-
-    msg->msg_iov[0].iov_base = g_ping->databuf;
-    msg->msg_iov[0].iov_len = sizeof(g_ping->databuf);
-
-
-    msg->msg_control = &g_ping->control;
-    msg->msg_controllen = sizeof(g_ping->control);
-
-    msg->msg_flags = 0;
-	g_ping->rec_flags = 0;
-}
-
 static uint16_t icmpChecksum() {
 	uint16_t res;
 	uint16_t *ptr;
@@ -55,7 +33,7 @@ void setClock(struct timeval *tv) {
 	ret = gettimeofday(tv, NULL);
 	if (ret != 0) {
 		printError("ERROR: %s | Failed setting clock\n", strerror(errno));
-		freePing();
+		cleanPing();
 		exit(FAILURE);
 	}
 }
@@ -96,12 +74,18 @@ long int getTimeDiff(struct timeval *tvf, struct timeval *tvi) {
 }
 
 static void printInitialInformation() {
-	printf("PING %s (%s) %d(%lu) bytes of data.\n", g_ping->canonname, g_ping->ip_str, ICMP_MINLEN, PACKET_LEN);
+
+	/* if verbose add identifier */
+	if ((g_ping->options & VERBOSE_OPTION) != 0) {
+		printf("PING %s (%s) %d data bytes, id 0x%x = %d\n", g_ping->canonname, g_ping->ip_str, ICMP_MINLEN, g_ping->pid, g_ping->pid);
+	}
+	else {
+		printf("PING %s (%s) %d data bytes\n", g_ping->canonname, g_ping->ip_str, ICMP_MINLEN);
+	}
 }
 
 void setupRoundTrip() {
 	setEmissionClock();
-	setupReception();
 
 	if (g_ping->seq == 0) {
 		setOriginalClock();
@@ -109,4 +93,15 @@ void setupRoundTrip() {
 	}
 
 	fillIcmp();
+}
+
+void sendPing() {
+	int res;
+
+	res = sendto(g_ping->socket.sockfd, &g_ping->icmp, ICMP_MINLEN, 0, &g_ping->dest_addr, INET_ADDRSTRLEN);
+	if (res == -1) {
+		printError("Error:%s | sending packet to %s\n", strerror(errno), g_ping->dest_addr.sa_data);
+		cleanPing();
+		exit(FAILURE);
+	}
 }

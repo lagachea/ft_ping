@@ -8,12 +8,12 @@ SRC = main.c\
 	  signals.c\
 	  recieve.c\
 	  tools.c\
-	  looping.c\
 	  stats.c\
 	  arguments.c\
 	  error.c\
 	  
 # debug.c\
+# looping.c\
 
 
 SRCS = $(addprefix srcs/,$(SRCS))

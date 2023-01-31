@@ -18,4 +18,6 @@ to Send / Recieve / Wait blocks
 
 use a bigger icmp packet to add timestamp in packet data
 
+use said timestamp to getRoundTripTime
+
 add a server to respond to packet and modify them to test program

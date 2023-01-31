@@ -6,10 +6,10 @@
 # include <bits/types/struct_timeval.h>
 # include <errno.h>
 # include <netdb.h>
-// # include <netinet/ip.h>
+# include <netinet/ip.h>
 // # include <netinet/ip_icmp.h>
 # include <linux/icmp.h>
-# include <linux/ip.h>
+// # include <linux/ip.h>
 # include <signal.h>
 # include <stdarg.h>
 # include <stdio.h>
@@ -105,16 +105,19 @@ typedef struct s_ftping {
 
 	t_socket socket;
 	// Packet buf ? + len
-	struct icmphdr icmp;
 	// struct iphdr ipheader;
+	struct icmphdr icmp;
 
 	char control[50];
 	char databuf[50];
 	int rec_flags;
+	int msg_len;
 	struct msghdr msg;
 	struct iovec iov[1];
 	struct sockaddr_in sin;
 
+	struct icmp *icmpptr;
+	struct ip *ipptr;
 } t_ftping;
 extern t_ftping *g_ping;
 
@@ -133,7 +136,7 @@ int getRawSocket();
 
 /* packet.c */
 void setupRoundTrip();
-void printMessageStatistics(int len);
+void printMessageStatistics();
 void setClock(struct timeval *tv);
 void setInitialTimestamp();
 void setReceptionClock();
@@ -141,13 +144,14 @@ void setWaitClock();
 void getRoudTripTime();
 long int getTimeDiff(struct timeval *tvf, struct timeval *tvi);
 void setOriginalClock();
+void sendPing();
 
 
 /* signals.c */
 void setHandler(int signum, sighandler_t handler);
-void setAlarm(int sec);
+void setTimeoutAlarm();
 void resetAlarm();
-void freePing();
+void cleanPing();
 void	loopHandler(int signum);
 void	interruptHandler(int signal);
 void	timeoutHandler(int signal);
@@ -161,6 +165,8 @@ void updateStatistics();
 
 /* recieve.c */
 void recieveMessage();
+void setupReception();
+void validateMessage(struct iphdr *ipptr, struct icmphdr *icmptr);
 
 /* tools.c */
 void	print_memory(const void *addr, size_t size);
@@ -171,6 +177,7 @@ void printShortStatistics();
 void printTimeval(struct timeval *tv);
 int ft_strcountchr(char *str, int c);
 void printUsage();
+int expectMessage();
 
 /* looping.c */
 void pingRoundTrip ();

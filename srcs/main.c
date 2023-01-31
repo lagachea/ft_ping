@@ -31,16 +31,24 @@ int	main(int ac, char **av)
 
 	parseArguments(ac, av);
 
-	while(1) {
+	while(TRUE) {
 		if (g_ping->step.count == READY) {
-			pingRoundTrip();
+			setupRoundTrip();
+			sendPing();
+			setTransmitted();
+			setTimeoutAlarm();
+			g_ping->step.count = WAIT;
 		}
 		else if (g_ping->step.count == WAIT) {
 			setWaitClock();
-			wait_diff = getTimeDiff(&g_ping->time.wait, &g_ping->time.reception);
+			wait_diff = getTimeDiff(&g_ping->time.wait, &g_ping->time.emission);
 			if (wait_diff > ONE_SEC) {
 				g_ping->step.count = READY;
 			}
+		}
+		if (expectMessage() == TRUE) {
+			setupReception();
+			recieveMessage();
 		}
 	}
 	

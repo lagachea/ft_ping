@@ -1,17 +1,11 @@
 #include "ft_ping.h"
 
 void setTransmitted() {
-	t_stats *ctrs;
-
-	ctrs = &g_ping->counters;
-	ctrs->transmitted++;
+	g_ping->counters.transmitted++;
 }
 
 void setRecieved() {
-	t_stats *ctrs;
-
-	ctrs = &g_ping->counters;
-	ctrs->recieved++;
+	g_ping->counters.recieved++;
 	setLoss();
 }
 
