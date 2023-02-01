@@ -13,11 +13,6 @@ print info on SIGQUIT
 quit gracefully on SIGINT
 
 ### My next goal is:
-now that we have non blocking msg reception we can extends the main loop
-to Send / Recieve / Wait blocks
-
-use a bigger icmp packet to add timestamp in packet data
-
 use said timestamp to getRoundTripTime
 
 add a server to respond to packet and modify them to test program
