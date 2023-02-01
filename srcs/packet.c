@@ -26,6 +26,7 @@ static void fillIcmp() {
 	icmp_out->icmphdr.un.echo.id = g_ping->pid;
 	icmp_out->icmphdr.un.echo.sequence = g_ping->seq;
 	icmp_out->icmphdr.checksum = icmpChecksum(&icmp_out->icmphdr);
+	//Set timestamp in icmp_out->data
 
 	g_ping->seq++;
 }
@@ -40,10 +41,6 @@ void setClock(struct timeval *tv) {
 		cleanPing();
 		exit(FAILURE);
 	}
-}
-
-void setOriginalClock() {
-	ft_memcpy(&g_ping->time.original, &g_ping->time.emission, sizeof(struct timeval));
 }
 
 void setEmissionClock() {
@@ -94,13 +91,10 @@ static void printInitialInformation() {
 }
 
 void setupRoundTrip() {
-	setEmissionClock();
-
 	if (g_ping->seq == 0) {
-		setOriginalClock();
 		printInitialInformation();
 	}
-
+	setEmissionClock();
 	fillIcmp();
 }
 

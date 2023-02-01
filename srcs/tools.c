@@ -59,17 +59,7 @@ void printIcmp(struct icmphdr *icmptr) {
 	printMemory(icmptr, 8);
 }
 
-void setSumTime() {
-	long int diff;
-	struct timeval tv;
-
-	setClock(&tv);
-	diff = getTimeDiff(&tv, &g_ping->time.original);
-	g_ping->counters.sumtime = diff / 1000;
-}
-
 void printStatistics() {
-	setSumTime();
 	setLoss();
 	printf( "--- %s ping statistics ---\n",
 			g_ping->canonname);

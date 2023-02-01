@@ -13,6 +13,6 @@ print info on SIGQUIT
 quit gracefully on SIGINT
 
 ### My next goal is:
-use said timestamp to getRoundTripTime
+set and use timestamp to getRoundTripTime
 
 add a server to respond to packet and modify them to test program

@@ -83,7 +83,6 @@ typedef struct s_stats{
 	long int recieved;
 	long int diff;
 	long int loss_percent;
-	long int sumtime;
 	double min;
 	double max;
 	double avg;
@@ -93,7 +92,6 @@ typedef struct s_stats{
 } t_stats;
 
 typedef struct s_clock{
-	struct timeval original;
 	struct timeval reception;
 	struct timeval emission;
 	struct timeval wait;
