@@ -24,7 +24,7 @@ void updateStatistics() {
 	double diff;
 	
 	ctrs = &g_ping->counters;
-	diff = g_ping->time.diff / 1000.0;
+	diff = g_ping->time.diff_ms;
 
 	if (ctrs->min > diff || ctrs->min == 0)
 		ctrs->min = diff;

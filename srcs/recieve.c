@@ -15,7 +15,7 @@ void printMessageStatistics() {
 
 	icmphdr = g_ping->pkt_msg.icmp.icmphdr;
 
-	printf("%lu bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n",
+	printf("%lu bytes from %s: icmp_seq=%d ttl=%d time=%.3lf ms\n",
 			g_ping->msg_ret - sizeof(struct iphdr), g_ping->ip_str, icmphdr.un.echo.sequence, iphdr.ttl, g_ping->time.diff_ms);
 }
 

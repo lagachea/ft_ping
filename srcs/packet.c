@@ -59,6 +59,11 @@ void setWaitClock() {
 }
 
 void getRoudTripTime() {
+	// refactor this func at the same time as filling icmp packet with TS
+	// we should gettimeofday in a now clock
+	// use TS from recieved packet
+	// and getTimeDiff(now, ts)
+	// other goal is to use long int for stats
 	t_clock *t;
 
 	setReceptionClock();

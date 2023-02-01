@@ -56,7 +56,6 @@ int	main(int ac, char **av)
 				// give us another TIMEOUT time to work
 				setTimeoutAlarm();
 
-				// refactor this func at the same time as filling icmp packet with TS
 				getRoudTripTime();
 
 				setRecieved();

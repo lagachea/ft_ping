@@ -73,11 +73,10 @@ void printStatistics() {
 	setLoss();
 	printf( "--- %s ping statistics ---\n",
 			g_ping->canonname);
-	printf("%ld packets transmitted, %ld received, %ld%% packet loss, time %ldms\n",
+	printf("%ld packets transmitted, %ld packets received, %ld%% packet loss\n",
 			g_ping->counters.transmitted,
 			g_ping->counters.recieved,
-			g_ping->counters.loss_percent,
-			g_ping->counters.sumtime);
+			g_ping->counters.loss_percent);
 	if (g_ping->counters.recieved > 0) {
 		printf("round-trip min/avg/max/stddev = %.3lf/%.3lf/%.3lf/%.3lf ms\n",
 				g_ping->counters.min,

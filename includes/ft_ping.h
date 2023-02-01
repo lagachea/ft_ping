@@ -137,9 +137,6 @@ typedef struct s_ftping {
 	struct msghdr msg;
 	struct iovec iov[1];
 	struct sockaddr_in sin;
-
-	struct icmp *icmpptr;
-	struct ip *ipptr;
 	t_msg_packet pkt_msg;
 } t_ftping;
 extern t_ftping *g_ping;
