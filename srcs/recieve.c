@@ -11,29 +11,16 @@ void printMessageStatistics() {
 	struct iphdr iphdr;
 	struct icmphdr icmphdr;
 
-	iphdr = *(struct iphdr*)g_ping->ipptr;
+	iphdr = g_ping->pkt_msg.iphdr;
 
-	icmphdr = *(struct icmphdr*)g_ping->icmpptr;
+	icmphdr = g_ping->pkt_msg.icmp.icmphdr;
 
-	printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n",
-			g_ping->msg_len, g_ping->ip_str, icmphdr.un.echo.sequence, iphdr.ttl, g_ping->time.diff_ms);
+	printf("%lu bytes from %s: icmp_seq=%d ttl=%d time=%.1lf ms\n",
+			g_ping->msg_ret - sizeof(struct iphdr), g_ping->ip_str, icmphdr.un.echo.sequence, iphdr.ttl, g_ping->time.diff_ms);
 }
 
-void setMsgPointers() {
-	int bytesOffset;
-	struct iphdr iphdr;
-
-	g_ping->ipptr = (struct ip*)(&g_ping->databuf);
-
-	// need to do this otherwise undefined runtime behaviour is triggered
-	// as the pointer to iphdr is not aligned, because it comes from packet data
-	// thus does not have bytes padding
-	iphdr = *(struct iphdr*)g_ping->ipptr;
-	bytesOffset = getIPHeaderLengthInBytes(&iphdr);
-
-	g_ping->msg_len -= bytesOffset;
-
-	g_ping->icmpptr = (struct icmp*)(&g_ping->databuf[bytesOffset]);
+void setMsgPointer() {
+	g_ping->pkt_msg = *(t_msg_packet*)(&g_ping->databuf);
 }
 
 void setupReception() {
@@ -55,20 +42,37 @@ void setupReception() {
     msg->msg_controllen = sizeof(g_ping->control);
 
     msg->msg_flags = 0;
-	// g_ping->rec_flags = 0;
 	g_ping->rec_flags = MSG_DONTWAIT;
 }
 
-static int isValidMessage(int len) {
+int isValidMessage() {
 	//validate msg len and content
 	//return if true error
 	//use function validateMessage to rework
-	if (len != PACKET_LEN) {
+	if (g_ping->msg_ret != PACKET_FULL) {
 		return FALSE;
 	}
 	return TRUE;
 }
 
+int hasValidMessage() {
+	if (!((g_ping->msg_ret == -1 && errno == EWOULDBLOCK) || isValidMessage() == FALSE)) {
+		setMsgPointer();
+		return TRUE;
+	}
+	return FALSE;
+}
+
+void recieveMessage( ) {
+	g_ping->msg_ret = recvmsg(g_ping->socket.sockfd, &g_ping->msg, g_ping->rec_flags);
+	if (g_ping->msg_ret == -1 && errno != EWOULDBLOCK) {
+		printError("ERROR: %s | Error reading msg\n", strerror(errno));
+		cleanPing();
+		exit(FAILURE);
+	}
+}
+
+/*
 void validateMessage(struct iphdr *ipptr, struct icmphdr *icmptr) {
 	uint32_t addr;
 	uint16_t id;
@@ -90,29 +94,4 @@ void validateMessage(struct iphdr *ipptr, struct icmphdr *icmptr) {
 		exit(1);
 	}
 }
-
-void recieveMessage( ) {
-	int res = 0;
-
-	res = recvmsg(g_ping->socket.sockfd, &g_ping->msg, g_ping->rec_flags);
-	if (res == -1 && errno != EWOULDBLOCK) {
-		printError("ERROR: %s | Error reading msg\n", strerror(errno));
-		cleanPing();
-		exit(FAILURE);
-	}
-	if ((res == -1 && errno == EWOULDBLOCK) || isValidMessage(res) == FALSE) {
-		//No message found or not the message we expect to find: (src / dest / id)
-		return;
-	}
-	setTimeoutAlarm();
-
-	// refactor this func at the same time as filling icmp packet with TS
-	getRoudTripTime();
-
-	setRecieved();
-	updateStatistics();
-	g_ping->msg_len = res;
-	setMsgPointers();
-	printMessageStatistics();
-	return ;
-}
+*/

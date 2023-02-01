@@ -1,14 +1,14 @@
 #include "ft_ping.h"
 
-static uint16_t icmpChecksum() {
+static uint16_t icmpChecksum(struct icmphdr *hdr) {
 	uint16_t res;
 	uint16_t *ptr;
 	size_t count;
 
-	ptr = (uint16_t *)&g_ping->icmp;
+	ptr = (uint16_t *)hdr;
 	res = 0;
 	count = 0;
-	while (count < 8) {
+	while (count < ICMPHDR_LEN) {
 		res += *ptr;
 		ptr++;
 		count++;
@@ -17,13 +17,17 @@ static uint16_t icmpChecksum() {
 }
 
 static void fillIcmp() {
-	ft_memset(&g_ping->icmp, 0, sizeof(g_ping->icmp));
-	g_ping->icmp.type = ICMP_ECHO;
-	g_ping->icmp.code = 0;
-	g_ping->icmp.un.echo.id = g_ping->pid;
+	t_icmp_out *icmp_out;
+
+	icmp_out = &g_ping->pkt_msg.icmp;
+	ft_memset(icmp_out, 0, sizeof(t_icmp_out));
+	icmp_out->icmphdr.type = ICMP_ECHO;
+	icmp_out->icmphdr.code = 0;
+	icmp_out->icmphdr.un.echo.id = g_ping->pid;
+	icmp_out->icmphdr.un.echo.sequence = g_ping->seq;
+	icmp_out->icmphdr.checksum = icmpChecksum(&icmp_out->icmphdr);
+
 	g_ping->seq++;
-	g_ping->icmp.un.echo.sequence = g_ping->seq;
-	g_ping->icmp.checksum = icmpChecksum();
 }
 
 void setClock(struct timeval *tv) {
@@ -77,10 +81,10 @@ static void printInitialInformation() {
 
 	/* if verbose add identifier */
 	if ((g_ping->options & VERBOSE_OPTION) != 0) {
-		printf("PING %s (%s) %d data bytes, id 0x%x = %d\n", g_ping->canonname, g_ping->ip_str, ICMP_MINLEN, g_ping->pid, g_ping->pid);
+		printf("PING %s (%s) %d data bytes, id 0x%x = %d\n", g_ping->canonname, g_ping->ip_str, ICMP_DATA_LEN, g_ping->pid, g_ping->pid);
 	}
 	else {
-		printf("PING %s (%s) %d data bytes\n", g_ping->canonname, g_ping->ip_str, ICMP_MINLEN);
+		printf("PING %s (%s) %d data bytes\n", g_ping->canonname, g_ping->ip_str, ICMP_DATA_LEN);
 	}
 }
 
@@ -98,7 +102,7 @@ void setupRoundTrip() {
 void sendPing() {
 	int res;
 
-	res = sendto(g_ping->socket.sockfd, &g_ping->icmp, ICMP_MINLEN, 0, &g_ping->dest_addr, INET_ADDRSTRLEN);
+	res = sendto(g_ping->socket.sockfd, &g_ping->pkt_msg.icmp, ICMP_FULL, 0, &g_ping->dest_addr, INET_ADDRSTRLEN);
 	if (res == -1) {
 		printError("Error:%s | sending packet to %s\n", strerror(errno), g_ping->dest_addr.sa_data);
 		cleanPing();

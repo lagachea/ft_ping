@@ -46,9 +46,26 @@ int	main(int ac, char **av)
 				g_ping->step.count = READY;
 			}
 		}
+
 		if (expectMessage() == TRUE) {
 			setupReception();
 			recieveMessage();
+			if (hasValidMessage() == TRUE) {
+				// a msg was found and is the response we expect to parse
+
+				// give us another TIMEOUT time to work
+				setTimeoutAlarm();
+
+				// refactor this func at the same time as filling icmp packet with TS
+				getRoudTripTime();
+
+				setRecieved();
+
+				updateStatistics();
+
+				printMessageStatistics();
+			}
+			//No valid message found or not the message we expect to find: (src / dest / id)
 		}
 	}
 	

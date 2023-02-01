@@ -11,7 +11,7 @@ int ft_strcountchr(char *str, int c) {
 	return count;
 }
 
-void	print_memory(const void *addr, size_t size)
+void	printMemory(const void *addr, size_t size)
 {
 	unsigned char *t = (unsigned char *)addr;
 	char		print;
@@ -52,11 +52,11 @@ void	print_memory(const void *addr, size_t size)
 
 void printIp(struct iphdr *ipptr) {
 	printf("ip\n");
-	print_memory(ipptr, 20);
+	printMemory(ipptr, 20);
 }
 void printIcmp(struct icmphdr *icmptr) {
 	printf("icmp\n");
-	print_memory(icmptr, 8);
+	printMemory(icmptr, 8);
 }
 
 void setSumTime() {
@@ -71,7 +71,7 @@ void setSumTime() {
 void printStatistics() {
 	setSumTime();
 	setLoss();
-	printf( "\n--- %s ping statistics ---\n",
+	printf( "--- %s ping statistics ---\n",
 			g_ping->canonname);
 	printf("%ld packets transmitted, %ld received, %ld%% packet loss, time %ldms\n",
 			g_ping->counters.transmitted,
@@ -79,7 +79,7 @@ void printStatistics() {
 			g_ping->counters.loss_percent,
 			g_ping->counters.sumtime);
 	if (g_ping->counters.recieved > 0) {
-		printf("rtt min/avg/max/mdev = %.3lf/%.3lf/%.3lf/%.3lf ms\n",
+		printf("round-trip min/avg/max/stddev = %.3lf/%.3lf/%.3lf/%.3lf ms\n",
 				g_ping->counters.min,
 				g_ping->counters.avg,
 				g_ping->counters.max,

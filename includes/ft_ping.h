@@ -40,7 +40,11 @@ struct icmp_filter {
 # define HOSTNAME 2
 # define LOCAL 4
 # define ICMP_MINLEN 8
+# define ICMP_DATA_LEN 56
+# define ICMPHDR_LEN sizeof(struct icmphdr)
 # define PACKET_LEN sizeof(struct iphdr) + ICMP_MINLEN
+# define ICMP_FULL sizeof(t_icmp_out)
+# define PACKET_FULL  sizeof(t_msg_packet)
 # define READY 0
 # define SEND 1
 # define RECIEVE 2
@@ -49,6 +53,17 @@ struct icmp_filter {
 
 /* OPTIONS */
 # define VERBOSE_OPTION 1
+
+typedef struct s_icmp_out {
+	struct icmphdr icmphdr;
+	uint8_t data[56];
+}
+t_icmp_out;
+
+typedef struct s_msg_packet {
+	struct iphdr iphdr;
+	t_icmp_out icmp;
+} t_msg_packet;
 
 union networkAddress {
 	uint32_t integer;
@@ -113,18 +128,19 @@ typedef struct s_ftping {
 	t_socket socket;
 	// Packet buf ? + len
 	// struct iphdr ipheader;
-	struct icmphdr icmp;
+	// struct icmphdr icmp;
 
-	char control[50];
-	char databuf[50];
+	char control[100];
+	char databuf[100];
 	int rec_flags;
-	int msg_len;
+	int msg_ret;
 	struct msghdr msg;
 	struct iovec iov[1];
 	struct sockaddr_in sin;
 
 	struct icmp *icmpptr;
 	struct ip *ipptr;
+	t_msg_packet pkt_msg;
 } t_ftping;
 extern t_ftping *g_ping;
 
@@ -174,9 +190,12 @@ void updateStatistics();
 void recieveMessage();
 void setupReception();
 void validateMessage(struct iphdr *ipptr, struct icmphdr *icmptr);
+int isValidMessage();
+void setMsgPointer();
+int hasValidMessage();
 
 /* tools.c */
-void	print_memory(const void *addr, size_t size);
+void	printMemory(const void *addr, size_t size);
 void printIcmp(struct icmphdr *icmptr);
 void printIp(struct iphdr *ipptr);
 void printStatistics();
