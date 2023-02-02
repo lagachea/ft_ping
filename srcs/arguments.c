@@ -64,7 +64,6 @@ static int hasDestination() {
 }
 
 static void getDestination(char *dest) {
-	union networkAddress destination;
 	struct sockaddr_in *sosckaddr_in;
 	struct in_addr addr_in;
 
@@ -75,22 +74,13 @@ static void getDestination(char *dest) {
 		exit(1);
 	}
 
-
-	// int ret = inet_pton(AF_INET, dest, &destination.bytes);
-	// print_memory(&destination, sizeof(union networkAddress));
-	// if (ret == 1) {
-	/*
-	 * is hostname or ip? clever IDEA pton
-	 * if looks like a.b.c.d and 0 <= a & b & c &d <= 255 => IP
-	 * else hostname let getAddInfo validate hostname
-	*/
-	if (parseIPv4Address(&destination, dest) == SUCCESS) {
+	if (parseIPv4Address(&g_ping->destination, dest) == SUCCESS) {
 		g_ping->state |= IP;
 		g_ping->canonname = dest;
 		g_ping->ip_str = dest;
 		sosckaddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
 		sosckaddr_in->sin_family = AF_INET;
-		sosckaddr_in->sin_addr.s_addr = destination.integer;
+		sosckaddr_in->sin_addr.s_addr = g_ping->destination.integer;
 	}
 	else {
 		g_ping->state |= HOSTNAME;
@@ -103,7 +93,7 @@ static void getDestination(char *dest) {
 		ft_memcpy(g_ping->canonname,  g_ping->results->ai_canonname, ft_strlen(g_ping->results->ai_canonname));
 
 		addr_in = ((struct sockaddr_in*)(&g_ping->dest_addr))->sin_addr;
-		destination.integer = addr_in.s_addr;
+		g_ping->destination.integer = addr_in.s_addr;
 		inet_ntop(AF_INET, &addr_in, g_ping->ip_str, INET_ADDRSTRLEN);
 
 		freeaddrinfo(g_ping->results);

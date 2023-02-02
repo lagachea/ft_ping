@@ -120,6 +120,7 @@ typedef struct s_ftping {
 	struct addrinfo hints;
 	struct addrinfo *results;
 	struct sockaddr dest_addr;
+	union networkAddress destination;
 
 	char rslv_node[INET_ADDRSTRLEN];
 	char *ip_str;

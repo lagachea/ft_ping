@@ -46,10 +46,21 @@ void setupReception() {
 }
 
 int isValidMessage() {
-	//validate msg len and content
-	//return if true error
-	//use function validateMessage to rework
+	t_msg_packet pkt;
+	uint32_t addr;
+	uint16_t id;
+
 	if (g_ping->msg_ret != PACKET_FULL) {
+		return FALSE;
+	}
+
+	pkt = *(t_msg_packet*)(&g_ping->databuf);
+
+	addr = g_ping->destination.integer;
+	id = g_ping->pid;
+
+	if (pkt.iphdr.saddr != addr
+			|| pkt.icmp.icmphdr.un.echo.id != id) {
 		return FALSE;
 	}
 	return TRUE;
@@ -71,27 +82,3 @@ void recieveMessage( ) {
 		exit(FAILURE);
 	}
 }
-
-/*
-void validateMessage(struct iphdr *ipptr, struct icmphdr *icmptr) {
-	uint32_t addr;
-	uint16_t id;
-	uint16_t sequence;
-
-	addr = ((struct sockaddr_in*)&g_ping->dest_addr)->sin_addr.s_addr;
-	id = g_ping->icmp.un.echo.id;
-	sequence = g_ping->icmp.un.echo.sequence;
-	if (ipptr->saddr != addr) {
-		printError("ERROR: %s | Error validating msg\n", "the recieved message comes from an unknown source");
-		exit(1);
-	}
-	if (icmptr->un.echo.id != id) {
-		printError("ERROR: %s | Error validating msg\n", "the recieved message has an unexpected identifier");
-		exit(1);
-	}
-	if (icmptr->un.echo.sequence != sequence) {
-		printError("ERROR: %s | Error validating msg\n", "the recieved message has an unexpected sequence number");
-		exit(1);
-	}
-}
-*/
