@@ -1,16 +1,16 @@
 #include "ft_ping.h"
 
-static uint16_t icmpChecksum(void *pkt) {
+static uint16_t icmpChecksum(void *pkt, int len) {
 	uint32_t sum;
 	uint16_t *ptr;
-	size_t count;
+	int count;
 
 	ptr = (uint16_t *)pkt;
 	sum = 0;
 	count = 0;
 
 	// sum all uint16 of the packet in a uint32
-	while (count < ICMP_FULL) {
+	while (count < len) {
 		sum += *ptr;
 		ptr++;
 		count += sizeof(uint16_t);
@@ -38,7 +38,7 @@ static void fillIcmp() {
 	//Set timestamp in icmp_out->data
 	ft_memcpy(&icmp_out->data[0], &g_ping->time.emission, sizeof(struct timeval));
 
-	icmp_out->icmphdr.checksum = icmpChecksum(icmp_out);
+	icmp_out->icmphdr.checksum = icmpChecksum(icmp_out, sizeof(t_icmp_out));
 	g_ping->seq++;
 }
 
