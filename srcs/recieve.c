@@ -28,8 +28,6 @@ void setupReception() {
 
 	msg = &g_ping->msg;
 	ft_memset(msg, 0, sizeof(*msg));
-	msg->msg_name = &g_ping->sin;
-	msg->msg_namelen = sizeof(g_ping->sin);
 
     msg->msg_iov = g_ping->iov;
     msg->msg_iovlen = 1;

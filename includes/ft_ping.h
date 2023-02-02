@@ -50,6 +50,7 @@ struct icmp_filter {
 # define RECIEVE 2
 # define WAIT 3
 # define ONE_SEC 1000000
+# define MSG_LEN 100
 
 /* OPTIONS */
 # define VERBOSE_OPTION 1
@@ -130,13 +131,13 @@ typedef struct s_ftping {
 	// struct iphdr ipheader;
 	// struct icmphdr icmp;
 
-	char control[100];
-	char databuf[100];
-	int rec_flags;
-	int msg_ret;
 	struct msghdr msg;
 	struct iovec iov[1];
-	struct sockaddr_in sin;
+	char control[MSG_LEN];
+	char databuf[MSG_LEN];
+	int rec_flags;
+	int msg_ret;
+
 	t_msg_packet pkt_msg;
 } t_ftping;
 extern t_ftping *g_ping;

@@ -74,10 +74,6 @@ void printStatistics() {
 				g_ping->counters.max,
 				g_ping->counters.mdev);
 	}
-	else {
-		printf("\n");
-	}
-
 }
 
 void printShortStatistics() {
