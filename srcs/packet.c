@@ -95,7 +95,7 @@ static void printInitialInformation() {
 
 	/* if verbose add identifier */
 	if ((g_ping->options & VERBOSE_OPTION) != 0) {
-		printf("PING %s (%s) %d data bytes, id 0x%x = %d\n", g_ping->canonname, g_ping->ip_str, ICMP_DATA_LEN, g_ping->pid, g_ping->pid);
+		printf("PING %s (%s) %d data bytes, id 0x%04x = %d\n", g_ping->canonname, g_ping->ip_str, ICMP_DATA_LEN, g_ping->pid, g_ping->pid);
 	}
 	else {
 		printf("PING %s (%s) %d data bytes\n", g_ping->canonname, g_ping->ip_str, ICMP_DATA_LEN);

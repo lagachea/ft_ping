@@ -12,7 +12,6 @@ static void getAddressInformation() {
 
 static int parseIPv4Address(union networkAddress *destValue, char *dest) {
 	int ret = inet_pton(AF_INET, dest, destValue);
-	printf("%d\n", ret);
 	if (ret == 1) {
 		return SUCCESS;
 	}
@@ -27,8 +26,7 @@ static int hasDestination() {
 }
 
 static void getDestination(char *dest) {
-	struct sockaddr_in *sosckaddr_in;
-	struct in_addr addr_in;
+	struct sockaddr_in *sockaddr_in;
 
 	if (hasDestination() == TRUE) {
 		printError("ERROR: destination %s (%s) is already set cannot add destination %s | Usage error\n",
@@ -37,13 +35,13 @@ static void getDestination(char *dest) {
 		exit(1);
 	}
 
+	sockaddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
 	if (parseIPv4Address(&g_ping->destination, dest) == SUCCESS) {
 		g_ping->state |= IP;
 		g_ping->canonname = dest;
 		g_ping->ip_str = dest;
-		sosckaddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
-		sosckaddr_in->sin_family = AF_INET;
-		sosckaddr_in->sin_addr.s_addr = g_ping->destination.integer;
+		sockaddr_in->sin_family = AF_INET;
+		sockaddr_in->sin_addr.s_addr = g_ping->destination.integer;
 	}
 	else {
 		g_ping->state |= HOSTNAME;
@@ -51,13 +49,11 @@ static void getDestination(char *dest) {
 
 		getAddressInformation();
 
-		ft_memcpy(&g_ping->dest_addr, g_ping->results->ai_addr, sizeof(struct sockaddr));
-		g_ping->canonname = &g_ping->hostname[0]; 
-		ft_memcpy(g_ping->canonname,  g_ping->results->ai_canonname, ft_strlen(g_ping->results->ai_canonname));
+		ft_memcpy(sockaddr_in, g_ping->results->ai_addr, sizeof(struct sockaddr));
+		ft_memcpy(g_ping->canonname, g_ping->results->ai_canonname, ft_strlen(g_ping->results->ai_canonname));
 
-		addr_in = ((struct sockaddr_in*)(&g_ping->dest_addr))->sin_addr;
-		g_ping->destination.integer = addr_in.s_addr;
-		inet_ntop(AF_INET, &addr_in, g_ping->ip_str, INET_ADDRSTRLEN);
+		g_ping->destination.integer = sockaddr_in->sin_addr.s_addr;
+		inet_ntop(AF_INET, &sockaddr_in->sin_addr, g_ping->ip_str, INET_ADDRSTRLEN);
 
 		freeaddrinfo(g_ping->results);
 		g_ping->results = NULL;

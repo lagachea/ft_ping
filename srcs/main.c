@@ -18,6 +18,7 @@ static void setup() {
 	g_ping->hints.ai_family = AF_INET;
 
 	g_ping->ip_str = &g_ping->rslv_node[0];
+	g_ping->canonname = &g_ping->hostname[0]; 
 }
 
 int	main(int ac, char **av)
