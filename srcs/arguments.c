@@ -10,50 +10,13 @@ static void getAddressInformation() {
 	}
 }
 
-static int parseByte(char *dest) {
-	int state = -1;
-	int byte = 0;
-	int iter = -1;
-
-	while (++iter < 3 && dest[iter] != '\0' && dest[iter] != '.') {
-		state = 0;
-		if (iter > 0) {
-			byte *= 10;
-		}
-		if (dest[iter] < '0' || dest[iter] > '9')
-			return -1;
-		byte += dest[iter] - '0';
-	}
-	if (state == -1 || byte > 255 || byte < 0) {
-		return -1;
-	}
-	return byte;
-}
-
 static int parseIPv4Address(union networkAddress *destValue, char *dest) {
-	int count = ft_strcountchr(dest, '.');
-	int iter = -1;
-	int byte;
-
-	destValue->integer = 0;
-	// need 4 .
-	if (count != 3) {
-		return FAILURE;
+	int ret = inet_pton(AF_INET, dest, destValue);
+	printf("%d\n", ret);
+	if (ret == 1) {
+		return SUCCESS;
 	}
-	// need 4 bytes with value <= 255
-	while (++iter < 4) {
-		byte = parseByte(dest);
-		if (byte == -1) {
-			return FAILURE;
-		}
-		else {
-			destValue->bytes[iter] = (uint8_t)byte;
-		}
-		if (iter < 3)
-			dest = ft_strchr(dest, '.') + 1;
-	}
-	
-	return SUCCESS;
+	return FAILURE;
 }
 
 static int hasDestination() {

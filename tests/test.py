@@ -2,7 +2,7 @@
 import subprocess
 
 	
-hostnames = ["127.1.1.1", "localhost", "google.com", "9.9.9.9", "www.42.fr", "192.168.1.1" ]
+hostnames = ["255.255.255.255", "127.1.1.1", "localhost", "google.com", "9.9.9.9", "www.42.fr", "192.168.1.1" ]
 timeout = 2.6789
 to_str = str(timeout) + "s"
 original = "./ping"

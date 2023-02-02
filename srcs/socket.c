@@ -11,6 +11,7 @@ static int getSocket(t_socket *sckt) {
 int getRawSocket() {
   int res;
   struct icmp_filter filter;
+  int yes = 1;
 
   g_ping->socket.family = AF_INET;
   g_ping->socket.socktype = SOCK_RAW;
@@ -26,6 +27,13 @@ int getRawSocket() {
   // ICMP_ECHOREPLY is code 0 so all bits are set except the lowest one
   filter.data = 0xFFFFFFFEu;
   res = setsockopt(g_ping->socket.sockfd, SOL_RAW, ICMP_FILTER, &filter, sizeof(filter));
+  if (res == -1) {
+    printError("ERROR: %s | Failed setting a socket option\n", strerror(errno));
+    exit(FAILURE);
+  }
+
+  // able to send to broadcast address
+  res = setsockopt(g_ping->socket.sockfd, SOL_SOCKET, SO_BROADCAST, &yes, sizeof(yes));
   if (res == -1) {
     printError("ERROR: %s | Failed setting a socket option\n", strerror(errno));
     exit(FAILURE);

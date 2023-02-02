@@ -115,7 +115,7 @@ void sendPing() {
 
 	res = sendto(g_ping->socket.sockfd, &g_ping->pkt_msg.icmp, ICMP_FULL, 0, &g_ping->dest_addr, INET_ADDRSTRLEN);
 	if (res == -1) {
-		printError("Error:%s | sending packet to %s\n", strerror(errno), g_ping->dest_addr.sa_data);
+		printError("ERROR: %s | sending packet to %s\n", strerror(errno), g_ping->ip_str);
 		cleanPing();
 		exit(FAILURE);
 	}
