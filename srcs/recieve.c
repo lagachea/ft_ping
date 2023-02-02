@@ -59,19 +59,18 @@ int isValidMessage() {
 	addr = g_ping->destination.integer;
 	id = g_ping->pid;
 
-	if (pkt.iphdr.saddr != addr
-			|| pkt.icmp.icmphdr.un.echo.id != id) {
+	if (pkt.iphdr.saddr != addr || pkt.icmp.icmphdr.un.echo.id != id) {
 		return FALSE;
 	}
 	return TRUE;
 }
 
 int hasValidMessage() {
-	if (!((g_ping->msg_ret == -1 && errno == EWOULDBLOCK) || isValidMessage() == FALSE)) {
-		setMsgPointer();
-		return TRUE;
+	if ((g_ping->msg_ret == -1 && errno == EWOULDBLOCK) || isValidMessage() == FALSE) {
+		return FALSE;
 	}
-	return FALSE;
+	setMsgPointer();
+	return TRUE;
 }
 
 void recieveMessage( ) {
