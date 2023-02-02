@@ -1,19 +1,29 @@
 #include "ft_ping.h"
 
-static uint16_t icmpChecksum(struct icmphdr *hdr) {
-	uint16_t res;
+static uint16_t icmpChecksum(void *pkt) {
+	uint32_t sum;
 	uint16_t *ptr;
 	size_t count;
 
-	ptr = (uint16_t *)hdr;
-	res = 0;
+	ptr = (uint16_t *)pkt;
+	sum = 0;
 	count = 0;
-	while (count < ICMPHDR_LEN) {
-		res += *ptr;
+
+	// sum all uint16 of the packet in a uint32
+	while (count < ICMP_FULL) {
+		sum += *ptr;
 		ptr++;
-		count++;
+		count += sizeof(uint16_t);
 	}
-	return ~res;
+
+	// sum 16 highest bits with 16 lowest bits
+	// until no more bits are set in the highest 16
+	while (sum & 0xFFFF0000) {
+		sum = (sum >> 16) + (sum & 0xFFFF);
+	}
+
+	// return 1's complement of sum
+	return ~sum;
 }
 
 static void fillIcmp() {
@@ -25,9 +35,10 @@ static void fillIcmp() {
 	icmp_out->icmphdr.code = 0;
 	icmp_out->icmphdr.un.echo.id = g_ping->pid;
 	icmp_out->icmphdr.un.echo.sequence = g_ping->seq;
-	icmp_out->icmphdr.checksum = icmpChecksum(&icmp_out->icmphdr);
 	//Set timestamp in icmp_out->data
+	ft_memcpy(&icmp_out->data[0], &g_ping->time.emission, sizeof(struct timeval));
 
+	icmp_out->icmphdr.checksum = icmpChecksum(icmp_out);
 	g_ping->seq++;
 }
 
@@ -55,17 +66,18 @@ void setWaitClock() {
 	setClock(&g_ping->time.wait);
 }
 
+void setMsgClock() {
+	g_ping->time.msg = *(struct timeval*)(&g_ping->pkt_msg.icmp.data[0]);
+}
+
 void getRoudTripTime() {
-	// refactor this func at the same time as filling icmp packet with TS
-	// we should gettimeofday in a now clock
-	// use TS from recieved packet
-	// and getTimeDiff(now, ts)
 	// other goal is to use long int for stats
 	t_clock *t;
 
-	setReceptionClock();
 	t = &g_ping->time;
-	t->diff = getTimeDiff(&t->reception, &t->emission);
+	setMsgClock();
+	setReceptionClock();
+	t->diff = getTimeDiff(&t->reception, &t->msg);
 	t->diff_ms = t->diff / 1000.0;
 }
 

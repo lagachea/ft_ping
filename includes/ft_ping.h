@@ -56,7 +56,7 @@ struct icmp_filter {
 
 typedef struct s_icmp_out {
 	struct icmphdr icmphdr;
-	uint8_t data[56];
+	uint8_t data[ICMP_DATA_LEN];
 }
 t_icmp_out;
 
@@ -92,8 +92,9 @@ typedef struct s_stats{
 } t_stats;
 
 typedef struct s_clock{
-	struct timeval reception;
 	struct timeval emission;
+	struct timeval msg;
+	struct timeval reception;
 	struct timeval wait;
 	long int diff;
 	double diff_ms;
