@@ -65,11 +65,16 @@ test: all
 
 firewall:
 	sudo python3 ./tests/firewall.py
+	sudo iptables -L -t nat
+	sudo iptables -L
 
 clean:
 	$(RM) -rf out
 	+ make -s -C $(LIBDIR) clean
 	printf "$(PURPLE)clean done$(WHITE)\n"
+
+server: firewall
+	clear; sudo python3 ./tests/server.py
 
 fclean:
 	$(RM) -rf out $(NAME) server client tmp/ inetutils-2.0

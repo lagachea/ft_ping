@@ -8,29 +8,51 @@ def getcmd(cmd: str) -> list[str]:
 
 def restore():
     # (flush start) firewall
-    flush_cmd = "iptables -F"
+    flush_cmd = "iptables -F -t nat"
+    subprocess.run(getcmd(flush_cmd))
+    flush_cmd = "iptables -F -t filter"
     subprocess.run(getcmd(flush_cmd))
     print('Restored firewall rules')
 
 def incoming():
-    incoming = "iptables -I INPUT -p icmp -j DROP"
     print('\nSetting incoming rules')
+    incoming = "iptables -A INPUT -p icmp -j DROP"
+    subprocess.run(getcmd(incoming))
+    incoming = "iptables -A INPUT -i lo -j ACCEPT"
+    subprocess.run(getcmd(incoming))
+    incoming = "iptables -A OUTPUT -o lo -j ACCEPT"
     subprocess.run(getcmd(incoming))
 
 
 def outgoing():
-    outgoing = "iptables -I OUTPUT -p icmp -j DROP"
+    outgoing = "iptables -A OUTPUT -p icmp -j DROP"
     print('\nSetting outgoing rules')
     subprocess.run(getcmd(outgoing))
 
 def nothing():
     print('\nNo rules added')
 
+def rerouting():
+    rerouting = "iptables -t nat -A OUTPUT -p icmp -j DNAT --to-destination 127.0.0.1"
+    output = "iptables -A INPUT -p icmp -j DROP"
+    print('\nSetting rerouting rules')
+    subprocess.run(getcmd(rerouting))
+    subprocess.run(getcmd(output))
+
 cases = {
     1: outgoing,
     2: incoming,
-    3: nothing,
+    3: rerouting,
+    4: nothing,
 }
+
+case_string = """
+1 to stop outgoing packets
+2 to stop incoming packets
+3 to reroute outgoing packets to localhost (to user with server.py)
+4 to stop no packets
+"""
+cases_len = len(cases)
 
 def switch():
     to_run = cases.get(target)
@@ -42,10 +64,10 @@ restore()
 
 target = False
 while not target:
-    target_nbr = input("1 to stop outgoing packets\n2 to stop incoming packets\n3 to stop no packets\n")
+    target_nbr = input(case_string)
     try:
         target = int(target_nbr)
-        if not 1 <= target <= 3:
+        if not 1 <= target <= cases_len:
             target = False
             print("Please enter a correct value")
     except ValueError:
