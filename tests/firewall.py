@@ -34,10 +34,10 @@ def nothing():
 
 def queuing():
     queuin = "iptables -A INPUT -p icmp -j NFQUEUE --queue-num 1"
-    queuout = "iptables -A OUTPUT -p icmp -j NFQUEUE --queue-num 2"
+    # queuout = "iptables -A OUTPUT -p icmp -j NFQUEUE --queue-num 1"
     print('\nSetting rerouting rules')
     subprocess.run(getcmd(queuin))
-    subprocess.run(getcmd(queuout))
+    # subprocess.run(getcmd(queuout))
 
 cases = {
     1: outgoing,

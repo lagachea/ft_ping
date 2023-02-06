@@ -4,7 +4,7 @@ import sys
 def process(pkt):
     data = pkt.get_payload()
     print(pkt, data)
-    pkt.accept()
+    # pkt.accept()
 
 nfqueue = netfilterqueue.NetfilterQueue()
 nfqueue.bind(1, process)
