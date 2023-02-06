@@ -32,24 +32,24 @@ def outgoing():
 def nothing():
     print('\nNo rules added')
 
-def rerouting():
-    rerouting = "iptables -t nat -A OUTPUT -p icmp -j DNAT --to-destination 127.0.0.1"
-    output = "iptables -A INPUT -p icmp -j DROP"
+def queuing():
+    queuin = "iptables -A INPUT -p icmp -j NFQUEUE --queue-num 1"
+    queuout = "iptables -A OUTPUT -p icmp -j NFQUEUE --queue-num 2"
     print('\nSetting rerouting rules')
-    subprocess.run(getcmd(rerouting))
-    subprocess.run(getcmd(output))
+    subprocess.run(getcmd(queuin))
+    subprocess.run(getcmd(queuout))
 
 cases = {
     1: outgoing,
     2: incoming,
-    3: rerouting,
+    3: queuing,
     4: nothing,
 }
 
 case_string = """
 1 to stop outgoing packets
 2 to stop incoming packets
-3 to reroute outgoing packets to localhost (to user with server.py)
+3 to queue packet into server
 4 to stop no packets
 """
 cases_len = len(cases)

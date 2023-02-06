@@ -74,7 +74,7 @@ clean:
 	printf "$(PURPLE)clean done$(WHITE)\n"
 
 server: firewall
-	clear; sudo python3 ./tests/server.py
+	sudo python3 ./tests/intercepter.py
 
 fclean:
 	$(RM) -rf out $(NAME) server client tmp/ inetutils-2.0
