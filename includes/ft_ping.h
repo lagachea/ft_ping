@@ -187,7 +187,6 @@ void updateStatistics();
 /* recieve.c */
 void recieveMessage();
 void setupReception();
-void validateMessage(struct iphdr *ipptr, struct icmphdr *icmptr);
 int isValidMessage();
 void setMsgPointer();
 int hasValidMessage();

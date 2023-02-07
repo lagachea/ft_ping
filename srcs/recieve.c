@@ -10,13 +10,23 @@ int getIPHeaderLengthInBytes(struct iphdr *ipptr) {
 void printMessageStatistics() {
 	struct iphdr iphdr;
 	struct icmphdr icmphdr;
+	char rslv_node[INET_ADDRSTRLEN];
+	char *ip_str;
 
 	iphdr = g_ping->pkt_msg.iphdr;
 
 	icmphdr = g_ping->pkt_msg.icmp.icmphdr;
 
+	ip_str = &rslv_node[0];
+	ft_memset(ip_str, 0, INET_ADDRSTRLEN);
+	if (inet_ntop(AF_INET, &iphdr.saddr, ip_str, INET_ADDRSTRLEN) == NULL) {
+		printError("ERROR: ntop");
+		cleanPing();
+		exit(1);
+	}
+
 	printf("%lu bytes from %s: icmp_seq=%d ttl=%d time=%.3lf ms\n",
-			g_ping->msg_ret - sizeof(struct iphdr), g_ping->ip_str, icmphdr.un.echo.sequence, iphdr.ttl, g_ping->time.diff_ms);
+			g_ping->msg_ret - sizeof(struct iphdr), ip_str, icmphdr.un.echo.sequence, iphdr.ttl, g_ping->time.diff_ms);
 }
 
 void setMsgPointer() {
@@ -57,10 +67,10 @@ int isValidMessage() {
 	addr = g_ping->destination.integer;
 	id = g_ping->pid;
 
-	if (pkt.iphdr.saddr != addr || pkt.icmp.icmphdr.un.echo.id != id) {
-		return FALSE;
+	if ((pkt.iphdr.saddr == addr || addr == 0) && pkt.icmp.icmphdr.un.echo.id == id) {
+		return TRUE;
 	}
-	return TRUE;
+	return FALSE;
 }
 
 int hasValidMessage() {
