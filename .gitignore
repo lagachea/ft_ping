@@ -11,7 +11,5 @@ tmp/
 inetutils-2.0
 ping
 tests/*.txt
-stdout.txt
-stderr.txt
 tests/orig/
 tests/test/
