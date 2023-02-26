@@ -61,6 +61,8 @@ run: all
 	clear; ./ft_ping google.com
 
 test: all
+	rm -rf tests/orig tests/test
+	mkdir -p tests/orig tests/test
 	clear; python3 ./tests/test.py
 
 firewall:
@@ -69,7 +71,7 @@ firewall:
 	sudo iptables -L
 
 clean:
-	$(RM) -rf out
+	$(RM) -rf out compile_commands.json
 	+ make -s -C $(LIBDIR) clean
 	printf "$(PURPLE)clean done$(WHITE)\n"
 
