@@ -47,16 +47,15 @@ def getOutname(args: list) -> str:
 
 def runArgs(args: list, timeout=maxtimeout) -> int:
     outfile = getOutname(args)
-    with open(outfile,"w+") as sout:
-        with subprocess.Popen(args, stdout=sout, stderr=sout) as proc:
-            print(f"[[-x ]] |{args}| Process launched")
-            try:
-                proc.communicate(timeout=timeout)
-            except subprocess.TimeoutExpired:
-                writeToFile(sout, "^C SIGINT")
-                proc.send_signal(signal.SIGINT)
-                print(f"[[--x]] |{args}| Process Finished")
-            return proc.returncode
+    with open(outfile,"w+") as sout, subprocess.Popen(args, stdout=sout, stderr=sout) as proc:
+        print(f"[[-x ]] |{args}| Process launched")
+        try:
+            proc.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            writeToFile(sout, "^C SIGINT")
+            proc.send_signal(signal.SIGINT)
+            print(f"[[--x]] |{args}| Process Finished")
+        return proc.returncode
 
 
 for hname in hostnames:
