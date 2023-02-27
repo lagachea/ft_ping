@@ -52,7 +52,7 @@ def runArgs(args: list, timeout=maxtimeout) -> int:
         try:
             proc.communicate(timeout=timeout)
         except subprocess.TimeoutExpired:
-            writeToFile(sout, "^C SIGINT")
+            # writeToFile(sout, "^C SIGINT")
             proc.send_signal(signal.SIGINT)
             print(f"[[--x]] |{args}| Process Finished")
         return proc.returncode
