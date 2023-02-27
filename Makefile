@@ -2,6 +2,17 @@ NAME = ft_ping
 REF = ping
 
 HDRS = includes/ft_ping.h libft/includes/libft.h
+
+SRCS = socket.c\
+	  packet.c\
+	  signals.c\
+	  recieve.c\
+	  tools.c\
+	  stats.c\
+	  arguments.c\
+	  error.c\
+
+
 SRC = main.c\
 	  socket.c\
 	  packet.c\
@@ -16,9 +27,9 @@ SRC = main.c\
 # looping.c\
 
 
-SRCS = $(addprefix srcs/,$(SRCS))
-
 OBJECT = $(addprefix out/,$(SRC:.c=.o))
+TOBJECT = $(addprefix out/,$(SRCS:.c=.o))
+TOBJECT += tests/test.o
 
 LIBDIR = libft
 
@@ -60,26 +71,32 @@ debug: all
 run: all
 	clear; ./ft_ping google.com
 
-test: all
+unit-test: all
+	$(CC) -I includes -I libft/includes -o tests/test.o -c tests/test.c $(CFLAGS)
+	$(CC) -o unit $(CFLAGS) $(TOBJECT) $(LIBA)
+	sudo setcap cap_net_raw=pe unit
+	./unit
+	
+test: all unit-test
 	rm -rf tests/orig tests/test tests/diff
 	mkdir -p tests/orig tests/test tests/diff
-	clear; python3 ./tests/test.py
+	python3 ./tests/test.py
 
 firewall:
 	sudo python3 ./tests/firewall.py
 	sudo iptables -L -t nat
 	sudo iptables -L
 
-clean:
-	$(RM) -rf out compile_commands.json
-	+ make -s -C $(LIBDIR) clean
-	printf "$(PURPLE)clean done$(WHITE)\n"
-
 server: firewall
 	sudo python3 ./tests/intercepter.py
 
+clean:
+	$(RM) -rf out compile_commands.json tests/*.o
+	+ make -s -C $(LIBDIR) clean
+	printf "$(PURPLE)clean done$(WHITE)\n"
+
 fclean:
-	$(RM) -rf out $(NAME) server client tmp/ inetutils-2.0
+	$(RM) -rf out $(NAME) server client tmp/ inetutils-2.0 unit
 	+ make -s -C $(LIBDIR) fclean
 	printf "$(PURPLE)fclean done$(WHITE)\n"
 
@@ -100,4 +117,4 @@ random:
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o client srcs/testcli.c $(LIBA)
 
 .PHONY: all fclean clean re FORCE test debug firewall
-.SILENT: all fclean clean re FORCE $(NAME) $(OBJECT) test debug firewall
+.SILENT: all fclean clean re FORCE $(NAME) $(OBJECT) test debug firewall unit-test

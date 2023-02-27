@@ -154,6 +154,7 @@ void printArguments(int ac, char **av);
 
 /* socket.c */
 int getRawSocket();
+int getSocket(t_socket *sckt);
 
 /* packet.c */
 void setupRoundTrip();
@@ -201,6 +202,7 @@ void printTimeval(struct timeval *tv);
 int ft_strcountchr(char *str, int c);
 void printUsage();
 int expectMessage();
+void setup();
 
 /* looping.c */
 void pingRoundTrip ();

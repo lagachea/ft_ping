@@ -1,5 +1,6 @@
 *.pdf
 out/
+*.o
 pcaps/
 ft_ping
 .cache/
@@ -10,6 +11,7 @@ server
 tmp/
 inetutils-2.0
 ping
+unit
 tests/*.txt
 tests/orig/
 tests/test/

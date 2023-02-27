@@ -1,5 +1,24 @@
 #include "ft_ping.h"
 
+void setup() {
+	ft_memset(g_ping, 0, sizeof(t_ftping));
+
+	setHandler(SIGINT, &interruptHandler);
+	setHandler(SIGQUIT, &sigquitHandler);
+	setHandler(SIGALRM, &timeoutHandler);
+
+	g_ping->service = NULL;
+	g_ping->pid = getpid();
+
+	getRawSocket();
+
+	g_ping->hints.ai_flags = AI_CANONNAME;
+	g_ping->hints.ai_family = AF_INET;
+
+	g_ping->ip_str = &g_ping->rslv_node[0];
+	g_ping->canonname = &g_ping->hostname[0]; 
+}
+
 int ft_strcountchr(char *str, int c) {
 	int count = 0;
 	while(*str) {
