@@ -11,8 +11,12 @@ recieve response
 print RTT and various info
 print info on SIGQUIT
 quit gracefully on SIGINT
+test.py:
+good !!
 
 ### My next goal is:
+server.py:
+scappy
 Forge expected packet (switch ip addr)
 <!-- sudo apt install libnfnetlink-dev libnetfilter-queue-dev -->
 <!-- sudo pip3 install NetFilterQueue kamene -->
