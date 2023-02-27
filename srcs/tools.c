@@ -61,14 +61,14 @@ void printIcmp(struct icmphdr *icmptr) {
 
 void printStatistics() {
 	setLoss();
-	printf( "--- %s ping statistics ---\n",
+	dprintf(STDOUT_FILENO,  "--- %s ping statistics ---\n",
 			g_ping->canonname);
-	printf("%ld packets transmitted, %ld packets received, %ld%% packet loss\n",
+	dprintf(STDOUT_FILENO, "%ld packets transmitted, %ld packets received, %ld%% packet loss\n",
 			g_ping->counters.transmitted,
 			g_ping->counters.recieved,
 			g_ping->counters.loss_percent);
 	if (g_ping->counters.recieved > 0) {
-		printf("round-trip min/avg/max/stddev = %.3lf/%.3lf/%.3lf/%.3lf ms\n",
+		dprintf(STDOUT_FILENO, "round-trip min/avg/max/stddev = %.3lf/%.3lf/%.3lf/%.3lf ms\n",
 				g_ping->counters.min,
 				g_ping->counters.avg,
 				g_ping->counters.max,
@@ -78,7 +78,7 @@ void printStatistics() {
 
 void printShortStatistics() {
 	setLoss();
-	printf("\r%ld/%ld packets, %ld%% loss\n",
+	dprintf(STDOUT_FILENO, "\r%ld/%ld packets, %ld%% loss\n",
 			g_ping->counters.recieved,
 			g_ping->counters.transmitted,
 			g_ping->counters.loss_percent);
@@ -88,11 +88,11 @@ void printTimeval(struct timeval *tv) {
 	unsigned int t;
 
 	t = tv->tv_sec * ONE_SEC + tv->tv_usec;
-	printf("%u\n", t);
+	dprintf(STDOUT_FILENO, "%u\n", t);
 }
 
 void printUsage() {
-	printf("./ft_ping [-vh] destination\n");
+	dprintf(STDOUT_FILENO, "./ft_ping [-vh] destination\n");
 }
 
 int expectMessage() {

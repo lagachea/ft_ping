@@ -61,8 +61,8 @@ run: all
 	clear; ./ft_ping google.com
 
 test: all
-	rm -rf tests/orig tests/test
-	mkdir -p tests/orig tests/test
+	rm -rf tests/orig tests/test tests/diff
+	mkdir -p tests/orig tests/test tests/diff
 	clear; python3 ./tests/test.py
 
 firewall:

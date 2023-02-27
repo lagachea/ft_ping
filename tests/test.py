@@ -1,7 +1,8 @@
 #!/bin/python3
-import subprocess
-import signal
+import subprocess, shlex, signal
 
+def getcmd(cmd: str) -> list[str]:
+    return shlex.split(cmd)
 	
 original = "./ping"
 to_test = "./ft_ping"
@@ -13,9 +14,6 @@ hostnames = ["255.255.255.255", "0.0.0.0", "127.1.1.1", "localhost", "google.com
 
 maxtimeout = 2.6789
 
-def printCmd(args: list):
-    print(f"{args}")
-            #f"Launching with following arguments\n
 
 def getArgs(name: str) -> list:
     args = [ original, name ]
@@ -32,16 +30,17 @@ def getTArgs(name: str) -> list:
     return args
 
 def writeToFile(file, buffer: str):
-    file.write(buffer)
+    file.write(buffer + "\n")
     file.flush()
 
 def getOutname(args: list) -> str:
-    bin, host = args[0], args[1]
+    bin, target = args[0], args[-1]
+    res = ""
     if bin == original:
-        res = "tests/orig/{0}.txt".format(host)
+        res = "tests/orig/{0}.txt".format(target)
         out_orig.append(res)
-    else:
-        res = "tests/test/{0}.txt".format(host)
+    elif bin == to_test:
+        res = "tests/test/{0}.txt".format(target)
         out_test.append(res)
     return res
 
@@ -50,24 +49,36 @@ def runArgs(args: list, timeout=maxtimeout) -> int:
     outfile = getOutname(args)
     with open(outfile,"w+") as sout:
         with subprocess.Popen(args, stdout=sout, stderr=sout) as proc:
-            writeToFile(sout, "[[-x ]] Process launched\n")
+            print(f"[[-x ]] |{args}| Process launched")
             try:
                 proc.communicate(timeout=timeout)
             except subprocess.TimeoutExpired:
-                writeToFile(sout, "^C SIGINT\n")
+                writeToFile(sout, "^C SIGINT")
                 proc.send_signal(signal.SIGINT)
-                proc.communicate()
-                writeToFile(sout, "[[--x]] Process Finished\n")
-            sout.close()
+                print(f"[[--x]] |{args}| Process Finished")
             return proc.returncode
 
 
 for hname in hostnames:
-    print('\ntesting {0}'.format(hname))
-    # do the original
-    orig_result = runArgs(getArgs(hname))
+
+    print('testing {0}'.format(hname))
 
     # do the tested
     test_result = runArgs(getTArgs(hname))
 
-    print('\n{0} tested'.format(hname))
+    # do the original
+    orig_result = runArgs(getArgs(hname))
+
+
+    orig = out_orig[-1]
+    test = out_test[-1]
+    diff = "tests/diff/{}".format(test.split('/')[-1])
+
+    fargs = getcmd("sdiff -t {} {}".format(orig, test))
+    pargs = getcmd("sdiff -s {} {}".format(orig, test))
+
+    with open(diff, "w+") as filediff, subprocess.Popen(fargs, stdout=filediff, stderr=filediff) as fproc, subprocess.Popen(pargs) as pproc:
+        print('{0} result\n\n'.format(hname))
+        pproc.communicate()
+        print("\n\n\n")
+        fproc.communicate()

@@ -13,3 +13,4 @@ ping
 tests/*.txt
 tests/orig/
 tests/test/
+diff/
