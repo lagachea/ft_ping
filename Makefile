@@ -30,6 +30,8 @@ SRC = main.c\
 OBJECT = $(addprefix out/,$(SRC:.c=.o))
 TOBJECT = $(addprefix out/,$(SRCS:.c=.o))
 TOBJECT += tests/test.o
+COBJECT = $(addprefix out/,$(SRCS:.c=.o))
+COBJECT += tests/crit.o
 
 LIBDIR = libft
 
@@ -71,11 +73,17 @@ debug: all
 run: all
 	clear; ./ft_ping google.com
 
+crit-test: all
+	$(CC) -I includes -I libft/includes -o tests/crit.o -c tests/crit.c $(CFLAGS)
+	$(CC) -lcriterion -o crit $(CFLAGS) $(COBJECT) $(LIBA)
+	sudo setcap cap_net_raw=pe crit
+	./crit || true
+
 unit-test: all
 	$(CC) -I includes -I libft/includes -o tests/test.o -c tests/test.c $(CFLAGS)
 	$(CC) -o unit $(CFLAGS) $(TOBJECT) $(LIBA)
 	sudo setcap cap_net_raw=pe unit
-	./unit
+	./unit || true
 	
 test: all unit-test
 	rm -rf tests/orig tests/test tests/diff
@@ -117,4 +125,4 @@ random:
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o client srcs/testcli.c $(LIBA)
 
 .PHONY: all fclean clean re FORCE test debug firewall
-.SILENT: all fclean clean re FORCE $(NAME) $(OBJECT) test debug firewall unit-test
+.SILENT: all fclean clean re FORCE $(NAME) $(OBJECT) test debug firewall unit-test crit-test

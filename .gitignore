@@ -12,6 +12,7 @@ tmp/
 inetutils-2.0
 ping
 unit
+crit
 tests/*.txt
 tests/orig/
 tests/test/
