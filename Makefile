@@ -11,25 +11,18 @@ SRCS = socket.c\
 	  stats.c\
 	  arguments.c\
 	  error.c\
-
-
-SRC = main.c\
-	  socket.c\
-	  packet.c\
-	  signals.c\
-	  recieve.c\
-	  tools.c\
-	  stats.c\
-	  arguments.c\
-	  error.c\
 	  
 # debug.c\
 # looping.c\
 
+MSRCS = $(SRCS)
+MSRCS += main.c
 
-OBJECT = $(addprefix out/,$(SRC:.c=.o))
+OBJECT = $(addprefix out/,$(MSRCS:.c=.o))
+
 TOBJECT = $(addprefix out/,$(SRCS:.c=.o))
 TOBJECT += tests/test.o
+
 COBJECT = $(addprefix out/,$(SRCS:.c=.o))
 COBJECT += tests/crit.o
 
@@ -85,7 +78,7 @@ unit-test: all
 	sudo setcap cap_net_raw=pe unit
 	./unit || true
 	
-test: all unit-test
+test: all unit-test crit-test
 	rm -rf tests/orig tests/test tests/diff
 	mkdir -p tests/orig tests/test tests/diff
 	python3 ./tests/test.py
