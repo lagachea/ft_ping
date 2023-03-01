@@ -32,6 +32,9 @@ LIBA = $(LIBDIR)/libft.a
 
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -g3 
+TFLAGS = $(CFLAGS)
+# comment when running crit test
+# do not use inside test add tflag
 CFLAGS += -fsanitize=address,leak,undefined -fno-omit-frame-pointer 
 # Don't forget to change the lib flags too
 # CFLAGS += -fsanitize=memory,undefined
@@ -68,13 +71,13 @@ run: all
 
 crit-test: all
 	$(CC) -I includes -I libft/includes -o tests/crit.o -c tests/crit.c $(CFLAGS)
-	$(CC) -lcriterion -o crit $(CFLAGS) $(COBJECT) $(LIBA)
+	$(CC) -lcriterion -lm -o crit $(CFLAGS) $(COBJECT) $(LIBA)
 	sudo setcap cap_net_raw=pe crit
 	./crit || true
 
 unit-test: all
 	$(CC) -I includes -I libft/includes -o tests/test.o -c tests/test.c $(CFLAGS)
-	$(CC) -o unit $(CFLAGS) $(TOBJECT) $(LIBA)
+	$(CC) -lm -o unit $(CFLAGS) $(TOBJECT) $(LIBA)
 	sudo setcap cap_net_raw=pe unit
 	./unit || true
 	
