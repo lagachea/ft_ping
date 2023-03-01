@@ -1,5 +1,5 @@
 #include "ft_ping.h"
-# define DEBUG 1
+
 #ifdef DEBUG
 int __lsan_is_turned_off()
 {

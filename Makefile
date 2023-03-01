@@ -31,10 +31,7 @@ LIBDIR = libft
 LIBA = $(LIBDIR)/libft.a
 
 CFLAGS = -Wall -Wextra -Werror
-CFLAGS += -g3 
-TFLAGS = $(CFLAGS)
-# comment when running crit test
-# do not use inside test add tflag
+CFLAGS += -g -O1
 CFLAGS += -fsanitize=address,leak,undefined -fno-omit-frame-pointer 
 # Don't forget to change the lib flags too
 # CFLAGS += -fsanitize=memory,undefined

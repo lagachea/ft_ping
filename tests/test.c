@@ -1,11 +1,19 @@
- /* file minunit_example.c */
- 
- #include <stdio.h>
- #include "test.h"
- #include "ft_ping.h"
+
+#include <stdio.h>
+#include "test.h"
+#include "ft_ping.h"
+
+#ifdef DEBUG
+int __lsan_is_turned_off()
+{
+    return 1;
+}
+#endif
+
  
 t_ftping *g_ping;
  int tests_run = 0;
+
  
  static char * test_sockets() {
      mu_assert("erro socket pas bon", 1 == 0);

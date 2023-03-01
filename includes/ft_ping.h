@@ -33,6 +33,7 @@ struct icmp_filter {
 
 # include "libft.h"
 
+// # define DEBUG 1
 # define FAILURE 1
 # define SUCCESS 0
 # define TIMEOUT 10

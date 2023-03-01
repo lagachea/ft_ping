@@ -1,5 +1,12 @@
 #include <criterion/criterion.h>
- #include "ft_ping.h"
+#include "ft_ping.h"
+
+#ifdef DEBUG
+int __lsan_is_turned_off()
+{
+    return 1;
+}
+#endif
 
 t_ftping pingdata;
 t_ftping *g_ping = &pingdata;
