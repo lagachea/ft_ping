@@ -113,7 +113,7 @@ void setupRoundTrip() {
 void sendPing() {
 	int res;
 
-	res = sendto(g_ping->socket.sockfd, &g_ping->pkt_msg.icmp, ICMP_FULL, 0, g_ping->sock_addr, INET_ADDRSTRLEN);
+	res = sendto(g_ping->socket.sockfd, &g_ping->pkt_msg.icmp, ICMP_FULL, 0, (struct sockaddr *)&g_ping->dest_addr, INET_ADDRSTRLEN);
 	if (res == -1) {
 		printError("ERROR: %s | sending packet to %s\n", strerror(errno), g_ping->ip_str);
 		cleanPing();

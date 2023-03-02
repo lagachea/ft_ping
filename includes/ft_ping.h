@@ -33,7 +33,7 @@ struct icmp_filter {
 
 # include "libft.h"
 
-# define DEBUG 1
+// # define DEBUG 1
 # define FAILURE 1
 # define SUCCESS 0
 # define TIMEOUT 10
@@ -122,7 +122,6 @@ typedef struct s_ftping {
 	struct addrinfo hints;
 	struct addrinfo *results;
 	struct sockaddr_in dest_addr;
-	struct sockaddr *sock_addr;
 	union networkAddress destination;
 
 	char rslv_node[INET_ADDRSTRLEN];
