@@ -17,6 +17,7 @@ void setup() {
 
 	g_ping->ip_str = &g_ping->rslv_node[0];
 	g_ping->canonname = &g_ping->hostname[0]; 
+	g_ping->sock_addr = (struct sockaddr *)&g_ping->dest_addr; 
 }
 
 int ft_strcountchr(char *str, int c) {
