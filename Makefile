@@ -49,7 +49,7 @@ LNECLR = "\\33[2K\\r"
 all: $(NAME) $(REF)
 
 $(NAME): $(OBJECT)
-	+ make -s -C $(LIBDIR)
+	$(MAKE) -s -C $(LIBDIR)
 	$(CC) -I includes -I libft/includes -lm -o $(NAME) $(OBJECT) $(LIBA) $(CFLAGS)
 	sudo setcap cap_net_raw=pe ft_ping
 	sed -e '1s/^/[\n/' -e '$$s/,$$/\n]/' out/*.o.json > compile_commands.json
@@ -93,12 +93,12 @@ server: firewall
 
 clean:
 	$(RM) -rf out compile_commands.json tests/*.o
-	+ make -s -C $(LIBDIR) clean
+	$(MAKE) -s -C $(LIBDIR) clean
 	printf "$(PURPLE)clean done$(WHITE)\n"
 
 fclean:
 	$(RM) -rf out $(NAME) server client tmp/ inetutils-2.0 unit
-	+ make -s -C $(LIBDIR) fclean
+	$(MAKE) -s -C $(LIBDIR) fclean
 	printf "$(PURPLE)fclean done$(WHITE)\n"
 
 $(REF):
