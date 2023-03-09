@@ -109,7 +109,7 @@ void printTimeval(struct timeval *tv) {
 }
 
 void printUsage() {
-	dprintf(STDOUT_FILENO, "./ft_ping [-vh] destination\n");
+	dprintf(STDERR_FILENO, "./ft_ping [-vh] destination\n");
 }
 
 int expectMessage() {
