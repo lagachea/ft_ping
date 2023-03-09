@@ -22,7 +22,7 @@ void printMessageStatistics() {
 	if (inet_ntop(AF_INET, &iphdr.saddr, ip_str, INET_ADDRSTRLEN) == NULL) {
 		printError("ERROR: ntop");
 		cleanPing();
-		exit(1);
+		exit(FAILURE);
 	}
 
 	dprintf(STDOUT_FILENO, "%lu bytes from %s: icmp_seq=%d ttl=%d time=%.3lf ms\n",

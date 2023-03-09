@@ -14,7 +14,7 @@ void	interruptHandler(int signal) {
 	(void)signal;
 	printStatistics();
 	cleanPing();
-	exit(0);
+	exit(SUCCESS);
 }
 
 void	timeoutHandler(int signum) {

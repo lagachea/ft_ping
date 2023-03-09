@@ -36,6 +36,7 @@ struct icmp_filter {
 // # define DEBUG 1
 # define FAILURE 1
 # define SUCCESS 0
+# define USAGE 64
 # define TIMEOUT 10
 # define IP 1
 # define HOSTNAME 2

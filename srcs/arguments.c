@@ -32,7 +32,7 @@ static void getDestination(char *dest) {
 		printError("ERROR: destination %s (%s) is already set cannot add destination %s | Usage error\n",
 			g_ping->canonname, g_ping->ip_str, dest);
 		printUsage();
-		exit(1);
+		exit(USAGE);
 	}
 
 	sockaddr_in = (struct sockaddr_in*)(&g_ping->dest_addr);
@@ -68,7 +68,7 @@ static void getOption(char *opt) {
 		// add a warning when option is doubled
 		case 'h':
 			printUsage();
-			exit(0);
+			exit(USAGE);
 			break;
 		case 'v':
 			g_ping->options |= VERBOSE_OPTION;
@@ -77,7 +77,7 @@ static void getOption(char *opt) {
 			invalid[15] = opt_value;
 			printError("ERROR: %s | option not recognized\n", &invalid[0]);
 			printUsage();
-			exit(1);
+			exit(USAGE);
 	}
 }
 
@@ -99,7 +99,7 @@ void parseArguments(int ac, char **av) {
 	if (hasDestination() == FALSE) {
 		printError("ERROR: %s | Usage error\n", "destination address required");
 		printUsage();
-		exit(1);
+		exit(USAGE);
 	}
 }
 
