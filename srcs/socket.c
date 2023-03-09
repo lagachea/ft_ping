@@ -1,6 +1,6 @@
 #include "ft_ping.h"
 
-int getSocket(t_socket *sckt) {
+int setSocket(t_socket *sckt) {
   sckt->sockfd = socket(sckt->family, sckt->socktype, sckt->protocol);
   if (sckt->sockfd == -1) {
     return FAILURE;
@@ -8,7 +8,7 @@ int getSocket(t_socket *sckt) {
   return SUCCESS;
 }
 
-int getRawSocket() {
+void setRawSocket() {
   int res;
   struct icmp_filter filter;
   int yes = 1;
@@ -17,7 +17,7 @@ int getRawSocket() {
   g_ping->socket.socktype = SOCK_RAW;
   g_ping->socket.protocol = IPPROTO_ICMP;
 
-  res = getSocket(&g_ping->socket);
+  res = setSocket(&g_ping->socket);
   if (res == FAILURE) {
     printError("ERROR: %s | Failed getting a socket\n", strerror(errno));
     exit(FAILURE);
@@ -38,6 +38,4 @@ int getRawSocket() {
     printError("ERROR: %s | Failed setting a socket option\n", strerror(errno));
     exit(FAILURE);
   }
-
-  return 0;
 }

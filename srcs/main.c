@@ -20,7 +20,8 @@ int	main(int ac, char **av)
 
 	parseArguments(ac, av);
 
-	getRawSocket();
+	setRawSocket();
+
 	printInitialInformation();
 
 	while(TRUE) {
@@ -50,7 +51,7 @@ int	main(int ac, char **av)
 
 				setMsgPointer();
 
-				getRoudTripTime();
+				setRoudTripTime();
 
 				setRecieved();
 

@@ -70,7 +70,7 @@ void setMsgClock() {
 	g_ping->time.msg = *(struct timeval*)(&g_ping->pkt_msg.icmp.data[0]);
 }
 
-void getRoudTripTime() {
+void setRoudTripTime() {
 	// other goal is to use long int for stats
 	t_clock *t;
 

@@ -155,8 +155,8 @@ void printAddressInformations();
 void printArguments(int ac, char **av);
 
 /* socket.c */
-int getRawSocket();
-int getSocket(t_socket *sckt);
+void setRawSocket();
+int setSocket(t_socket *sckt);
 
 /* packet.c */
 void printInitialInformation();
@@ -166,7 +166,7 @@ void setClock(struct timeval *tv);
 void setInitialTimestamp();
 void setReceptionClock();
 void setWaitClock();
-void getRoudTripTime();
+void setRoudTripTime();
 long int getTimeDiff(struct timeval *tvf, struct timeval *tvi);
 void setOriginalClock();
 void sendPing();
