@@ -77,7 +77,6 @@ int hasValidMessage() {
 	if ((g_ping->msg_ret == -1 && errno == EWOULDBLOCK) || isValidMessage() == FALSE) {
 		return FALSE;
 	}
-	setMsgPointer();
 	return TRUE;
 }
 

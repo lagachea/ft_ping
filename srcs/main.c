@@ -45,6 +45,8 @@ int	main(int ac, char **av)
 				// give us another TIMEOUT time to work
 				setTimeoutAlarm();
 
+				setMsgPointer();
+
 				getRoudTripTime();
 
 				setRecieved();
