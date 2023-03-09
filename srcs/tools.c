@@ -10,8 +10,6 @@ void setup() {
 	g_ping->service = NULL;
 	g_ping->pid = getpid();
 
-	getRawSocket();
-
 	g_ping->hints.ai_flags = AI_CANONNAME;
 	g_ping->hints.ai_family = AF_INET;
 

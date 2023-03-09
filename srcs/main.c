@@ -20,6 +20,8 @@ int	main(int ac, char **av)
 
 	parseArguments(ac, av);
 
+	getRawSocket();
+
 	while(TRUE) {
 		if (g_ping->step.count == READY) {
 			setupRoundTrip();
