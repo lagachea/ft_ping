@@ -107,8 +107,7 @@ $(REF):
 	tar -xf tmp/inetutils-2.0.tar.gz
 	cd ./inetutils-2.0; ./configure; make
 	cp ./inetutils-2.0/ping/ping .
-	sudo chown root:root ping
-	sudo chmod u+s ping
+	sudo setcap cap_net_raw=pe ping
 	printf "$(LNECLR)$(GREEN)make download done$(WHITE)\n"
 
 re: fclean all
@@ -118,4 +117,4 @@ random:
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o client srcs/testcli.c $(LIBA)
 
 .PHONY: all fclean clean re FORCE test debug firewall
-.SILENT: all fclean clean re FORCE $(NAME) $(OBJECT) test debug firewall unit-test crit-test
+.SILENT: all fclean clean re FORCE $(NAME) $(OBJECT) $(REF) test debug firewall unit-test crit-test
