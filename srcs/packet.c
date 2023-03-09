@@ -91,7 +91,7 @@ long int getTimeDiff(struct timeval *tvf, struct timeval *tvi) {
 	return diff;
 }
 
-static void printInitialInformation() {
+void printInitialInformation() {
 
 	/* if verbose add identifier */
 	if ((g_ping->options & VERBOSE_OPTION) != 0) {
@@ -103,9 +103,6 @@ static void printInitialInformation() {
 }
 
 void setupRoundTrip() {
-	if (g_ping->seq == 0) {
-		printInitialInformation();
-	}
 	setEmissionClock();
 	fillIcmp();
 }

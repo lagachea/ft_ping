@@ -158,6 +158,7 @@ int getRawSocket();
 int getSocket(t_socket *sckt);
 
 /* packet.c */
+void printInitialInformation();
 void setupRoundTrip();
 void printMessageStatistics();
 void setClock(struct timeval *tv);

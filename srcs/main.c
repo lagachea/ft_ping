@@ -21,6 +21,7 @@ int	main(int ac, char **av)
 	parseArguments(ac, av);
 
 	getRawSocket();
+	printInitialInformation();
 
 	while(TRUE) {
 		if (g_ping->step.count == READY) {
