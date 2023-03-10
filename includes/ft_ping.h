@@ -152,6 +152,7 @@ const char *getSocketName(int value);
 void printSocket(int family, int socktype, int protocol);
 void printSocketStruct(t_socket *sckt);
 void printAddressInformations();
+void reverseDNSquery();
 void printArguments(int ac, char **av);
 
 /* socket.c */

@@ -100,7 +100,7 @@ void printAddressInformations() {
 	printf("%s\n", ai_res->ai_canonname);
 	while (ai_res) {
 		printf("\n");
-		print_memory(ai_res, sizeof(struct addrinfo));
+		printMemory(ai_res, sizeof(struct addrinfo));
 		printf("\n");
 		ai_res = (ai_res)->ai_next;
 	}
@@ -124,7 +124,7 @@ void printMsghdr() {
 	char rslv_node[INET_ADDRSTRLEN];
 
 	msg = &g_ping->msg;
-	print_memory(msg, sizeof(*msg));
+	printMemory(msg, sizeof(*msg));
 	sosckaddr_in = (struct sockaddr_in*)(msg->msg_name);
 
 	printf("Family: %s | Port: %hu | Addr: %s\n", 
@@ -134,3 +134,13 @@ void printMsghdr() {
 			);
 }
 
+void reverseDNSquery() {
+   char host[NI_MAXHOST], service[NI_MAXSERV];
+   struct sockaddr *addr_ptr;
+
+   addr_ptr = &g_ping->dest_addr;
+   getnameinfo(addr_ptr, sizeof(struct sockaddr),
+		   host, NI_MAXHOST,
+		   service, NI_MAXSERV, NI_NUMERICSERV);
+   printf("host: %s\nservice: %s\n", host, service);
+}

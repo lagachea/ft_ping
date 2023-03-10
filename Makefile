@@ -4,16 +4,16 @@ REF = ping
 HDRS = includes/ft_ping.h libft/includes/libft.h
 
 SRCS = socket.c\
-	  packet.c\
-	  signals.c\
-	  recieve.c\
-	  tools.c\
-	  stats.c\
-	  arguments.c\
-	  error.c\
-	  
-# debug.c\
-# looping.c\
+	   packet.c\
+	   signals.c\
+	   recieve.c\
+	   tools.c\
+	   stats.c\
+	   arguments.c\
+	   error.c\
+
+	# debug.c\
+	# looping.c\
 
 MSRCS = $(SRCS)
 MSRCS += main.c

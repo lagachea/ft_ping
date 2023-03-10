@@ -24,6 +24,9 @@ int	main(int ac, char **av)
 
 	printInitialInformation();
 
+	// reverseDNSquery();
+	// exit(255);
+
 	while(TRUE) {
 		if (g_ping->step.count == READY) {
 			setupRoundTrip();
