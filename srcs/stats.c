@@ -6,17 +6,15 @@ void setTransmitted() {
 
 void setRecieved() {
 	g_ping->counters.recieved++;
-	setLoss();
 }
 
 void setLoss() {
 	t_stats *ctrs;
-	float ratio;
 
 	ctrs = &g_ping->counters;
 	ctrs->diff = ctrs->transmitted - ctrs->recieved;
-	ratio = (float)ctrs->diff / ctrs->transmitted;
-	ctrs->loss_percent = ratio * 100;
+	if (ctrs->transmitted > 0)
+		ctrs->loss_percent = 100 * ctrs->diff / ctrs->transmitted;
 }
 
 void updateStatistics() {
