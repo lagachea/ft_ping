@@ -1,6 +1,6 @@
 #include "ft_ping.h"
 
-static uint16_t icmpChecksum(void *pkt, int len) {
+uint16_t icmpChecksum(void *pkt, int len) {
 	uint32_t sum;
 	uint16_t *ptr;
 	int count;

@@ -171,6 +171,7 @@ void setRoudTripTime();
 long int getTimeDiff(struct timeval *tvf, struct timeval *tvi);
 void setOriginalClock();
 void sendPing();
+uint16_t icmpChecksum(void *pkt, int len);
 
 
 /* signals.c */

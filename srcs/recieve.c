@@ -57,12 +57,19 @@ int isValidMessage() {
 	t_msg_packet pkt;
 	uint32_t addr;
 	uint16_t id;
+	uint16_t checksum;
 
 	if (g_ping->msg_ret != PACKET_FULL) {
 		return FALSE;
 	}
 
 	pkt = *(t_msg_packet*)(&g_ping->databuf);
+
+	checksum = pkt.icmp.icmphdr.checksum;
+	pkt.icmp.icmphdr.checksum = 0;
+	if (icmpChecksum(&(pkt.icmp), sizeof(pkt.icmp)) != checksum) {
+		return FALSE;
+	}
 
 	addr = g_ping->destination.integer;
 	id = g_ping->pid;
