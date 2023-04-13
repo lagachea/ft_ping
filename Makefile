@@ -97,7 +97,7 @@ clean:
 	printf "$(PURPLE)clean done$(WHITE)\n"
 
 fclean:
-	$(RM) -rf out $(NAME) server client tmp/ inetutils-2.0 unit crit
+	$(RM) -rf out $(NAME) server client tmp/ unit crit
 	$(MAKE) -s -C $(LIBDIR) fclean
 	printf "$(PURPLE)fclean done$(WHITE)\n"
 
