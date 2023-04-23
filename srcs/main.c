@@ -43,7 +43,7 @@ int	main(int ac, char **av)
 			}
 		}
 
-		if (expectMessage() == TRUE) {
+		if (g_ping->counters.transmitted > g_ping->counters.recieved) {
 			setupReception();
 			recieveMessage();
 			if (hasValidMessage() == TRUE) {

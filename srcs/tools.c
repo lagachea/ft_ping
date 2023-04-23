@@ -111,10 +111,3 @@ void printTimeval(struct timeval *tv) {
 void printUsage() {
 	dprintf(STDERR_FILENO, "./ft_ping [-vh] destination\n");
 }
-
-int expectMessage() {
-	if (g_ping->counters.transmitted > g_ping->counters.recieved) {
-		return TRUE;
-	}
-	return FALSE;
-}
