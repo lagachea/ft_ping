@@ -124,7 +124,7 @@ typedef struct s_ftping {
 	char *canonname;
 	struct addrinfo hints;
 	struct addrinfo *results;
-	struct sockaddr dest_addr;
+	struct sockaddr_in dest_addr;
 	union networkAddress destination;
 
 	char rslv_node[INET_ADDRSTRLEN];

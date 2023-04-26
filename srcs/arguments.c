@@ -52,11 +52,11 @@ static void getDestination(char *dest) {
 		ft_memcpy(sockaddr_in, g_ping->results->ai_addr, sizeof(struct sockaddr));
 		ft_memcpy(g_ping->canonname, g_ping->results->ai_canonname, ft_strlen(g_ping->results->ai_canonname));
 
-		g_ping->destination.integer = sockaddr_in->sin_addr.s_addr;
-		inet_ntop(AF_INET, &sockaddr_in->sin_addr, g_ping->ip_str, INET_ADDRSTRLEN);
-
 		freeaddrinfo(g_ping->results);
 		g_ping->results = NULL;
+
+		g_ping->destination.integer = sockaddr_in->sin_addr.s_addr;
+		inet_ntop(AF_INET, &sockaddr_in->sin_addr, g_ping->ip_str, INET_ADDRSTRLEN);
 	}
 }
 
