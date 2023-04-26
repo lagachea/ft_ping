@@ -13,6 +13,7 @@ void setRawSocket() {
   struct icmp_filter filter;
   t_socket *sock_ptr;
   int yes = 1;
+  // int ttl = TTL;
 
   sock_ptr = &g_ping->socket;
   sock_ptr->family = AF_INET;
@@ -27,7 +28,14 @@ void setRawSocket() {
 
   // ICMP_FILTER use a bitmask of the ICMP_CODE (ex: 1 << ICMP_ECHO)
   // ICMP_ECHOREPLY is code 0 so all bits are set except the lowest one
-  filter.data = 0xFFFFFFFEu;
+  filter.data = 0xFFFFFFFFu;
+  filter.data -= 1 << ICMP_ECHOREPLY;
+  filter.data -= 1 << ICMP_DEST_UNREACH;
+  filter.data -= 1 << ICMP_SOURCE_QUENCH;
+  filter.data -= 1 << ICMP_REDIRECT;
+  filter.data -= 1 << ICMP_TIME_EXCEEDED;
+  filter.data -= 1 << ICMP_PARAMETERPROB;
+
   res = setsockopt(sock_ptr->sockfd, SOL_RAW, ICMP_FILTER, &filter, sizeof(filter));
   if (res == -1) {
     printError("ERROR: %s | Failed setting a socket option\n", strerror(errno));
@@ -40,4 +48,11 @@ void setRawSocket() {
     printError("ERROR: %s | Failed setting a socket option\n", strerror(errno));
     exit(FAILURE);
   }
+  
+  // Set ttl
+  // res = setsockopt(sock_ptr->sockfd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl));
+  // if (res == -1) {
+  //   printError("ERROR: %s | Failed setting a socket option\n", strerror(errno));
+  //   exit(FAILURE);
+  // }
 }

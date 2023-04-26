@@ -52,7 +52,9 @@ struct icmp_filter {
 # define RECIEVE 2
 # define WAIT 3
 # define ONE_SEC 1000000
-# define MSG_LEN 100
+# define MSG_LEN 1024
+# define TTL 10
+# define WOULD_BLOCK -1
 
 /* OPTIONS */
 # define VERBOSE_OPTION 1

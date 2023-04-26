@@ -13,6 +13,7 @@ int	main(int ac, char **av)
 {
 	t_ftping pingdata;
 	long int wait_diff;
+	int valid_msg;
 
 	g_ping = &pingdata;
 
@@ -46,7 +47,8 @@ int	main(int ac, char **av)
 		if (g_ping->counters.transmitted > g_ping->counters.recieved) {
 			setupReception();
 			recieveMessage();
-			if (hasValidMessage() == TRUE) {
+			valid_msg = hasValidMessage();
+			if (valid_msg == TRUE) {
 				// a msg was found and is the response we expect to parse
 
 				// give us another TIMEOUT time to work
@@ -62,7 +64,13 @@ int	main(int ac, char **av)
 
 				printMessageStatistics();
 			}
-			//No valid message found or not the message we expect to find: (src / dest / id)
+			else if (valid_msg == FALSE) {
+				//No valid message found or not the message we expect to find: (src / dest / id)
+				// Check for error type messages
+				// branch to print error message
+				// reverse DNS for iphdr.saddr
+				printf("ERROR MSG\n");
+			}
 		}
 	}
 	

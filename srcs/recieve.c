@@ -59,10 +59,6 @@ int isValidMessage() {
 	uint16_t id;
 	uint16_t checksum;
 
-	if (g_ping->msg_ret != PACKET_FULL) {
-		return FALSE;
-	}
-
 	pkt = *(t_msg_packet*)(&g_ping->databuf);
 
 	checksum = pkt.icmp.icmphdr.checksum;
@@ -74,17 +70,21 @@ int isValidMessage() {
 	addr = g_ping->destination.integer;
 	id = g_ping->pid;
 
-	if ((pkt.iphdr.saddr == addr || addr == 0) && pkt.icmp.icmphdr.un.echo.id == id) {
+	if ((pkt.iphdr.saddr == addr || addr == 0) 
+			&& pkt.icmp.icmphdr.type == 0
+			&& pkt.icmp.icmphdr.code == 0
+			&& pkt.icmp.icmphdr.un.echo.id == id) {
 		return TRUE;
 	}
+
 	return FALSE;
 }
 
 int hasValidMessage() {
-	if ((g_ping->msg_ret == -1 && errno == EWOULDBLOCK) || isValidMessage() == FALSE) {
-		return FALSE;
+	if (g_ping->msg_ret == -1 && errno == EWOULDBLOCK) {
+		return WOULD_BLOCK;
 	}
-	return TRUE;
+	return isValidMessage();
 }
 
 void recieveMessage( ) {
