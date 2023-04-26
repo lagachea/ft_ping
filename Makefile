@@ -13,7 +13,6 @@ SRCS = socket.c\
 	   error.c\
 
 	# debug.c\
-	# looping.c\
 
 MSRCS = $(SRCS)
 MSRCS += main.c
