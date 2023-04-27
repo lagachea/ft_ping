@@ -68,9 +68,11 @@ int	main(int ac, char **av)
 				// ICMP_DEST_UNREACH
 					// reverse DNS for iphdr.saddr
 					// printMessageError 
+					//Verbose add iphdr dump + icmp info of sent packt
 				// ICMP_TIME_EXCEEDED
 					// reverse DNS for iphdr.saddr
 					// printMessageError 
+					//Verbose add iphdr dump + icmp info of sent packt
 				//Reuse printMessageStatistics into a printMessageError
 				dprintf(STDOUT_FILENO, "%lu bytes ERROR MSG\n", g_ping->msg_ret - sizeof(struct iphdr));
 				// ICMP_REDIRECT

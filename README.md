@@ -27,3 +27,4 @@ test multiple push
 Organize error messages in an array
 Add reverse dns query for source of error message
 print error message
+verbose print for error messages
