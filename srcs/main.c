@@ -13,7 +13,7 @@ int	main(int ac, char **av)
 {
 	t_ftping pingdata;
 	long int wait_diff;
-	int valid_msg;
+	int validReply;
 
 	g_ping = &pingdata;
 
@@ -24,9 +24,6 @@ int	main(int ac, char **av)
 	setRawSocket();
 
 	printInitialInformation();
-
-	// reverseDNSquery();
-	// exit(255);
 
 	while(TRUE) {
 		if (g_ping->step.count == READY) {
@@ -47,8 +44,8 @@ int	main(int ac, char **av)
 		if (g_ping->counters.transmitted > g_ping->counters.recieved) {
 			setupReception();
 			recieveMessage();
-			valid_msg = hasValidMessage();
-			if (valid_msg == TRUE) {
+			validReply = hasValidReply();
+			if (validReply == TRUE) {
 				// a msg was found and is the response we expect to parse
 
 				// give us another TIMEOUT time to work
@@ -64,12 +61,20 @@ int	main(int ac, char **av)
 
 				printMessageStatistics();
 			}
-			else if (valid_msg == FALSE) {
+			else if (validReply == FALSE) {
 				//No valid message found or not the message we expect to find: (src / dest / id)
+
 				// Check for error type messages
-				// branch to print error message
-				// reverse DNS for iphdr.saddr
-				printf("ERROR MSG\n");
+				// ICMP_DEST_UNREACH
+					// reverse DNS for iphdr.saddr
+					// printMessageError 
+				// ICMP_TIME_EXCEEDED
+					// reverse DNS for iphdr.saddr
+					// printMessageError 
+				//Reuse printMessageStatistics into a printMessageError
+				dprintf(STDOUT_FILENO, "%lu bytes ERROR MSG\n", g_ping->msg_ret - sizeof(struct iphdr));
+				// ICMP_REDIRECT
+					// unknown for now
 			}
 		}
 	}

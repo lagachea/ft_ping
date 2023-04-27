@@ -31,10 +31,8 @@ void setRawSocket() {
   filter.data = 0xFFFFFFFFu;
   filter.data -= 1 << ICMP_ECHOREPLY;
   filter.data -= 1 << ICMP_DEST_UNREACH;
-  filter.data -= 1 << ICMP_SOURCE_QUENCH;
   filter.data -= 1 << ICMP_REDIRECT;
   filter.data -= 1 << ICMP_TIME_EXCEEDED;
-  filter.data -= 1 << ICMP_PARAMETERPROB;
 
   res = setsockopt(sock_ptr->sockfd, SOL_RAW, ICMP_FILTER, &filter, sizeof(filter));
   if (res == -1) {

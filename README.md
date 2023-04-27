@@ -15,10 +15,15 @@ test.py:
 good !!
 
 ### My next goal is:
+<!--
 server.py:
 scappy
 Forge expected packet (switch ip addr)
-<!-- sudo apt install libnfnetlink-dev libnetfilter-queue-dev -->
-<!-- sudo pip3 install NetFilterQueue kamene -->
-<!-- pip3 install NetFilterQueue kamene -->
+sudo apt install libnfnetlink-dev libnetfilter-queue-dev
+sudo pip3 install NetFilterQueue kamene
+pip3 install NetFilterQueue kamene
 test multiple push
+-->
+Organize error messages in an array
+Add reverse dns query for source of error message
+print error message

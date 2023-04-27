@@ -61,26 +61,25 @@ int isValidMessage() {
 
 	pkt = *(t_msg_packet*)(&g_ping->databuf);
 
-	checksum = pkt.icmp.icmphdr.checksum;
-	pkt.icmp.icmphdr.checksum = 0;
-	if (icmpChecksum(&(pkt.icmp), sizeof(pkt.icmp)) != checksum) {
-		return FALSE;
-	}
-
 	addr = g_ping->destination.integer;
 	id = g_ping->pid;
+	checksum = pkt.icmp.icmphdr.checksum;
 
 	if ((pkt.iphdr.saddr == addr || addr == 0) 
 			&& pkt.icmp.icmphdr.type == 0
 			&& pkt.icmp.icmphdr.code == 0
 			&& pkt.icmp.icmphdr.un.echo.id == id) {
-		return TRUE;
+
+		pkt.icmp.icmphdr.checksum = 0;
+		if (icmpChecksum(&(pkt.icmp), sizeof(pkt.icmp)) == checksum) {
+			return TRUE;
+		}
 	}
 
 	return FALSE;
 }
 
-int hasValidMessage() {
+int hasValidReply() {
 	if (g_ping->msg_ret == -1 && errno == EWOULDBLOCK) {
 		return WOULD_BLOCK;
 	}

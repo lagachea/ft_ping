@@ -197,7 +197,7 @@ void recieveMessage();
 void setupReception();
 int isValidMessage();
 void setMsgPointer();
-int hasValidMessage();
+int hasValidReply();
 
 /* tools.c */
 void	printMemory(const void *addr, size_t size);
