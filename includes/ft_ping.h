@@ -195,9 +195,11 @@ void updateStatistics();
 /* recieve.c */
 void recieveMessage();
 void setupReception();
-int isValidMessage();
+int isValidReply();
 void setMsgPointer();
-int hasValidReply();
+int hasReply();
+void handleValidReply();
+void handleInvalidReply();
 
 /* tools.c */
 void	printMemory(const void *addr, size_t size);

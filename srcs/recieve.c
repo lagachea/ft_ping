@@ -53,7 +53,7 @@ void setupReception() {
 	g_ping->rec_flags = MSG_DONTWAIT;
 }
 
-int isValidMessage() {
+int isValidReply() {
 	t_msg_packet pkt;
 	uint32_t addr;
 	uint16_t id;
@@ -79,11 +79,11 @@ int isValidMessage() {
 	return FALSE;
 }
 
-int hasValidReply() {
+int hasReply() {
 	if (g_ping->msg_ret == -1 && errno == EWOULDBLOCK) {
-		return WOULD_BLOCK;
+		return FALSE;
 	}
-	return isValidMessage();
+	return TRUE;
 }
 
 void recieveMessage( ) {
@@ -93,4 +93,39 @@ void recieveMessage( ) {
 		cleanPing();
 		exit(FAILURE);
 	}
+}
+
+void handleValidReply() {
+	// a msg was found and is the response we expect to parse
+
+	// give us another TIMEOUT time to work
+	setTimeoutAlarm();
+
+	setMsgPointer();
+
+	setRoudTripTime();
+
+	setRecieved();
+
+	updateStatistics();
+
+	printMessageStatistics();
+}
+
+void handleInvalidReply() {
+	//No valid message found or not the message we expect to find: (src / dest / id)
+
+	// Check for error type messages
+	// ICMP_DEST_UNREACH
+	// reverse DNS for iphdr.saddr
+	// printMessageError 
+	//Verbose add iphdr dump + icmp info of sent packt
+	// ICMP_TIME_EXCEEDED
+	// reverse DNS for iphdr.saddr
+	// printMessageError 
+	//Verbose add iphdr dump + icmp info of sent packt
+	//Reuse printMessageStatistics into a printMessageError
+	dprintf(STDOUT_FILENO, "%lu bytes ERROR MSG\n", g_ping->msg_ret - sizeof(struct iphdr));
+	// ICMP_REDIRECT
+	// unknown for now
 }

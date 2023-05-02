@@ -13,7 +13,6 @@ int	main(int ac, char **av)
 {
 	t_ftping pingdata;
 	long int wait_diff;
-	int validReply;
 
 	g_ping = &pingdata;
 
@@ -44,39 +43,14 @@ int	main(int ac, char **av)
 		if (g_ping->counters.transmitted > g_ping->counters.recieved) {
 			setupReception();
 			recieveMessage();
-			validReply = hasValidReply();
-			if (validReply == TRUE) {
-				// a msg was found and is the response we expect to parse
+			if (hasReply() == TRUE) {
+				if (isValidReply() == TRUE) {
+					handleValidReply();
+				}
+				else {
+					handleInvalidReply();
+				}
 
-				// give us another TIMEOUT time to work
-				setTimeoutAlarm();
-
-				setMsgPointer();
-
-				setRoudTripTime();
-
-				setRecieved();
-
-				updateStatistics();
-
-				printMessageStatistics();
-			}
-			else if (validReply == FALSE) {
-				//No valid message found or not the message we expect to find: (src / dest / id)
-
-				// Check for error type messages
-				// ICMP_DEST_UNREACH
-					// reverse DNS for iphdr.saddr
-					// printMessageError 
-					//Verbose add iphdr dump + icmp info of sent packt
-				// ICMP_TIME_EXCEEDED
-					// reverse DNS for iphdr.saddr
-					// printMessageError 
-					//Verbose add iphdr dump + icmp info of sent packt
-				//Reuse printMessageStatistics into a printMessageError
-				dprintf(STDOUT_FILENO, "%lu bytes ERROR MSG\n", g_ping->msg_ret - sizeof(struct iphdr));
-				// ICMP_REDIRECT
-					// unknown for now
 			}
 		}
 	}
