@@ -53,7 +53,7 @@ struct icmp_filter {
 # define WAIT 3
 # define ONE_SEC 1000000
 # define MSG_LEN 1024
-# define TTL 10
+# define TTL 2
 # define WOULD_BLOCK -1
 
 /* OPTIONS */
@@ -202,7 +202,8 @@ void handleValidReply();
 void handleInvalidReply();
 
 /* tools.c */
-void	printMemory(const void *addr, size_t size);
+void printHeaderMemory(const void *addr, size_t size);
+void printMemory(const void *addr, size_t size);
 void printIcmp(struct icmphdr *icmptr);
 void printIp(struct iphdr *ipptr);
 void printStatistics();

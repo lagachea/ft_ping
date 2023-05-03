@@ -30,7 +30,7 @@ int ft_strcountchr(char *str, int c) {
 
 void	printMemory(const void *addr, size_t size)
 {
-	unsigned char *t = (unsigned char *)addr;
+	uint8_t *t = (unsigned char *)addr;
 	char		print;
 	size_t		i = 0;
 	size_t		col;
@@ -53,7 +53,7 @@ void	printMemory(const void *addr, size_t size)
 		col = 0;
 		i = tmp;
 		while (col < cut && i < size) {
-			unsigned char c;
+			uint8_t c;
 			c = t[i++];
 			// print = (c > 31 && c < 127) ? c : '.';
 			print = '.';
@@ -110,4 +110,65 @@ void printTimeval(struct timeval *tv) {
 
 void printUsage() {
 	dprintf(STDERR_FILENO, "./ft_ping [-vh] destination\n");
+}
+
+void printBytes(const void* addr, size_t size) {
+	uint8_t *t = (uint8_t *)addr;
+	size_t		i = 0;
+
+	while (i < size) {
+		printf("%02x", t[i]);
+		i++;
+	}
+}
+
+void	printHeaderMemory(const void *addr, size_t size)
+{
+	uint8_t *t = (uint8_t *)addr;
+	size_t		i = 0;
+	t_msg_packet msg = *(t_msg_packet*)addr;
+
+	while (i < size) {
+		printf("%s%02x", i % 2 == 0 ? " " : "", t[i]);
+		i++;
+	}
+	printf("\n");
+
+	printf("Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src\tDst\tData\n");
+
+	// Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst     Data
+	// 4  5  00 0054 9bc8   2 0000  01  01 6b4c 172.21.196.125  1.1.1.1 
+	// Need ntohs for field > 8 bits
+
+	printf(" %1x", msg.iphdr.version);
+
+	printf("  %1x", msg.iphdr.ihl);
+
+	printf("  %02x", msg.iphdr.tos);
+
+	printf(" ");
+	printBytes(&msg.iphdr.tot_len, sizeof(msg.iphdr.tot_len));
+
+	printf(" ");
+	printBytes(&msg.iphdr.id, sizeof(msg.iphdr.id));
+
+	printf("   %1x", (msg.iphdr.frag_off & 0xE000u) >> 13); // 3 / 16 bits
+	printf(" %04x", msg.iphdr.frag_off & 0x1FFF); // 13 / 16 bits
+
+	printf("  %02x", msg.iphdr.ttl);
+
+	printf("  %02x", msg.iphdr.protocol);
+
+	printf(" ");
+	printBytes(&msg.iphdr.check, sizeof(msg.iphdr.check));
+
+	char src[INET_ADDRSTRLEN];
+		inet_ntop(AF_INET, &msg.iphdr.saddr, &src[0], INET_ADDRSTRLEN);
+	printf(" %s ", src);
+
+	char dst[INET_ADDRSTRLEN];
+		inet_ntop(AF_INET, &msg.iphdr.daddr, &dst[0], INET_ADDRSTRLEN);
+	printf(" %s ", dst);
+
+	printf("\n");
 }

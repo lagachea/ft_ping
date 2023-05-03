@@ -13,7 +13,7 @@ void setRawSocket() {
   struct icmp_filter filter;
   t_socket *sock_ptr;
   int yes = 1;
-  // int ttl = TTL;
+  int ttl = TTL;
 
   sock_ptr = &g_ping->socket;
   sock_ptr->family = AF_INET;
@@ -48,9 +48,9 @@ void setRawSocket() {
   }
   
   // Set ttl
-  // res = setsockopt(sock_ptr->sockfd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl));
-  // if (res == -1) {
-  //   printError("ERROR: %s | Failed setting a socket option\n", strerror(errno));
-  //   exit(FAILURE);
-  // }
+  res = setsockopt(sock_ptr->sockfd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl));
+  if (res == -1) {
+    printError("ERROR: %s | Failed setting a socket option\n", strerror(errno));
+    exit(FAILURE);
+  }
 }
