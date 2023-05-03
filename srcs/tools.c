@@ -138,7 +138,6 @@ void	printHeaderMemory(const void *addr, size_t size)
 
 	// Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst     Data
 	// 4  5  00 0054 9bc8   2 0000  01  01 6b4c 172.21.196.125  1.1.1.1 
-	// Need ntohs for field > 8 bits
 
 	printf(" %1x", msg.iphdr.version);
 
@@ -152,6 +151,7 @@ void	printHeaderMemory(const void *addr, size_t size)
 	printf(" ");
 	printBytes(&msg.iphdr.id, sizeof(msg.iphdr.id));
 
+	// Need ntohs for field > 8 bits
 	printf("   %1x", (msg.iphdr.frag_off & 0xE000u) >> 13); // 3 / 16 bits
 	printf(" %04x", msg.iphdr.frag_off & 0x1FFF); // 13 / 16 bits
 
