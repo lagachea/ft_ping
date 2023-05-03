@@ -74,7 +74,7 @@ typedef struct s_msg_packet {
 typedef struct s_err_msg_packet {
 	struct iphdr iphdr;
 	struct icmphdr icmphdr;
-} t_err_msg_packet;
+} t_hdr_packet;
 
 union networkAddress {
 	uint32_t integer;

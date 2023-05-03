@@ -10,7 +10,7 @@ to_test = "./ft_ping"
 out_orig = []
 out_test = []
 
-hostnames = ["255.255.255.255", "0.0.0.0", "127.1.1.1", "localhost", "google.com", "9.9.9.9", "www.42.fr", "192.168.1.1", "192.168.1.123" ]
+hostnames = ["255.255.255.255", "192.168.1.123", "0.0.0.0", "127.1.1.1", "localhost", "google.com", "9.9.9.9", "www.42.fr", "192.168.1.1" ]
 
 maxtimeout = 4.6789
 

@@ -134,26 +134,31 @@ void handleValidReply() {
 
 void handleInvalidReply() {
 	int ret;
-	t_err_msg_packet msg;
+	t_hdr_packet reply;
+	t_hdr_packet request;
 	struct sockaddr_in sock_addr;
 
 	char ip_buff[INET_ADDRSTRLEN];
 	char hostname[NI_MAXHOST];
 	char *ip_str;
 
-	msg = *(t_err_msg_packet*)g_ping->databuf;
-	printf("%lu bytes from ", msg.iphdr.tot_len - sizeof(msg.iphdr));
+	reply = *(t_hdr_packet*)g_ping->databuf;
+	request = *(t_hdr_packet*)(g_ping->databuf + sizeof(t_hdr_packet));
+	if (request.icmphdr.un.echo.id != g_ping->pid) {
+		return;
+	}
+	printf("%lu bytes from ", reply.iphdr.tot_len - sizeof(reply.iphdr));
 
 	ip_str = &ip_buff[0];
 	ft_memset(ip_str, 0, INET_ADDRSTRLEN);
-	if (inet_ntop(AF_INET, &msg.iphdr.saddr, ip_str, INET_ADDRSTRLEN) == NULL) {
+	if (inet_ntop(AF_INET, &reply.iphdr.saddr, ip_str, INET_ADDRSTRLEN) == NULL) {
 		printError("ERROR: ntop");
 		cleanPing();
 		exit(FAILURE);
 	}
 	
 	sock_addr.sin_family = AF_INET;
-	sock_addr.sin_addr.s_addr = msg.iphdr.saddr;
+	sock_addr.sin_addr.s_addr = reply.iphdr.saddr;
 	ret	= reverseDNSquery((struct sockaddr*)&sock_addr, &hostname[0]);
 	if (ret == SUCCESS) {
 		printf("%s (%s): ", hostname, ip_str);
@@ -163,10 +168,10 @@ void handleInvalidReply() {
 	}
 
 	// Check for error type messages
-	if (msg.icmphdr.type == ICMP_DEST_UNREACH) {
+	if (reply.icmphdr.type == ICMP_DEST_UNREACH) {
 		printf("Destination Host Unreachable");
 	}
-	else if (msg.icmphdr.type == ICMP_TIME_EXCEEDED) {
+	else if (reply.icmphdr.type == ICMP_TIME_EXCEEDED) {
 		printf("Time to live exceeded");
 	}
 	printf("\n");
