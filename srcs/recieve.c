@@ -133,22 +133,34 @@ void handleValidReply() {
 }
 
 void handleInvalidReply() {
+	int ret;
 	t_err_msg_packet msg;
-	// char ip_buff[INET_ADDRSTRLEN];
-	// char hostname[NI_MAXHOST];
-	// char *ip_str = &ip_buff[0];
+	struct sockaddr_in sock_addr;
+
+	char ip_buff[INET_ADDRSTRLEN];
+	char hostname[NI_MAXHOST];
+	char *ip_str;
 
 	msg = *(t_err_msg_packet*)g_ping->databuf;
 	printf("%lu bytes from ", msg.iphdr.tot_len - sizeof(msg.iphdr));
 
-	// Reverse dns on 
-	(void)msg.iphdr.saddr;
-	// if (SUCCESS == 1) {
-	// 			printf("%s (%s): ", hostname, ip_str);
-	// }
-	// else {
-	// 			printf("%s: ", ip_str);
-	// }
+	ip_str = &ip_buff[0];
+	ft_memset(ip_str, 0, INET_ADDRSTRLEN);
+	if (inet_ntop(AF_INET, &msg.iphdr.saddr, ip_str, INET_ADDRSTRLEN) == NULL) {
+		printError("ERROR: ntop");
+		cleanPing();
+		exit(FAILURE);
+	}
+	
+	sock_addr.sin_family = AF_INET;
+	sock_addr.sin_addr.s_addr = msg.iphdr.saddr;
+	ret	= reverseDNSquery((struct sockaddr*)&sock_addr, &hostname[0]);
+	if (ret == SUCCESS) {
+		printf("%s (%s): ", hostname, ip_str);
+	}
+	else {
+		printf("%s: ", ip_str);
+	}
 
 	// Check for error type messages
 	if (msg.icmphdr.type == ICMP_DEST_UNREACH) {

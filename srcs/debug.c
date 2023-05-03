@@ -133,14 +133,3 @@ void printMsghdr() {
 			, inet_ntop(AF_INET, &sosckaddr_in->sin_addr.s_addr, &rslv_node[0], INET_ADDRSTRLEN)
 			);
 }
-
-void reverseDNSquery() {
-   char host[NI_MAXHOST], service[NI_MAXSERV];
-   struct sockaddr *addr_ptr;
-
-   addr_ptr = &g_ping->dest_addr;
-   getnameinfo(addr_ptr, sizeof(struct sockaddr),
-		   host, NI_MAXHOST,
-		   service, NI_MAXSERV, NI_NUMERICSERV);
-   printf("host: %s\nservice: %s\n", host, service);
-}

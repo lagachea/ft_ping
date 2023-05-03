@@ -53,7 +53,10 @@ static void getDestination(char *dest) {
 		ft_memcpy(g_ping->canonname, g_ping->results->ai_canonname, ft_strlen(g_ping->results->ai_canonname));
 
 		g_ping->destination.integer = sockaddr_in->sin_addr.s_addr;
-		inet_ntop(AF_INET, &sockaddr_in->sin_addr, g_ping->ip_str, INET_ADDRSTRLEN);
+		if (inet_ntop(AF_INET, &sockaddr_in->sin_addr, g_ping->ip_str, INET_ADDRSTRLEN) == NULL) {
+			printError("ERROR: ntop");
+			exit(FAILURE);
+		}
 
 		freeaddrinfo(g_ping->results);
 		g_ping->results = NULL;

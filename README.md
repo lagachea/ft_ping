@@ -4,7 +4,6 @@ The goal here is to recreate the ping command in c using minimal function (see s
 
 ### TODO:
 - Organize error messages in an array
-- Add reverse dns query for source ip of error message
 - handle ip pkt len for regular err msg
 - handle frag offset for verbose
 <!--

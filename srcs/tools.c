@@ -163,12 +163,37 @@ void	printHeaderMemory(const void *addr, size_t size)
 	printBytes(&msg.iphdr.check, sizeof(msg.iphdr.check));
 
 	char src[INET_ADDRSTRLEN];
-		inet_ntop(AF_INET, &msg.iphdr.saddr, &src[0], INET_ADDRSTRLEN);
+	ft_memset(&src[0], 0, INET_ADDRSTRLEN);
+	if (inet_ntop(AF_INET, &msg.iphdr.saddr, &src[0], INET_ADDRSTRLEN) == NULL) {
+		cleanPing();
+		printError("ERROR: ntop");
+		exit(FAILURE);
+	}
 	printf(" %s ", src);
 
 	char dst[INET_ADDRSTRLEN];
-		inet_ntop(AF_INET, &msg.iphdr.daddr, &dst[0], INET_ADDRSTRLEN);
+	ft_memset(&dst[0], 0, INET_ADDRSTRLEN);
+	if (inet_ntop(AF_INET, &msg.iphdr.daddr, &dst[0], INET_ADDRSTRLEN) == NULL) {
+		cleanPing();
+		printError("ERROR: ntop");
+		exit(FAILURE);
+	}
 	printf(" %s ", dst);
 
 	printf("\n");
+}
+
+int reverseDNSquery(struct sockaddr *sock_addr, char *hostname) {
+	int ret;
+
+	ret = getnameinfo(sock_addr, sizeof(struct sockaddr),
+			hostname, NI_MAXHOST, NULL, 0, NI_NAMEREQD);
+	if (ret == 0) {
+		return SUCCESS;
+	}
+	else if (ret == EAI_NONAME) {
+		return NO_NAME;
+	}
+	cleanPing();
+	exit(FAILURE);
 }

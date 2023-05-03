@@ -53,8 +53,9 @@ struct icmp_filter {
 # define WAIT 3
 # define ONE_SEC 1000000
 # define MSG_LEN 1024
-# define TTL 2
+# define TTL 64
 # define WOULD_BLOCK -1
+# define NO_NAME -1
 
 /* OPTIONS */
 # define VERBOSE_OPTION 1
@@ -159,7 +160,6 @@ const char *getSocketName(int value);
 void printSocket(int family, int socktype, int protocol);
 void printSocketStruct(t_socket *sckt);
 void printAddressInformations();
-void reverseDNSquery();
 void printArguments(int ac, char **av);
 
 /* socket.c */
@@ -218,6 +218,7 @@ int ft_strcountchr(char *str, int c);
 void printUsage();
 int expectMessage();
 void setup();
+int reverseDNSquery(struct sockaddr *sock_addr, char *hostname);
 
 /* looping.c */
 void pingRoundTrip ();
