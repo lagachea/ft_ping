@@ -3,7 +3,6 @@
 The goal here is to recreate the ping command in c using minimal function (see subject pdf)
 
 ### TODO:
-- Organize error messages in an array
 - handle ip pkt len for regular err msg
 - handle frag offset for verbose
 <!--
