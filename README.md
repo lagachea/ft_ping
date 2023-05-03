@@ -2,19 +2,11 @@
 
 The goal here is to recreate the ping command in c using minimal function (see subject pdf)
 
-### The things I already done
-
-DNS query to get ip from hostname
-create packet
-send packet
-recieve response
-print RTT and various info
-print info on SIGQUIT
-quit gracefully on SIGINT
-test.py:
-good !!
-
-### My next goal is:
+### TODO:
+- Organize error messages in an array
+- Add reverse dns query for source ip of error message
+- handle ip pkt len for regular err msg
+- handle frag offset for verbose
 <!--
 server.py:
 scappy
@@ -24,7 +16,3 @@ sudo pip3 install NetFilterQueue kamene
 pip3 install NetFilterQueue kamene
 test multiple push
 -->
-Organize error messages in an array
-Add reverse dns query for source of error message
-print error message
-verbose print for error messages
