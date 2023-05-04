@@ -131,32 +131,7 @@ void handleValidReply() {
 
 void printErrorMessage(struct icmphdr *reply) {
 	char *message = NULL;
-	t_err_msg err_messages[] = {
-		{ICMP_DEST_UNREACH, ICMP_NET_UNREACH, "Destination Network unreachable"},
-		{ICMP_DEST_UNREACH, ICMP_HOST_UNREACH, "Destination Host unreachable"},
-		{ICMP_DEST_UNREACH, ICMP_PROT_UNREACH, "Destination Protocol unreachable"},
-		{ICMP_DEST_UNREACH, ICMP_PORT_UNREACH, "Destination Port unreachable"},
-		{ICMP_DEST_UNREACH, ICMP_FRAG_NEEDED, "Fragmentation needed/DF flag set"},
-		{ICMP_DEST_UNREACH, ICMP_SR_FAILED, "Source Route failed"},
-		{ICMP_DEST_UNREACH, ICMP_NET_UNKNOWN, "Unknown network"},
-		{ICMP_DEST_UNREACH, ICMP_HOST_UNKNOWN, "Unknown host"},
-		{ICMP_DEST_UNREACH, ICMP_HOST_ISOLATED, "Host isolated"},
-		{ICMP_DEST_UNREACH, ICMP_NET_ANO, "Network administratively prohibited"},
-		{ICMP_DEST_UNREACH, ICMP_HOST_ANO, "Host administratively prohibited"},
-		{ICMP_DEST_UNREACH, ICMP_NET_UNR_TOS, "Network unreachable for ToS"},
-		{ICMP_DEST_UNREACH, ICMP_HOST_UNR_TOS, "Host unreachable for ToS"},
-		{ICMP_DEST_UNREACH, ICMP_PKT_FILTERED, "Packet filtered"},
-		{ICMP_DEST_UNREACH, ICMP_PREC_VIOLATION, "Host Precedence Violation"},
-		{ICMP_DEST_UNREACH, ICMP_PREC_CUTOFF, "Precedence cutoff in effect"},
-		{ICMP_REDIRECT, ICMP_REDIR_NET, "Redirect Datagram for the Network"},
-		{ICMP_REDIRECT, ICMP_REDIR_HOST, "Redirect Datagram for the Host"},
-		{ICMP_REDIRECT, ICMP_REDIR_NETTOS, "Redirect Datagram for the ToS & network"},
-		{ICMP_REDIRECT, ICMP_REDIR_HOSTTOS, "Redirect Datagram for the ToS & host"},
-		{ICMP_TIME_EXCEEDED, ICMP_EXC_TTL, "Time to live exceeded"},
-		{ICMP_TIME_EXCEEDED, ICMP_EXC_FRAGTIME, "Fragment reassembly time exceeded"},
-		{-1, -1, "NO"}
-	};
-	t_err_msg *err_ptr = &err_messages[0];
+	t_err_msg *err_ptr = &g_ping->err_messages[0];
 
 	while (err_ptr->type != -1) {
 		if (reply->type == err_ptr->type && reply->code == err_ptr->code)
@@ -171,7 +146,6 @@ void printErrorMessage(struct icmphdr *reply) {
 	}
 
 	// ERROR FILTER IS NOT WORKING
-
 }
 
 void handleInvalidReply() {
@@ -191,7 +165,7 @@ void handleInvalidReply() {
 		return;
 	}
 
-	dprintf(STDOUT_FILENO, "%lu bytes from ", reply.iphdr.tot_len - sizeof(reply.iphdr));
+	dprintf(STDOUT_FILENO, "%lu bytes from ", ntohs(reply.iphdr.tot_len) - sizeof(reply.iphdr));
 
 	ip_str = &ip_buff[0];
 	ft_memset(ip_str, 0, INET_ADDRSTRLEN);

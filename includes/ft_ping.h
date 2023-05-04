@@ -154,6 +154,7 @@ typedef struct s_ftping {
 	int msg_ret;
 
 	t_msg_packet pkt_msg;
+	t_err_msg err_messages[23];
 } t_ftping;
 extern t_ftping *g_ping;
 

@@ -15,6 +15,31 @@ void setup() {
 
 	g_ping->ip_str = &g_ping->rslv_node[0];
 	g_ping->canonname = &g_ping->hostname[0]; 
+	ft_memcpy(&g_ping->err_messages, (t_err_msg[]){
+		{ICMP_DEST_UNREACH, ICMP_NET_UNREACH, "Destination Network Unreachable"},
+		{ICMP_DEST_UNREACH, ICMP_HOST_UNREACH, "Destination Host Unreachable"},
+		{ICMP_DEST_UNREACH, ICMP_PROT_UNREACH, "Destination Protocol Unreachable"},
+		{ICMP_DEST_UNREACH, ICMP_PORT_UNREACH, "Destination Port Unreachable"},
+		{ICMP_DEST_UNREACH, ICMP_FRAG_NEEDED, "Fragmentation needed/DF flag set"},
+		{ICMP_DEST_UNREACH, ICMP_SR_FAILED, "Source Route failed"},
+		{ICMP_DEST_UNREACH, ICMP_NET_UNKNOWN, "Unknown network"},
+		{ICMP_DEST_UNREACH, ICMP_HOST_UNKNOWN, "Unknown host"},
+		{ICMP_DEST_UNREACH, ICMP_HOST_ISOLATED, "Host isolated"},
+		{ICMP_DEST_UNREACH, ICMP_NET_ANO, "Network administratively prohibited"},
+		{ICMP_DEST_UNREACH, ICMP_HOST_ANO, "Host administratively prohibited"},
+		{ICMP_DEST_UNREACH, ICMP_NET_UNR_TOS, "Network unreachable for ToS"},
+		{ICMP_DEST_UNREACH, ICMP_HOST_UNR_TOS, "Host unreachable for ToS"},
+		{ICMP_DEST_UNREACH, ICMP_PKT_FILTERED, "Packet filtered"},
+		{ICMP_DEST_UNREACH, ICMP_PREC_VIOLATION, "Host Precedence Violation"},
+		{ICMP_DEST_UNREACH, ICMP_PREC_CUTOFF, "Precedence cutoff in effect"},
+		{ICMP_REDIRECT, ICMP_REDIR_NET, "Redirect Datagram for the Network"},
+		{ICMP_REDIRECT, ICMP_REDIR_HOST, "Redirect Datagram for the Host"},
+		{ICMP_REDIRECT, ICMP_REDIR_NETTOS, "Redirect Datagram for the ToS & network"},
+		{ICMP_REDIRECT, ICMP_REDIR_HOSTTOS, "Redirect Datagram for the ToS & host"},
+		{ICMP_TIME_EXCEEDED, ICMP_EXC_TTL, "Time to live exceeded"},
+		{ICMP_TIME_EXCEEDED, ICMP_EXC_FRAGTIME, "Fragment reassembly time exceeded"},
+		{-1, -1, ""},
+	}, sizeof(g_ping->err_messages));
 }
 
 int ft_strcountchr(char *str, int c) {
@@ -127,6 +152,9 @@ void	printHeaderMemory(struct iphdr *addr, size_t size)
 	uint8_t *t = (uint8_t *)addr;
 	size_t		i = 0;
 	struct iphdr iphdr = *addr;
+	uint16_t flags;
+	uint16_t fragment_offset;
+
 
 	while (i < size) {
 		dprintf(STDOUT_FILENO, "%s%02x", i % 2 == 0 ? " " : "", t[i]);
@@ -152,8 +180,10 @@ void	printHeaderMemory(struct iphdr *addr, size_t size)
 	printBytes(&iphdr.id, sizeof(iphdr.id));
 
 	// Need ntohs for field > 8 bits
-	dprintf(STDOUT_FILENO, "   %1x", (iphdr.frag_off & 0xE000u) >> 13); // 3 / 16 bits
-	dprintf(STDOUT_FILENO, " %04x", iphdr.frag_off & 0x1FFF); // 13 / 16 bits
+	flags = (ntohs(iphdr.frag_off) & 0xE000u) >> 13;
+	dprintf(STDOUT_FILENO, "   %1x", flags); // 3 / 16 bits
+	fragment_offset = ntohs(iphdr.frag_off) & 0x1FFF;
+	dprintf(STDOUT_FILENO, " %04x", fragment_offset); // 13 / 16 bits
 
 	dprintf(STDOUT_FILENO, "  %02x", iphdr.ttl);
 
