@@ -30,8 +30,9 @@ LIBDIR = libft
 LIBA = $(LIBDIR)/libft.a
 
 CFLAGS = -Wall -Wextra -Werror
-CFLAGS += -g -O1
-CFLAGS += -fsanitize=address,leak,undefined -fno-omit-frame-pointer 
+CFLAGS += -O2
+# CFLAGS += -g
+# CFLAGS += -fsanitize=address,leak,undefined -fno-omit-frame-pointer 
 # Don't forget to change the lib flags too
 # CFLAGS += -fsanitize=memory,undefined
 
@@ -45,7 +46,7 @@ PURPLE = "\\033[35m"
 
 LNECLR = "\\33[2K\\r"
 
-all: $(NAME) $(REF)
+all: $(REF) $(NAME)
 
 $(NAME): $(OBJECT)
 	$(MAKE) -s -C $(LIBDIR)
@@ -91,14 +92,14 @@ server: firewall
 	sudo python3 ./tests/intercepter.py
 
 clean:
-	$(RM) -rf out compile_commands.json tests/*.o
 	$(MAKE) -s -C $(LIBDIR) clean
-	printf "$(PURPLE)clean done$(WHITE)\n"
+	$(RM) -rf out compile_commands.json tests/*.o
+	printf "$(LNECLR)$(PURPLE)clean done$(WHITE)\n"
 
 fclean:
-	$(RM) -rf out $(NAME) server client tmp/ unit crit
 	$(MAKE) -s -C $(LIBDIR) fclean
-	printf "$(PURPLE)fclean done$(WHITE)\n"
+	$(RM) -rf out $(NAME) server client tmp/ unit crit
+	printf "$(LNECLR)$(PURPLE)fclean done$(WHITE)\n"
 
 $(REF):
 	mkdir -p tmp/
@@ -109,11 +110,13 @@ $(REF):
 	sudo setcap cap_net_raw=pe ping
 	printf "$(LNECLR)$(GREEN)make download done$(WHITE)\n"
 
-re: fclean all
+re: fclean
+	$(MAKE) -s all
+	printf "$(LNECLR)$(GREEN)make re done$(WHITE)\n"
 
 random:
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o server srcs/test.c $(LIBA)
 	$(CC) $(CFLAGS) -I includes -I libft/includes -o client srcs/testcli.c $(LIBA)
 
 .PHONY: all fclean clean re test debug firewall unit-test crit-test
-.SILENT: all fclean clean re  $(NAME) $(OBJECT) $(REF) test debug firewall unit-test crit-test
+.SILENT: all fclean clean re $(NAME) $(OBJECT) $(REF) test debug firewall unit-test crit-test
