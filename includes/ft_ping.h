@@ -60,11 +60,16 @@ struct icmp_filter {
 /* OPTIONS */
 # define VERBOSE_OPTION 1
 
+typedef struct s_err_msg {
+	int type;
+	int code;
+	char *message;
+} t_err_msg;
+
 typedef struct s_icmp_out {
 	struct icmphdr icmphdr;
 	uint8_t data[ICMP_DATA_LEN];
-}
-t_icmp_out;
+} t_icmp_out;
 
 typedef struct s_msg_packet {
 	struct iphdr iphdr;
