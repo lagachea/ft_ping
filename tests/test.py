@@ -6,6 +6,7 @@ def getcmd(cmd: str) -> list[str]:
 	
 original = "./ping"
 to_test = "./ft_ping"
+option = "-v"
 
 out_orig = []
 out_test = []
@@ -16,18 +17,10 @@ maxtimeout = 4.6789
 
 
 def getArgs(name: str) -> list:
-    args = [ original, name ]
-    # print("[[===================")
-    # printCmd(args)
-    # print("                     ===================]]")
-    return args
+    return [ original, option, name ]
 
 def getTArgs(name: str) -> list:
-    args = [ to_test, name ]
-    # print("[[===================")
-    # printCmd(args)
-    # print("                     ===================]]")
-    return args
+    return [ to_test, option, name ]
 
 def writeToFile(file, buffer: str):
     file.write(buffer + "\n")
@@ -73,8 +66,8 @@ for hname in hostnames:
     test = out_test[-1]
     diff = "tests/diff/{}".format(test.split('/')[-1])
 
-    fargs = getcmd("sdiff -t {} {}".format(orig, test))
-    pargs = getcmd("sdiff -s {} {}".format(orig, test))
+    fargs = getcmd("sdiff -t -w 200 {} {}".format(orig, test))
+    pargs = getcmd("sdiff -s -w 200 {} {}".format(orig, test))
 
     with open(diff, "w+") as filediff, subprocess.Popen(fargs, stdout=filediff, stderr=filediff) as fproc, subprocess.Popen(pargs) as pproc:
         print('{0} result\n\n'.format(hname))

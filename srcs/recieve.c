@@ -7,22 +7,19 @@ int getIPHeaderLengthInBytes(struct iphdr *ipptr) {
 	return ipptr->ihl * 4;
 }
 
-void printErrorMsgDump() {
-	t_msg_packet msg;
-	uint16_t size = g_ping->msg_ret - sizeof(struct iphdr) - sizeof(struct icmphdr) - sizeof(struct iphdr);
-
-	msg = *((t_msg_packet*)(g_ping->databuf + sizeof(struct iphdr) + sizeof(struct icmphdr)));
+void printErrorMsgDump(t_hdr_packet *request) {
 
 	printf("IP Hdr Dump:\n");
 
-	printHeaderMemory(&msg, sizeof(struct iphdr));
+	printHeaderMemory(&request->iphdr, sizeof(struct iphdr));
 
+	uint16_t size = g_ping->msg_ret - sizeof(struct iphdr) - sizeof(struct icmphdr) - sizeof(struct iphdr);
 	printf("ICMP: type %hu, code %hu, size %hu, id %#x, seq 0x%04x\n", 
-			msg.icmp.icmphdr.type,
-			msg.icmp.icmphdr.code,
+			request->icmphdr.type,
+			request->icmphdr.code,
 			size,
-			msg.icmp.icmphdr.un.echo.id,
-			msg.icmp.icmphdr.un.echo.sequence
+			request->icmphdr.un.echo.id,
+			request->icmphdr.un.echo.sequence
 		  );
 }
 
@@ -219,7 +216,7 @@ void handleInvalidReply() {
 
 	//Verbose add iphdr dump + icmp info of recieved message packt
 	if ((g_ping->options & VERBOSE_OPTION) != 0) {
-		printErrorMsgDump();
+		printErrorMsgDump(&request);
 	}
 
 }

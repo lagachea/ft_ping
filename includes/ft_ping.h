@@ -212,7 +212,7 @@ void handleValidReply();
 void handleInvalidReply();
 
 /* tools.c */
-void printHeaderMemory(const void *addr, size_t size);
+void printHeaderMemory(struct iphdr*addr, size_t size);
 void printMemory(const void *addr, size_t size);
 void printIcmp(struct icmphdr *icmptr);
 void printIp(struct iphdr *ipptr);

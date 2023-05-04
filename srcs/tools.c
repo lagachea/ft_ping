@@ -122,11 +122,11 @@ void printBytes(const void* addr, size_t size) {
 	}
 }
 
-void	printHeaderMemory(const void *addr, size_t size)
+void	printHeaderMemory(struct iphdr *addr, size_t size)
 {
 	uint8_t *t = (uint8_t *)addr;
 	size_t		i = 0;
-	t_msg_packet msg = *(t_msg_packet*)addr;
+	struct iphdr iphdr = *addr;
 
 	while (i < size) {
 		printf("%s%02x", i % 2 == 0 ? " " : "", t[i]);
@@ -139,32 +139,32 @@ void	printHeaderMemory(const void *addr, size_t size)
 	// Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst     Data
 	// 4  5  00 0054 9bc8   2 0000  01  01 6b4c 172.21.196.125  1.1.1.1 
 
-	printf(" %1x", msg.iphdr.version);
+	printf(" %1x", iphdr.version);
 
-	printf("  %1x", msg.iphdr.ihl);
+	printf("  %1x", iphdr.ihl);
 
-	printf("  %02x", msg.iphdr.tos);
-
-	printf(" ");
-	printBytes(&msg.iphdr.tot_len, sizeof(msg.iphdr.tot_len));
+	printf("  %02x", iphdr.tos);
 
 	printf(" ");
-	printBytes(&msg.iphdr.id, sizeof(msg.iphdr.id));
+	printBytes(&iphdr.tot_len, sizeof(iphdr.tot_len));
+
+	printf(" ");
+	printBytes(&iphdr.id, sizeof(iphdr.id));
 
 	// Need ntohs for field > 8 bits
-	printf("   %1x", (msg.iphdr.frag_off & 0xE000u) >> 13); // 3 / 16 bits
-	printf(" %04x", msg.iphdr.frag_off & 0x1FFF); // 13 / 16 bits
+	printf("   %1x", (iphdr.frag_off & 0xE000u) >> 13); // 3 / 16 bits
+	printf(" %04x", iphdr.frag_off & 0x1FFF); // 13 / 16 bits
 
-	printf("  %02x", msg.iphdr.ttl);
+	printf("  %02x", iphdr.ttl);
 
-	printf("  %02x", msg.iphdr.protocol);
+	printf("  %02x", iphdr.protocol);
 
 	printf(" ");
-	printBytes(&msg.iphdr.check, sizeof(msg.iphdr.check));
+	printBytes(&iphdr.check, sizeof(iphdr.check));
 
 	char src[INET_ADDRSTRLEN];
 	ft_memset(&src[0], 0, INET_ADDRSTRLEN);
-	if (inet_ntop(AF_INET, &msg.iphdr.saddr, &src[0], INET_ADDRSTRLEN) == NULL) {
+	if (inet_ntop(AF_INET, &iphdr.saddr, &src[0], INET_ADDRSTRLEN) == NULL) {
 		cleanPing();
 		printError("ERROR: ntop");
 		exit(FAILURE);
@@ -173,7 +173,7 @@ void	printHeaderMemory(const void *addr, size_t size)
 
 	char dst[INET_ADDRSTRLEN];
 	ft_memset(&dst[0], 0, INET_ADDRSTRLEN);
-	if (inet_ntop(AF_INET, &msg.iphdr.daddr, &dst[0], INET_ADDRSTRLEN) == NULL) {
+	if (inet_ntop(AF_INET, &iphdr.daddr, &dst[0], INET_ADDRSTRLEN) == NULL) {
 		cleanPing();
 		printError("ERROR: ntop");
 		exit(FAILURE);
