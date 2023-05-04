@@ -9,12 +9,12 @@ int getIPHeaderLengthInBytes(struct iphdr *ipptr) {
 
 void printErrorMsgDump(t_hdr_packet *request) {
 
-	printf("IP Hdr Dump:\n");
+	dprintf(STDOUT_FILENO, "IP Hdr Dump:\n");
 
 	printHeaderMemory(&request->iphdr, sizeof(struct iphdr));
 
 	uint16_t size = g_ping->msg_ret - sizeof(struct iphdr) - sizeof(struct icmphdr) - sizeof(struct iphdr);
-	printf("ICMP: type %hu, code %hu, size %hu, id %#x, seq 0x%04x\n", 
+	dprintf(STDOUT_FILENO, "ICMP: type %hu, code %hu, size %hu, id %#x, seq 0x%04x\n", 
 			request->icmphdr.type,
 			request->icmphdr.code,
 			size,
@@ -166,7 +166,7 @@ void printErrorMessage(struct icmphdr *reply) {
 		err_ptr++;
 	}
 	if (message != NULL) {
-		printf("%s\n", message);
+		dprintf(STDOUT_FILENO, "%s\n", message);
 		return;
 	}
 
@@ -191,7 +191,7 @@ void handleInvalidReply() {
 		return;
 	}
 
-	printf("%lu bytes from ", reply.iphdr.tot_len - sizeof(reply.iphdr));
+	dprintf(STDOUT_FILENO, "%lu bytes from ", reply.iphdr.tot_len - sizeof(reply.iphdr));
 
 	ip_str = &ip_buff[0];
 	ft_memset(ip_str, 0, INET_ADDRSTRLEN);
@@ -205,10 +205,10 @@ void handleInvalidReply() {
 	sock_addr.sin_addr.s_addr = reply.iphdr.saddr;
 	ret	= reverseDNSquery((struct sockaddr*)&sock_addr, &hostname[0]);
 	if (ret == SUCCESS) {
-		printf("%s (%s): ", hostname, ip_str);
+		dprintf(STDOUT_FILENO, "%s (%s): ", hostname, ip_str);
 	}
 	else {
-		printf("%s: ", ip_str);
+		dprintf(STDOUT_FILENO, "%s: ", ip_str);
 	}
 
 	printErrorMessage(&reply.icmphdr);

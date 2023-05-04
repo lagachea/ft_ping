@@ -44,9 +44,9 @@ void	printMemory(const void *addr, size_t size)
 		while (col < cut)
 		{
 			if (i < size)
-				printf("%-4.2x", t[i]);
+				dprintf(STDOUT_FILENO, "%-4.2x", t[i]);
 			else
-				printf("    ");
+				dprintf(STDOUT_FILENO, "    ");
 			i++;
 			col++;
 		}
@@ -60,19 +60,19 @@ void	printMemory(const void *addr, size_t size)
 			if (ft_isprint(c)) {
 				print = c;
 			}
-			printf("%c", print);
+			dprintf(STDOUT_FILENO, "%c", print);
 			col++;
 		}
-		printf("\n");
+		dprintf(STDOUT_FILENO, "\n");
 	}
 }
 
 void printIp(struct iphdr *ipptr) {
-	printf("ip\n");
+	dprintf(STDOUT_FILENO, "ip\n");
 	printMemory(ipptr, 20);
 }
 void printIcmp(struct icmphdr *icmptr) {
-	printf("icmp\n");
+	dprintf(STDOUT_FILENO, "icmp\n");
 	printMemory(icmptr, 8);
 }
 
@@ -117,7 +117,7 @@ void printBytes(const void* addr, size_t size) {
 	size_t		i = 0;
 
 	while (i < size) {
-		printf("%02x", t[i]);
+		dprintf(STDOUT_FILENO, "%02x", t[i]);
 		i++;
 	}
 }
@@ -129,37 +129,37 @@ void	printHeaderMemory(struct iphdr *addr, size_t size)
 	struct iphdr iphdr = *addr;
 
 	while (i < size) {
-		printf("%s%02x", i % 2 == 0 ? " " : "", t[i]);
+		dprintf(STDOUT_FILENO, "%s%02x", i % 2 == 0 ? " " : "", t[i]);
 		i++;
 	}
-	printf("\n");
+	dprintf(STDOUT_FILENO, "\n");
 
-	printf("Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src\tDst\tData\n");
+	dprintf(STDOUT_FILENO, "Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src\tDst\tData\n");
 
 	// Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst     Data
 	// 4  5  00 0054 9bc8   2 0000  01  01 6b4c 172.21.196.125  1.1.1.1 
 
-	printf(" %1x", iphdr.version);
+	dprintf(STDOUT_FILENO, " %1x", iphdr.version);
 
-	printf("  %1x", iphdr.ihl);
+	dprintf(STDOUT_FILENO, "  %1x", iphdr.ihl);
 
-	printf("  %02x", iphdr.tos);
+	dprintf(STDOUT_FILENO, "  %02x", iphdr.tos);
 
-	printf(" ");
+	dprintf(STDOUT_FILENO, " ");
 	printBytes(&iphdr.tot_len, sizeof(iphdr.tot_len));
 
-	printf(" ");
+	dprintf(STDOUT_FILENO, " ");
 	printBytes(&iphdr.id, sizeof(iphdr.id));
 
 	// Need ntohs for field > 8 bits
-	printf("   %1x", (iphdr.frag_off & 0xE000u) >> 13); // 3 / 16 bits
-	printf(" %04x", iphdr.frag_off & 0x1FFF); // 13 / 16 bits
+	dprintf(STDOUT_FILENO, "   %1x", (iphdr.frag_off & 0xE000u) >> 13); // 3 / 16 bits
+	dprintf(STDOUT_FILENO, " %04x", iphdr.frag_off & 0x1FFF); // 13 / 16 bits
 
-	printf("  %02x", iphdr.ttl);
+	dprintf(STDOUT_FILENO, "  %02x", iphdr.ttl);
 
-	printf("  %02x", iphdr.protocol);
+	dprintf(STDOUT_FILENO, "  %02x", iphdr.protocol);
 
-	printf(" ");
+	dprintf(STDOUT_FILENO, " ");
 	printBytes(&iphdr.check, sizeof(iphdr.check));
 
 	char src[INET_ADDRSTRLEN];
@@ -169,7 +169,7 @@ void	printHeaderMemory(struct iphdr *addr, size_t size)
 		printError("ERROR: ntop");
 		exit(FAILURE);
 	}
-	printf(" %s ", src);
+	dprintf(STDOUT_FILENO, " %s ", src);
 
 	char dst[INET_ADDRSTRLEN];
 	ft_memset(&dst[0], 0, INET_ADDRSTRLEN);
@@ -178,9 +178,9 @@ void	printHeaderMemory(struct iphdr *addr, size_t size)
 		printError("ERROR: ntop");
 		exit(FAILURE);
 	}
-	printf(" %s ", dst);
+	dprintf(STDOUT_FILENO, " %s ", dst);
 
-	printf("\n");
+	dprintf(STDOUT_FILENO, "\n");
 }
 
 int reverseDNSquery(struct sockaddr *sock_addr, char *hostname) {
