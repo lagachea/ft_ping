@@ -51,8 +51,8 @@ all: $(REF) $(NAME)
 $(NAME): $(OBJECT)
 	$(MAKE) -s -C $(LIBDIR)
 	$(CC) -I includes -I libft/includes -lm -o $(NAME) $(OBJECT) $(LIBA) $(CFLAGS)
-	sudo setcap cap_net_raw=pe ft_ping
 	sed -e '1s/^/[\n/' -e '$$s/,$$/\n]/' out/*.o.json > compile_commands.json
+	# sudo setcap cap_net_raw=pe ft_ping
 	printf "$(LNECLR)$(GREEN)make done$(WHITE)\n"
 
 out/%.o: srcs/%.c $(HDRS)
